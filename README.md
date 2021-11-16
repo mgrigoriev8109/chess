@@ -1,14 +1,36 @@
 # Chess
 
-This will someday be a finished game of Chess, which two players can play on the Command Line Interface. Right now it is simply a skeleton of a README file. 
+This is the a Command Line Interface game of Chess I created after finishing the Ruby lessons of [The Odin Project](https://www.theodinproject.com/courses/ruby-programming/lessons/ruby-final-project?ref=lnav).
 
 ## Demo
 
-## Features upon completion
+## How to play
 
-* Saves and Load the game
-* Player knows when they are in Check
-* Player knows when they have won, Checkmate
+Chess is played with two Players, who choose either Light or Dark as their color, on a 8x8 64 square Chess Board. These players take turns moving pieces across the board, attempting to place the opposing player in a Checkmate.
+
+The pieces are 8 Pawns, 2 Rooks, 2 Bishops, 2 Knights, a Queen and a King.
+
+Each player selects their desired movement by specifying a start location and end location on the Chess board, as long as it is within the legal possible moves of the piece.
+
+Legal moves of pieces:
+- Pawn: The first move a pawn makes moves forward two spaces, and forward one space every subsequent turn.
+- Rook: Every move a Rook makes can go vertically and horizontally any number of spaces across the board.
+- Bishop: Every move a Bishop makes can go diagonally in any direction any number of spaces across the board. 
+- Knight: A knight can move in the shape of an L, moving two spaces forward and one space to the side.
+- Queen: A queen can make all the moves of a Rook and a Bishop.
+- King: A king can move one space in any direction.
+
+If a piece encounters another piece
+
+## Project Requirements
+
+** Use Git [progressive-stability branching](https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows)
+Master branch will contain only functional code, develop branch will contain code being tested for stability before being merged into master, and topic branches going off of develop that have to pass all tests before being merged into develop. 
+
+** Use [Readme Driven Development](https://tom.preston-werner.com/2010/08/23/readme-driven-development.html)
+Before writing any code for this project, I'm writing a comprehensive Readme 
+**
+**
 
 ## How to play
 
