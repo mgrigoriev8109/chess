@@ -1,6 +1,3 @@
-require_relative 'player'
-require_relative 'game'
-
 class Display
 
   def initialize(gameboard)
@@ -8,9 +5,18 @@ class Display
   end 
 
   def show
-    @gameboard[0][0] = "♟" 
-    @gameboard[1][1] = "♟" 
-    @gameboard[0][7] = "♔" 
+    white_king = "♔"
+    white_queen = "♕"
+    white_rook = "♖"
+    white_bishop = "♗"
+    white_knight = "♘"
+    white_pawn = "♙"
+    black_king = "♚"
+    black_queen = "♛"
+    black_rook = "♜"
+    black_bishop = "♝"
+    black_knight = "♞"
+    black_pawn = "♟︎" 
     puts <<-HEREDOC
           +---+---+---+---+---+---+---+---+
         8 | #{@gameboard[0][0]} | #{@gameboard[0][1]} | #{@gameboard[0][2]} | #{@gameboard[0][3]} | #{@gameboard[0][4]} | #{@gameboard[0][5]} | #{@gameboard[0][6]} | #{@gameboard[0][7]} |
@@ -34,6 +40,3 @@ class Display
   end
 
 end
-game = Game.new
-display = Display.new(game.board)
-display.show
