@@ -1,6 +1,7 @@
-require_relative 'piece'
 
 class Rook
+
+  attr_reader :location
   def initialize(color, location)
     @color = color
     @location = location
