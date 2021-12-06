@@ -54,3 +54,43 @@ Before writing any code for this project, I'm writing a comprehensive Readme
 
 * Readability: Comments should be nonexistant, and methods should be readable and easily understood at first glance in plain english - adhering when appropriate to guidelines set by the book Clean Code.
 
+* Further OOP: This is the planning I have so far for messages and their respective classes:
+Class:
+1) Game
+  - I'm giving the command to create a gameboard (Send to self)
+  - I'm giving the command to create each of the 8 types of piece classes (Send to self)
+  - Can you tell me a query of the current display? (Send to Display Class)
+  - Can you tell me a query of what movement you want to make? (Send to Player Class)
+2) Player
+  - Can you tell me a query of whether or not this piece exists on the GameBoard (Send to Game Class)
+  - Can you tell me a query of whether or not this is a possible movement of this Rook on these coordinates? (Send to Rook Class)
+  - Can you tell me a query of whether or not this is a possible attack of this Rook on these coordinates? (Send to Rook Class)
+  - I'm giving you a command of how to update the gameboard (Send to Game Class)
+
+Based off of these messages, major methods I'm going to be working on during the next three months:
+game.create_gameboard
+game.create_piece
+game.play_turn
+player.check_existance_of_piece(piece_type)
+player.ask_legality_of_move(piece, coordinates)
+player.ask_legality_of_attack(piece, cordinates)
+
+Rough three month timeline:
+12/6: This week's goal is to create two rooks on gameboard, and have them pass tests to move around the gameboard.
+12/13: Next week will be white Rooks pass tests to successfully attack black Rooks.
+12/20: King movement
+12/27: King attack
+1/3: Check and checkmate. 
+1/10: Bishop move 
+1/17: Bishop attack, this and every following piece also tests check/checkmate
+1/24: Queen move attack
+1/31: Knight move 
+2/7: Knight attack
+2/14: White Pawn move
+2/21: White Pawn attack
+2/28: Black pawn move
+3/4: Black Pawn attack
+3/11: Play turn
+
+
+
