@@ -13,7 +13,7 @@ describe CurrentGame do
         expect(current_game.board[0][0]).to be_instance_of(Rook)
       end
 
-      it "returns false when an instanc of Rook doesn't exist on that coordinate" do
+      it "returns false when an instance of Rook doesn't exist on that coordinate" do
         expect(current_game.board[0][0]).not_to be_instance_of(Rook)
       end
     end

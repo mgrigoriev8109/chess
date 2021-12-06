@@ -7,14 +7,8 @@ class CurrentGame
 
   def initialize
     @board = Array.new(8) { Array.new(8, " ")}
-    @players_in_play = create_starting_players
     @display = Display.new(@board)
   end 
-
-  def create_starting_players
-    white_player = Player.new('white', 'player white name')
-    black_player = Player.new('black', 'player black name')
-  end
 
   def create_starting_rooks
     @board[0][7] = Rook.new('white')
@@ -24,5 +18,3 @@ class CurrentGame
   end
   
 end
-
-game = CurrentGame.new

@@ -1,4 +1,5 @@
 require_relative 'rook'
+require_relative 'current_game'
 
 class Player
 
@@ -7,4 +8,5 @@ class Player
     @name = name
   end
 
+  
 end

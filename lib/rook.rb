@@ -15,4 +15,8 @@ class Rook
     end
     symbol
   end
+
+  def possible_movements
+
+  end
 end
