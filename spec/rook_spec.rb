@@ -8,7 +8,7 @@ describe Rook do
       subject(:rook) {described_class.new}
 
       it "returns an array of all the possible spots the rook can move to" do
-        expect (rook.possible_movements)
+        expect (rook.possible_movements(current_game.board[0][0])) to_eq ()
       end
     end
   end
