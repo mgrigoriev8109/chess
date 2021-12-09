@@ -3,11 +3,16 @@ require_relative 'display'
 require_relative 'rook'
 
 class CurrentGame
-  attr_reader :board
+  attr_reader :board, :display
 
   def initialize
     @board = Array.new(8) { Array.new(8, " ")}
-    @display = Display.new(@board)
+    @display = create_display
+  end 
+
+  def create_display
+    display = Display.new(@board)
+    display.show
   end 
 
   def create_starting_rooks
@@ -18,3 +23,5 @@ class CurrentGame
   end
   
 end
+
+current_game = CurrentGame.new
