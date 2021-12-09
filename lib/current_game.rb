@@ -22,6 +22,19 @@ class CurrentGame
     @board[7][0] = Rook.new('black')
   end
   
+  def possible_movements(rook_location, current_gameboard)
+    possible_rook_moves = Array.new
+
+    #look at the rooks entire row 
+    #  use a (for loop?) loop to iterate through the row until we hit something other than " "
+    #    add each set of coordinates to our possible_moves array
+    #look at the rooks entire column
+    #  use a loop to iterate through the row until we hit something other than " "
+    #    add each set of coordinates to our possible_moves array
+
+    possible_rook_moves
+  end
+  
 end
 
 current_game = CurrentGame.new
