@@ -12,7 +12,6 @@ class CurrentGame
 
   def create_display
     display = Display.new(@board)
-    display.show
   end 
 
   def create_starting_rooks
@@ -22,19 +21,28 @@ class CurrentGame
     @board[7][0] = Rook.new('black')
   end
   
-  def possible_movements(rook_location, current_gameboard)
+  def rook_row_movements(rook_location)
+    rook_row = rook_location[0]
+    rook_column = rook_location[1]
+    row_array = Array.new 
     possible_rook_moves = Array.new
+    
+    @board.each_with_index do |board_row, row_index|
+      if rook_row == row_index
+        row_array = board_row
+      end
+    end
 
-    #look at the rooks entire row 
-    #  use a (for loop?) loop to iterate through the row until we hit something other than " "
-    #    add each set of coordinates to our possible_moves array
-    #look at the rooks entire column
-    #  use a loop to iterate through the row until we hit something other than " "
-    #    add each set of coordinates to our possible_moves array
-
+    row_array.each_with_index do |value, current_column|
+      if current_column > rook_column && value.is_a?(Rook)
+        break
+      elsif current_column > rook_column
+        possible_rook_moves.push([rook_row, current_column])
+      end
+    end
     possible_rook_moves
   end
-  
+
 end
 
 current_game = CurrentGame.new
