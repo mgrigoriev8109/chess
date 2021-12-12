@@ -21,41 +21,4 @@ describe CurrentGame do
     end
   end
 
-  describe '#row_movements' do
-
-    subject(:current_game) {described_class.new}
-    context 'from [0,1]' do
-
-      it "returns an array of [[0,2]] when stopping at [0][3]" do
-
-      current_game.board[0][3] = Rook.new('white')
-      current_game.board[0][1] = Rook.new('black')
-
-      rook_row_movements = current_game.rook_row_movements([0,1])
-      
-      expect(rook_row_movements).to eq([[0,2]])
-      end
-
-      it "returns an array of [[0,2][0,3]] when stopping at [0][4]" do
-
-      current_game.board[0][4] = Rook.new('white')
-      current_game.board[0][1] = Rook.new('black')
-
-      rook_row_movements = current_game.rook_row_movements([0,1])
-      
-      expect(rook_row_movements).to eq([[0,2],[0,3]])
-      end
-  
-      it "returns possible moves of [[0,0][0,2][0,3]] when stopping at [0][4] and left board edge" do
-
-        current_game.board[0][4] = Rook.new('white')
-        current_game.board[0][1] = Rook.new('black')
-  
-        rook_row_movements = current_game.rook_row_movements([0,1])
-        
-        expect(rook_row_movements).to eq([[0,0],[0,2],[0,3]])
-        end
-    
-    end
-  end
 end

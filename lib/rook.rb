@@ -17,16 +17,26 @@ class Rook
     symbol
   end
 
-  def possible_movements(rook_location)
+
+  def row_movements(board, rook_location)
+    rook_row = rook_location[0]
+    rook_column = rook_location[1]
+    row_array = Array.new 
     possible_rook_moves = Array.new
+    
+    board.each_with_index do |board_row, row_index|
+      if rook_row == row_index
+        row_array = board_row
+      end
+    end
 
-    #look at the rooks entire row 
-    #  use a (for loop?) loop to iterate through the row until we hit something other than " "
-    #    add each set of coordinates to our possible_moves array
-    #look at the rooks entire column
-    #  use a loop to iterate through the row until we hit something other than " "
-    #    add each set of coordinates to our possible_moves array
-
+    row_array.each_with_index do |value, current_column|
+      if current_column > rook_column && value.is_a?(Rook)
+        break
+      elsif current_column > rook_column
+        possible_rook_moves.push([rook_row, current_column])
+      end
+    end
     possible_rook_moves
   end
 end
