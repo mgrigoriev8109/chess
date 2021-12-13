@@ -54,7 +54,7 @@ describe Player do
         expect(coordinate_notation).to eq([1,5])
       end
 
-      it 'returns coordinate notation [6,6] for the input algebraic notation location G2A8' do
+      it 'returns coordinate notation [3,6] for the input algebraic notation location G2A8' do
         player.alg_notation = 'G2A8'
 
         coordinate_notation = player.starting_location
@@ -63,4 +63,36 @@ describe Player do
       end
     end
   end
+
+  describe '#ending_location' do
+
+    subject(:player) {described_class.new('white', 'test_player')}
+    context 'when Player inputs a ending location with LetterNumber format' do
+
+      it 'returns coordinate notation [2,0] for the input algebraic notation location A8C8' do
+        player.alg_notation = 'A8C8'
+
+        coordinate_notation = player.ending_location
+
+        expect(coordinate_notation).to eq([2,0])
+      end
+
+      it 'returns coordinate notation [7,7] for the input algebraic notation location A8H1' do
+        player.alg_notation = 'A8H1'
+
+        coordinate_notation = player.ending_location
+
+        expect(coordinate_notation).to eq([7,7])
+      end
+
+      it 'returns coordinate notation [3,6] for the input algebraic notation location G2D2' do
+        player.alg_notation = 'G2D2'
+
+        coordinate_notation = player.ending_location
+
+        expect(coordinate_notation).to eq([3,6])
+      end
+    end
+  end
+  
 end
