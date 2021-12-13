@@ -21,4 +21,17 @@ describe CurrentGame do
     end
   end
 
+  describe '#verify_starting_location' do
+
+    let(:player){instance_double(Player, starting_location: [0,0]) } 
+    subject(:current_game) {described_class.new}
+
+    context 'from [0,1]' do
+
+      it "returns an array of [[0,2]] when stopping at [0][3]" do
+
+        expect(verified_starting_location).to be_truthy
+      end
+    end
+  end
 end

@@ -41,17 +41,10 @@ class CurrentGame
     @board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         if player.starting_location == [row_index, column_index] && cell != " "
-          p "It exists!"
+          true
         end
       end
     end
   end
 
 end
-
-current_game = CurrentGame.new
-current_game.create_display
-current_game.show_display
-current_game.play_turn
-current_game.update_display
-current_game.show_display
