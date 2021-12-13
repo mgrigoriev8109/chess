@@ -25,7 +25,7 @@ class CurrentGame
   def create_starting_rooks
     @board[0][7] = Rook.new('white')
     @board[7][7] = Rook.new('white')
-    @board[0][0] = Rook.new('black')
+    @board[0][0] = Rook.new('white')
     @board[7][0] = Rook.new('black')
   end
   
@@ -41,8 +41,12 @@ class CurrentGame
     is_location_verified = false
     @board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
-        if player.starting_location == [row_index, column_index] && cell != " "
+        if player.starting_location == [row_index, column_index] && cell == ' '
+          is_location_verified = false
+        elsif player.starting_location == [row_index, column_index] && cell.color == player.color
           is_location_verified = true
+        else
+          is_location_verified = false
         end
       end
     end
