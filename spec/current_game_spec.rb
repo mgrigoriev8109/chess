@@ -26,11 +26,32 @@ describe CurrentGame do
     let(:player){instance_double(Player, starting_location: [0,0]) } 
     subject(:current_game) {described_class.new}
 
-    context 'from [0,1]' do
+    context 'When verifying a starting location of [0.0]' do
 
-      it "returns an array of [[0,2]] when stopping at [0][3]" do
+      it "returns false if the no pieces have been created on the board" do
 
+        verified_starting_location = current_game.verify_starting_location(player)
+        
+        expect(verified_starting_location).to be_falsy
+      end
+
+      it "returns true if a Rook is created at [0,0]" do
+
+        current_game.create_starting_rooks
+
+        verified_starting_location = current_game.verify_starting_location(player)
+        
         expect(verified_starting_location).to be_truthy
+      end
+
+      it "returns false if the Rook at [0,0] created, and then deleted" do
+
+        current_game.create_starting_rooks
+        current_game.board[0][0] = " "
+
+        verified_starting_location = current_game.verify_starting_location(player)
+        
+        expect(verified_starting_location).to be_falsy
       end
     end
   end

@@ -38,13 +38,15 @@ class CurrentGame
   end
 
   def verify_starting_location(player)
+    is_location_verified = false
     @board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         if player.starting_location == [row_index, column_index] && cell != " "
-          true
+          is_location_verified = true
         end
       end
     end
+    is_location_verified
   end
 
 end
