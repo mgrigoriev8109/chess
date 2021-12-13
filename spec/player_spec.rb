@@ -38,12 +38,28 @@ describe Player do
     subject(:player) {described_class.new('white', 'test_player')}
     context 'when Player inputs a starting location with LetterNumber format' do
 
-      it 'returns [0,0] for the input location A8A8' do
+      it 'returns coordinate notation [0,0] for the input algebraic notation location A8A8' do
         player.alg_notation = 'A8A8'
 
         coordinate_notation = player.starting_location
 
         expect(coordinate_notation).to eq([0,0])
+      end
+
+      it 'returns coordinate notation [1,5] for the input algebraic notation location A8A8' do
+        player.alg_notation = 'B3A8'
+
+        coordinate_notation = player.starting_location
+
+        expect(coordinate_notation).to eq([1,5])
+      end
+
+      it 'returns coordinate notation [6,6] for the input algebraic notation location G2A8' do
+        player.alg_notation = 'G2A8'
+
+        coordinate_notation = player.starting_location
+
+        expect(coordinate_notation).to eq([6,6])
       end
     end
   end
