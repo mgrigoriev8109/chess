@@ -32,4 +32,19 @@ describe Player do
       end
     end
   end
+
+  describe '#starting_location' do
+
+    subject(:player) {described_class.new('white', 'test_player')}
+    context 'when Player inputs a starting location with LetterNumber format' do
+
+      it 'returns [0,0] for the input location A8A8' do
+        player.alg_notation = 'A8A8'
+
+        coordinate_notation = player.starting_location
+
+        expect(coordinate_notation).to eq([0,0])
+      end
+    end
+  end
 end

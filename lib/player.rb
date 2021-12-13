@@ -1,10 +1,11 @@
 class Player
 
-  attr_reader :name, :color, :player_selection
+  attr_reader :name, :color
+  attr_accessor :alg_notation
   def initialize(color, name)
     @color = color
     @name = name
-    @player_selection
+    @alg_notation
   end
 
   def get_input_array
@@ -12,7 +13,7 @@ class Player
     puts "In the example A1B1, A1 will represent where your piece is located on this turn."
     puts "In the example A1B1, B1 will represent where you want that piece to move."
     puts "Please enter the movement you would like to make:"
-    @player_selection = gets.chomp.split("")
+    @alg_notation = gets.chomp.split("")
   end
   
   def letter_to_numbers(letter)
@@ -21,14 +22,14 @@ class Player
   end
 
   def starting_location
-    starting_row = letter_to_numbers(@player_selection[0])
-    starting_column = @player_selection[1].to_i - 1
-    player_starting_selection = [starting_row, starting_column]
+    starting_row = letter_to_numbers(@alg_notation[0])
+    starting_column = 8 - @alg_notation[1].to_i
+    player_starting_location = [starting_row, starting_column]
   end
 
   def ending_location
-    ending_row = letter_to_numbers(@player_selection[2])
-    ending_column = @player_selection[3].to_i - 1
+    ending_row = letter_to_numbers(@alg_notation[2])
+    ending_column = 8 - @alg_notation[3].to_i
     player_ending_location = [ending_row, ending_column]
   end
 end
