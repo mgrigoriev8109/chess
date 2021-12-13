@@ -1,5 +1,7 @@
 class Display
 
+  attr_accessor :gameboard
+
   def initialize(gameboard)
     @gameboard = gameboard
   end 

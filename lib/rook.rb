@@ -1,5 +1,3 @@
-require_relative 'current_game'
-
 class Rook
 
   attr_reader :color

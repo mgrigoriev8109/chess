@@ -1,5 +1,6 @@
 class Player
 
+  attr_reader :name, :color, :player_selection
   def initialize(color, name)
     @color = color
     @name = name
@@ -19,13 +20,13 @@ class Player
     a_to_h_array.index(letter)
   end
 
-  def transform_starting_location
+  def starting_location
     starting_row = letter_to_numbers(@player_selection[0])
     starting_column = @player_selection[1].to_i - 1
     player_starting_selection = [starting_row, starting_column]
   end
 
-  def transform_ending_location
+  def ending_location
     ending_row = letter_to_numbers(@player_selection[2])
     ending_column = @player_selection[3].to_i - 1
     player_ending_location = [ending_row, ending_column]
