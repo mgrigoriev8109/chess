@@ -7,26 +7,19 @@ class CurrentGame
 
   def initialize
     @board = Array.new(8) { Array.new(8, " ")}
-    @display
-  end 
-
-  def create_display
-    @display = Display.new(@board)
   end 
 
   def show_display
-    @display.show
-  end
-
-  def update_display
-    @display.gameboard = @board
-  end
+    display = Display.new
+    display.transform_to_symbol(@board)
+    display.show
+  end 
 
   def create_starting_rooks
-    @board[0][7] = Rook.new('white')
+    @board[0][0] = Rook.new('black')
+    @board[0][7] = Rook.new('black')
+    @board[7][0] = Rook.new('white')
     @board[7][7] = Rook.new('white')
-    @board[0][0] = Rook.new('white')
-    @board[7][0] = Rook.new('black')
   end
   
   def play_turn

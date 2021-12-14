@@ -2,9 +2,19 @@ class Display
 
   attr_accessor :gameboard
 
-  def initialize(gameboard)
-    @gameboard = gameboard
+  def initialize()
+    @gameboard = Array.new(8) { Array.new(8, " ")}
   end 
+
+  def transform_to_symbol(board)
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        unless cell == ' '
+          @gameboard[row_index][column_index] = cell.symbol
+        end
+      end
+    end
+  end
 
   def show
     white_king = "♔"
