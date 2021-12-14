@@ -38,8 +38,6 @@ class CurrentGame
           is_location_verified = false
         elsif player.starting_location == [row_index, column_index] && cell.color == player.color
           is_location_verified = true
-        else
-          is_location_verified = false
         end
       end
     end

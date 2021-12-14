@@ -23,7 +23,7 @@ describe CurrentGame do
 
   describe '#verify_starting_location' do
 
-    let(:player){instance_double(Player, starting_location: [0,0], color: 'white') } 
+    let(:player){instance_double(Player, starting_location: [0,0], color: 'black') } 
     subject(:current_game) {described_class.new}
 
     context 'When verifying a starting location of [0.0]' do
@@ -45,7 +45,7 @@ describe CurrentGame do
         expect(verified_starting_location).to be_falsy
       end
 
-      it "returns true if a White Color Player checks whether White Rook is created at [0,0]" do
+      it "returns true if a Black Color Player finds that a Black Rook is at [0,0]" do
 
         current_game.create_starting_rooks
 
@@ -54,13 +54,14 @@ describe CurrentGame do
         expect(verified_starting_location).to be_truthy
       end
       
-      it "returns false if a Black Color Player checks whether White Rook is created at [0,0]" do
+      it "returns false if a Black Color Player finds that a White Rook is at [0,0]" do
 
         current_game.create_starting_rooks
+        current_game.board[0][0] = Rook.new('white')
 
         verified_starting_location = current_game.verify_starting_location(player)
         
-        expect(verified_starting_location).to be_truthy
+        expect(verified_starting_location).to be_falsy
       end
     end
   end
