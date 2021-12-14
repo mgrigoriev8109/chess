@@ -9,6 +9,7 @@ describe Rook do
 
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:rook) {described_class.new('white')}
+
     context 'from [0,1]' do
 
       it "returns an array of [[0,2]] when stopping at [0][3]" do
@@ -19,6 +20,7 @@ describe Rook do
       possible_movements = rook.movements_right(board, [0,1])
       
       expect(possible_movements).to eq([[0,2]])
+
       end
 
       it "returns an array of [[0,2][0,3]] when stopping at [0][4]" do
@@ -38,14 +40,15 @@ describe Rook do
 
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:rook) {described_class.new('white')}
+
     context 'from [0,1]' do
       it "returns an array of [[0,0]] when stopping at the left board edge" do
 
-      board[0][1] = Rook.new('black')
+        board[0][1] = Rook.new('black')
 
-      possible_movements = rook.movements_left(board, [0,1])
-      
-      expect(possible_movements).to eq([[0,0]])
+        possible_movements = rook.movements_left(board, [0,1])
+        
+        expect(possible_movements).to eq([[0,0]])
       end
 
     end
@@ -55,14 +58,15 @@ describe Rook do
 
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:rook) {described_class.new('white')}
+
     context 'from [6,0]' do
       it "returns an array of [[7,0]] when stopping at the lower board edge" do
 
-      board[6][0] = Rook.new('black')
+        board[6][0] = Rook.new('black')
 
-      possible_movements = rook.movements_down(board, [6,0])
-      
-      expect(possible_movements).to eq([[7,0]])
+        possible_movements = rook.movements_down(board, [6,0])
+        
+        expect(possible_movements).to eq([[7,0]])
       end
 
     end
@@ -72,16 +76,37 @@ describe Rook do
 
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:rook) {described_class.new('white')}
+
     context 'from [1,0]' do
       it "returns an array of [[0,0]] when stopping at the upper board edge" do
 
-      board[1][0] = Rook.new('black')
+        board[1][0] = Rook.new('black')
 
-      possible_movements = rook.movements_up(board, [1,0])
-      
-      expect(possible_movements).to eq([[0,0]])
+        possible_movements = rook.movements_up(board, [1,0])
+        
+        expect(possible_movements).to eq([[0,0]])
       end
 
+    end
+  end
+
+  describe '#possible_rook_movements' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:rook) {described_class.new('white')}
+
+    context 'A rook starting at [0,0]' do
+
+      it "returns an array of [[0,1],[0,2],[1,0],[2,0]] when other pieces at [0,3] and [3,0]" do
+        
+        board[0][0] = Rook.new('black')
+        board[0][3] = Rook.new('white')
+        board[3][0] = Rook.new('white')
+
+        possible_movements = rook.possible_rook_movements(board, [0,0])
+
+        expect(possible_movements).to eq([[0,1],[0,2],[1,0],[2,0]])
+      end
     end
   end
 end

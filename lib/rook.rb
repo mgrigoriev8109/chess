@@ -15,6 +15,17 @@ class Rook
     symbol
   end
 
+  def possible_rook_movements(board, rook_location)
+    all_possible_movements = Array.new
+    all_possible_movements.push(*movements_right(board, rook_location))
+    all_possible_movements.push(*movements_left(board, rook_location))
+    all_possible_movements.push(*movements_up(board, rook_location))
+    all_possible_movements.push(*movements_down(board, rook_location))
+    all_possible_movements.delete([])
+    all_possible_movements
+  end
+
+
   def movements_right(board, rook_location)
     starting_row = rook_location[0]
     starting_column = rook_location[1]
@@ -34,7 +45,7 @@ class Rook
         possible_moves.push([starting_row, index])
       end
     end
-
+    
     possible_moves
   end
 
@@ -58,7 +69,6 @@ class Rook
         possible_moves.push([starting_row, index])
       end
     end
-
     possible_moves
   end
 
