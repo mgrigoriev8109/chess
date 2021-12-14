@@ -22,12 +22,27 @@ class CurrentGame
     @board[7][7] = Rook.new('white')
   end
   
-  def play_turn
-    player_white = Player.new('white', 'player1')
-    puts "#{player_white.name} it is now your turn."
+  def create_players
+    player_black = Player.new('black', 'player_black')
+    player_white = Player.new('white', 'player_white')
+  end
+
+  def populate_gameboard
     create_starting_rooks
+  end
+
+  def play_turn
+    create_players
+    populate_gameboard
+    puts "#{player_white.name} it is now your turn."
     player_white.get_input_array
     verify_starting_location(player_white)
+  end
+
+  def move_gamepiece(player)
+    row = player.starting_location[0]
+    column = player.starting_location[1]
+    @board[row][column].all_possible_movements
   end
 
   def verify_starting_location(player)
@@ -43,5 +58,5 @@ class CurrentGame
     end
     is_location_verified
   end
-
+  
 end

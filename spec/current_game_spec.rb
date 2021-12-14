@@ -12,11 +12,11 @@ describe CurrentGame do
 
       it "returns true when an instance of Rook exists on that coordinate" do
         current_game.create_starting_rooks
-        expect(current_game.board[0][0]).to be_instance_of(Rook)
+        expect(current_game.board[0][0]).to be_a Rook
       end
 
       it "returns false when an instance of Rook doesn't exist on that coordinate" do
-        expect(current_game.board[0][0]).not_to be_instance_of(Rook)
+        expect(current_game.board[0][0]).not_to be_a Rook
       end
     end
   end
@@ -62,6 +62,29 @@ describe CurrentGame do
         verified_starting_location = current_game.verify_starting_location(player)
         
         expect(verified_starting_location).to be_falsy
+      end
+    end
+  end
+
+  describe '#move_gamepiece' do
+
+    let(:player){instance_double(Player, starting_location: [0,0], color: 'black') } 
+    subject(:current_game) {described_class.new}
+
+    context 'When moving a White Rook from [0.0]' do
+
+      it "the board will return a White Rook at [1][0]" do
+
+      ending_location = current_game.move_gamepiece(player)
+        
+        expect(ending_location).to be_a Rook
+      end
+
+      it "and also return empty space ' ' at [0][0]" do
+
+        verified_starting_location = current_game.move_gamepiece(player)
+        
+        expect(verified_starting_location).to eq(' ')
       end
     end
   end

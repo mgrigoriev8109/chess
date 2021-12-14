@@ -15,14 +15,14 @@ class Rook
     symbol
   end
 
-  def possible_rook_movements(board, rook_location)
-    all_possible_movements = Array.new
-    all_possible_movements.push(*movements_right(board, rook_location))
-    all_possible_movements.push(*movements_left(board, rook_location))
-    all_possible_movements.push(*movements_up(board, rook_location))
-    all_possible_movements.push(*movements_down(board, rook_location))
-    all_possible_movements.delete([])
-    all_possible_movements
+  def all_possible_movements(board, rook_location)
+    movements_array = Array.new
+    movements_array.push(*movements_right(board, rook_location))
+    movements_array.push(*movements_left(board, rook_location))
+    movements_array.push(*movements_up(board, rook_location))
+    movements_array.push(*movements_down(board, rook_location))
+    movements_array.delete([])
+    movements_array
   end
 
 

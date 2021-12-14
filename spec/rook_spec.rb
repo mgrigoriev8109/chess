@@ -90,7 +90,7 @@ describe Rook do
     end
   end
 
-  describe '#possible_rook_movements' do
+  describe '#all_possible_movements' do
 
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:rook) {described_class.new('white')}
@@ -103,7 +103,7 @@ describe Rook do
         board[0][3] = Rook.new('white')
         board[3][0] = Rook.new('white')
 
-        possible_movements = rook.possible_rook_movements(board, [0,0])
+        possible_movements = rook.all_possible_movements(board, [0,0])
 
         expect(possible_movements).to eq([[0,1],[0,2],[1,0],[2,0]])
       end
