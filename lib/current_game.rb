@@ -28,21 +28,43 @@ class CurrentGame
   end
 
   def populate_gameboard
+    create_players
     create_starting_rooks
   end
 
-  def play_turn
-    create_players
-    populate_gameboard
-    puts "#{player_white.name} it is now your turn."
-    player_white.get_input_array
-    verify_starting_location(player_white)
+  def play_turn(player)
+    puts "#{player.name} it is now your turn."
+    player.get_input_array
+    until verify_starting_location(player) &&  verify_ending_location(player)
+      player.get_input_array
+    end
+    move_gamepiece(player)
+  end
+
+  def verify_ending_location(player)
+    row = player.starting_location[0]
+    column = player.starting_location[1]
+    can_piece_move_or_attack = false
+
+    if @board[row][column].all_possible_movements.include?([player.ending_location])
+      can_piece_move_or_attack = true
+    elsif @board[row][column].all_possible_attacks.include?([player.ending_location])
+      can_piece_move_or_attack = true
+    end 
+
+    can_piece_move_or_attack
   end
 
   def move_gamepiece(player)
-    row = player.starting_location[0]
-    column = player.starting_location[1]
-    @board[row][column].all_possible_movements
+    starting_row = player.starting_location[0]
+    starting_column = player.starting_location[1]
+
+    ending_row = player.ending_location[0]
+    ending_column = player.ending_location[1]
+
+    @board[ending_row][ending_column] = @board[starting_row][starting_column]
+
+    @board[starting_row][starting_column] = ' '
   end
 
   def verify_starting_location(player)
@@ -56,6 +78,7 @@ class CurrentGame
         end
       end
     end
+
     is_location_verified
   end
   

@@ -68,23 +68,29 @@ describe CurrentGame do
 
   describe '#move_gamepiece' do
 
-    let(:player){instance_double(Player, starting_location: [0,0], color: 'black') } 
+    let(:player){instance_double(Player, color: 'white', name: 'player', starting_location: [0,0], ending_location: [1,0]) } 
     subject(:current_game) {described_class.new}
 
-    context 'When moving a White Rook from [0.0]' do
+    context 'When moving a Black Rook from A8, aka [0,0] aka [0][0]' do
 
-      it "the board will return a White Rook at [1][0]" do
-
-      ending_location = current_game.move_gamepiece(player)
+      it "the board will return a Black Rook at A7, aka [1.0], aka [1][0]" do
         
-        expect(ending_location).to be_a Rook
+        current_game.board[0][0] = Rook.new('black')
+        current_game.move_gamepiece(player)
+
+        ending_coordinates = current_game.board[1][0]
+        
+        expect(ending_coordinates).to be_a Rook
       end
 
       it "and also return empty space ' ' at [0][0]" do
 
-        verified_starting_location = current_game.move_gamepiece(player)
+        current_game.board[0][0] = Rook.new('black')
+        current_game.move_gamepiece(player)
+
+        starting_coordinates = current_game.board[0][0]
         
-        expect(verified_starting_location).to eq(' ')
+        expect(starting_coordinates).to eq(' ')
       end
     end
   end
