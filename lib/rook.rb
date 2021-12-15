@@ -1,4 +1,6 @@
-class Rook
+require_relative 'piece'
+
+class Rook < Piece
 
   attr_reader :color
 
@@ -15,6 +17,34 @@ class Rook
     symbol
   end
 
+  def row_to_look_through(board, starting_row)
+    moves_to_look_through = Array.new     
+    board.each_with_index do |board_row, row_index|
+      if starting_row == row_index
+        moves_to_look_through = board_row
+      end
+    end
+    moves_to_look_through
+  end
+
+  def attacks_right(board, rook_location)
+    starting_row = rook_location[0]
+    starting_column = rook_location[1]
+    attacks_to_look_through = row_to_look_through(board, starting_row)
+    possible_attack = Array.new
+  
+    attacks_to_look_through.each_with_index do |value, index|
+      if index > starting_column && value.is_a?(Piece) && value.color == @color
+        break
+      elsif index > starting_column && value.is_a?(Piece) && value.color != @color
+        possible_attack.push([starting_row, index])
+        break
+      end
+    end
+    
+    possible_attack
+  end
+
   def all_possible_movements(board, rook_location)
     movements_array = Array.new
     movements_array.push(*movements_right(board, rook_location))
@@ -25,15 +55,6 @@ class Rook
     movements_array
   end
 
-  def row_to_look_through(board, starting_row)
-    moves_to_look_through = Array.new     
-    board.each_with_index do |board_row, row_index|
-      if starting_row == row_index
-        moves_to_look_through = board_row
-      end
-    end
-    moves_to_look_through
-  end
 
   def movements_right(board, rook_location)
     starting_row = rook_location[0]
