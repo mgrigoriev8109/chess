@@ -25,19 +25,22 @@ class Rook
     movements_array
   end
 
-
-  def movements_right(board, rook_location)
-    starting_row = rook_location[0]
-    starting_column = rook_location[1]
-    moves_to_look_through = Array.new 
-    possible_moves = Array.new
-    
+  def row_to_look_through(board, starting_row)
+    moves_to_look_through = Array.new     
     board.each_with_index do |board_row, row_index|
       if starting_row == row_index
         moves_to_look_through = board_row
       end
     end
+    moves_to_look_through
+  end
 
+  def movements_right(board, rook_location)
+    starting_row = rook_location[0]
+    starting_column = rook_location[1]
+    moves_to_look_through = row_to_look_through(board, starting_row)
+    possible_moves = Array.new
+  
     moves_to_look_through.each_with_index do |value, index|
       if index > starting_column && value.is_a?(Rook)
         break
@@ -52,14 +55,8 @@ class Rook
   def movements_left(board, rook_location)
     starting_row = rook_location[0]
     starting_column = 7 - rook_location[1]
-    moves_to_look_through = Array.new 
+    moves_to_look_through = row_to_look_through(board, starting_row)
     possible_moves = Array.new
-    
-    board.each_with_index do |board_row, row_index|
-      if starting_row == row_index
-        moves_to_look_through = board_row
-      end
-    end
 
     moves_to_look_through.reverse.each_with_index do |value, index|
       if index > starting_column && value.is_a?(Rook)
@@ -71,7 +68,7 @@ class Rook
     end
     possible_moves
   end
-  
+
   def column_to_look_through(board, starting_column)
     moves_to_look_through = Array.new 
     board.each_with_index do |board_row, row_index|
