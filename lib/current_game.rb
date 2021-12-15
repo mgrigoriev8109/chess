@@ -44,12 +44,18 @@ class CurrentGame
   def verify_ending_location(player)
     row = player.starting_location[0]
     column = player.starting_location[1]
-    can_piece_move_or_attack = false
+    starting_piece = @board[row][column]
 
-    if @board[row][column].all_possible_movements.include?([player.ending_location])
+    array_of_movements = starting_piece.all_possible_movements(@board, player.starting_location)
+    can_piece_move_or_attack = false
+    
+    if array_of_movements.include?(player.ending_location)
       can_piece_move_or_attack = true
-    elsif @board[row][column].all_possible_attacks.include?([player.ending_location])
-      can_piece_move_or_attack = true
+    #elsif @board[row][column].all_possible_attacks.include?([player.ending_location])
+    #  can_piece_move_or_attack = true
+    # Uncomment this after properly testing movement functionality, writing failing
+    # tests for attack functionality, and passing tests for attack functionality
+    # THEN add in tests to verify_ending_location for attack functionality
     end 
 
     can_piece_move_or_attack
