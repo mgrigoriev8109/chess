@@ -34,7 +34,6 @@ class CurrentGame
 
   def play_turn(player)
     puts "#{player.name} it is now your turn."
-    player.get_input_array
     until verify_starting_location(player) &&  verify_ending_location(player)
       player.get_input_array
     end
