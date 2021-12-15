@@ -220,4 +220,23 @@ describe Rook do
       end
     end
   end
+
+  describe '#attacks_down' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:rook) {described_class.new('white')}
+
+    context 'A White Rook looking for pieces to attack downward' do
+      it "A White Rook looking for pieces to attack downward" do
+
+        board[6][0] = Rook.new('black')
+
+        possible_attacks = rook.attacks_down(board, [6,0])
+        
+        expect(possible_attacks).to eq([[7,0]])
+      end
+
+    end
+  end
+
 end
