@@ -39,6 +39,16 @@ class Rook < Piece
     moves_to_look_through
   end
 
+  def all_possible_attacks(board, rook_location)
+    attacks_array = Array.new
+    attacks_array.push(*attacks_right(board, rook_location))
+    attacks_array.push(*attacks_left(board, rook_location))
+    attacks_array.push(*attacks_up(board, rook_location))
+    attacks_array.push(*attacks_down(board, rook_location))
+    attacks_array.delete([])
+    attacks_array
+  end
+
   def attacks_up(board, rook_location)
     starting_row = 7 - rook_location[0]
     starting_column = rook_location[1]

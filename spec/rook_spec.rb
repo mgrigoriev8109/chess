@@ -333,4 +333,26 @@ describe Rook do
       end
     end
   end
+
+  describe '#all_possible_attacks' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:rook) {described_class.new('white')}
+
+    context 'A White Rook starting at [1,1]' do
+
+      it "returns an array of [[1,2],[3,1],[0,1]], but NOT [1,0] when three black Rooks and one white Rook around" do
+        
+        board[1][1] = Rook.new('white')
+        board[1][0] = Rook.new('white')
+        board[1][2] = Rook.new('black')
+        board[3][1] = Rook.new('black')
+        board[0][1] = Rook.new('black')
+
+        possible_attacks = rook.all_possible_attacks(board, [1,1])
+
+        expect(possible_attacks).to eq([[1, 2], [0, 1], [3, 1]])
+      end
+    end
+  end
 end
