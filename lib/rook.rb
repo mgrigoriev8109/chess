@@ -39,6 +39,24 @@ class Rook < Piece
     moves_to_look_through
   end
 
+  def attacks_down(board, rook_location)
+    starting_row = rook_location[0]
+    starting_column = rook_location[1]
+    attacks_to_look_through = column_to_look_through(board, starting_column)
+    possible_attack = Array.new
+  
+    attacks_to_look_through.each_with_index do |value, index|
+      if index > starting_row && value.is_a?(Piece) && value.color == @color
+        break
+      elsif index > starting_row && value.is_a?(Piece) && value.color != @color
+        possible_attack.push([index, starting_column])
+        break
+      end
+    end
+    
+    possible_attack
+  end
+
   def attacks_right(board, rook_location)
     starting_row = rook_location[0]
     starting_column = rook_location[1]
