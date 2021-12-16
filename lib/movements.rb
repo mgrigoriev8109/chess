@@ -22,9 +22,31 @@ module Movements
     moves_to_look_through
   end
 
-  def movements_right(board, rook_location)
-    starting_row = rook_location[0]
-    starting_column = rook_location[1]
+  def movements_up_right(board, piece_location)
+    starting_row = piece_location[0]
+    starting_column = piece_location[1]
+    possible_moves = Array.new
+    column_to_check = starting_row + starting_column
+
+    board.each_with_index do |board_row, row_index|
+      board_row.each_with_index do |value, column_index| 
+        if column_to_check == column_index && value.is_a?(Piece) && column_index > starting_column
+          possible_moves = Array.new
+          break
+        elsif column_to_check == column_index && column_index > starting_column
+          possible_moves.push([row_index, column_index])
+        end
+      end
+
+      column_to_check -= 1
+    end
+
+    possible_moves
+  end
+
+  def movements_right(board, piece_location)
+    starting_row = piece_location[0]
+    starting_column = piece_location[1]
     moves_to_look_through = row_to_look_through(board, starting_row)
     possible_moves = Array.new
 
@@ -39,9 +61,9 @@ module Movements
     possible_moves
   end
 
-  def movements_left(board, rook_location)
-    starting_row = rook_location[0]
-    starting_column = 7 - rook_location[1]
+  def movements_left(board, piece_location)
+    starting_row = piece_location[0]
+    starting_column = 7 - piece_location[1]
     moves_to_look_through = row_to_look_through(board, starting_row)
     possible_moves = Array.new
 
@@ -56,9 +78,9 @@ module Movements
     possible_moves
   end
 
-  def movements_down(board, rook_location)
-    starting_row = rook_location[0]
-    starting_column = rook_location[1]
+  def movements_down(board, piece_location)
+    starting_row = piece_location[0]
+    starting_column = piece_location[1]
     moves_to_look_through = column_to_look_through(board, starting_column)
     possible_moves = Array.new
 
@@ -73,9 +95,9 @@ module Movements
     possible_moves
   end
 
-  def movements_up(board, rook_location)
-    starting_row = 7 - rook_location[0]
-    starting_column = rook_location[1]
+  def movements_up(board, piece_location)
+    starting_row = 7 - piece_location[0]
+    starting_column = piece_location[1]
     moves_to_look_through = column_to_look_through(board, starting_column)
     possible_moves = Array.new
 
