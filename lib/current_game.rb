@@ -46,15 +46,13 @@ class CurrentGame
     starting_piece = @board[row][column]
 
     array_of_movements = starting_piece.all_possible_movements(@board, player.starting_location)
+    array_of_attacks = starting_piece.all_possible_attacks(@board, player.starting_location)
     can_piece_move_or_attack = false
-    
+
     if array_of_movements.include?(player.ending_location)
       can_piece_move_or_attack = true
-    #elsif @board[row][column].all_possible_attacks.include?([player.ending_location])
-    #  can_piece_move_or_attack = true
-    # Uncomment this after properly testing movement functionality, writing failing
-    # tests for attack functionality, and passing tests for attack functionality
-    # THEN add in tests to verify_ending_location for attack functionality
+    elsif array_of_attacks.include?(player.ending_location)
+      can_piece_move_or_attack = true
     end 
 
     can_piece_move_or_attack

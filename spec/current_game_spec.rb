@@ -97,12 +97,12 @@ describe CurrentGame do
 
   describe '#verify_ending_location' do
 
-    let(:player){instance_double(Player, color: 'white', name: 'player', starting_location: [0,0], ending_location: [1,0]) } 
+    let(:player){instance_double(Player, color: 'black', name: 'player', starting_location: [0,0], ending_location: [1,0]) } 
     subject(:current_game) {described_class.new}
 
     context 'When moving a Black Rook and checking availability of the ending location' do
 
-      it "will return true when moving a Rook from [0][0] to an empty space at [1][0]" do
+      it "will return true when moving a Black Rook from [0][0] to an empty space at [1][0]" do
         
         current_game.board[0][0] = Rook.new('black')
 
@@ -111,7 +111,7 @@ describe CurrentGame do
         expect(ending_location_verification).to be true
       end
 
-      it "will return false when moving a Rook from [0][0] to an non-empty space at [1][0]" do
+      it "will return false when moving Black Rook from [0][0] to attack a Black Rook at [1][0]" do
         
         current_game.board[0][0] = Rook.new('black')
         current_game.board[1][0] = Rook.new('black')
@@ -119,6 +119,16 @@ describe CurrentGame do
         ending_location_verification = current_game.verify_ending_location(player)
         
         expect(ending_location_verification).to be false
+      end
+
+      it "will return true when moving a Black Rook from [0][0] to attack a White Rook at [1][0]" do
+        
+        current_game.board[0][0] = Rook.new('black')
+        current_game.board[1][0] = Rook.new('white')
+
+        ending_location_verification = current_game.verify_ending_location(player)
+        
+        expect(ending_location_verification).to be true
       end
     end
   end
