@@ -277,4 +277,60 @@ describe Rook do
       end
     end
   end
+
+  describe '#attacks_up' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:rook) {described_class.new('white')}
+
+    context 'A White Rook looking for pieces to attack to upward' do
+
+      it "returns an array of [2,0] when attacking from [3][0] and seeing a Black Rook at [2][0]" do
+
+        board[3][0] = Rook.new('white')
+        board[2][0] = Rook.new('black')
+        board[6][0] = Rook.new('black')
+
+        possible_attacks = rook.attacks_up(board, [3,0])
+        
+        expect(possible_attacks).to eq([[2,0]])
+
+      end
+
+      it "returns an array of [1,0] when attacking from [5][0] and seeing a Black Rook at [1][0] and [0][1]" do
+
+        board[5][0] = Rook.new('white')
+        board[1][0] = Rook.new('black')
+        board[0][0] = Rook.new('black')
+
+        possible_attacks = rook.attacks_up(board, [5,0])
+        
+        expect(possible_attacks).to eq([[1,0]])
+
+      end
+
+      it "returns an array of [] when attacking from [3][0] and seeing no black pieces upward" do
+
+        board[3][0] = Rook.new('white')
+        board[4][0] = Rook.new('white')
+
+        possible_attacks = rook.attacks_up(board, [3,0])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+
+      it "returns an array of [] when attacking from [2][0] and seeing no black pieces upward" do
+
+        board[2][0] = Rook.new('white')
+        board[1][0] = Rook.new('white')
+        board[0][0] = Rook.new('black')
+
+        possible_attacks = rook.attacks_up(board, [2,0])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+    end
+  end
 end
