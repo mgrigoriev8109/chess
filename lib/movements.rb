@@ -1,5 +1,31 @@
 module Movements
 
+  def movements_down_left(board, piece_location)
+    starting_row = piece_location[0]
+    starting_column = piece_location[1]
+    possible_moves = Array.new
+    column_to_check = starting_column - 1
+    piece_in_the_way = false
+
+    board.each_with_index do |board_row, row_index|
+      if piece_in_the_way
+        break
+      end
+
+      if row_index > starting_row
+        board_row.each_with_index do |value, column_index| 
+          if column_to_check == column_index && value.is_a?(Piece) 
+            piece_in_the_way = true
+          elsif column_to_check == column_index
+            possible_moves.push([row_index, column_index])
+          end
+        end
+        column_to_check -= 1
+      end
+    end
+    possible_moves
+  end
+
   def movements_up_left(board, piece_location)
     ending_row = piece_location[0]
     ending_column = piece_location[1]
