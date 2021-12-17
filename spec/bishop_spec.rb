@@ -104,4 +104,66 @@ describe Bishop do
       end
     end
   end
+
+  describe '#movements_up_left' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:bishop) {described_class.new('white')}
+
+    context 'When a bishop is looking for possible up left diagonal movements' do
+
+      it "from [1,1] returns an array of [[0,0]] when stopping at top left board corner" do
+
+        board[1][1] = Bishop.new('white')
+
+        possible_movements = bishop.movements_up_left(board, [1,1])
+        
+        expect(possible_movements).to eq([[0,0]])
+
+      end
+
+      it "from [3,3] returns an array of [[2,2]] when stopping at a White Bishop at [1][1]" do
+
+        board[3][3] = Bishop.new('white')
+        board[1][1] = Bishop.new('white')
+
+        possible_movements = bishop.movements_up_left(board, [3,3])
+        
+        expect(possible_movements).to eq([[2,2]])
+
+      end
+
+      it "from [4,5] returns an array of [[2, 3], [3, 4]] when stopping at a White Bishop at [1][2]" do
+
+        board[4][5] = Bishop.new('white')
+        board[1][2] = Bishop.new('white')
+
+        possible_movements = bishop.movements_up_left(board, [4,5])
+        
+        expect(possible_movements).to eq([[2, 3], [3, 4]])
+
+      end
+
+      it "from [2,1] returns an array of [[1,0]] when stopping at the left board edge" do
+
+        board[2][1] = Bishop.new('white')
+
+        possible_movements = bishop.movements_up_left(board, [2,1])
+        
+        expect(possible_movements).to eq([[1,0]])
+
+      end
+
+      it "from [4,3] returns an array of [[3,2]] when stopping at a White Bishop at [2,1]" do
+
+        board[4][3] = Bishop.new('white')
+        board[2][1] = Bishop.new('white')
+
+        possible_movements = bishop.movements_up_left(board, [4,3])
+        
+        expect(possible_movements).to eq([[3,2]])
+
+      end
+    end
+  end
 end
