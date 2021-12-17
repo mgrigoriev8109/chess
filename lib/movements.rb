@@ -1,25 +1,29 @@
 module Movements
 
-  def row_to_look_through(board, starting_row)
-    moves_to_look_through = Array.new     
-    board.each_with_index do |board_row, row_index|
-      if starting_row == row_index
-        moves_to_look_through = board_row
-      end
-    end
-    moves_to_look_through
-  end
+  def movements_down_right(board, piece_location)
+    starting_row = piece_location[0]
+    starting_column = piece_location[1]
+    possible_moves = Array.new
+    column_to_check = starting_column + 1
+    piece_in_the_way = false
 
-  def column_to_look_through(board, starting_column)
-    moves_to_look_through = Array.new 
     board.each_with_index do |board_row, row_index|
-      board_row.each_with_index do |value, column_index| 
-        if starting_column == column_index
-          moves_to_look_through.push(value)
+      if piece_in_the_way
+        break
+      end
+
+      if row_index > starting_row
+        board_row.each_with_index do |value, column_index| 
+          if column_to_check == column_index && value.is_a?(Piece) 
+            piece_in_the_way = true
+          elsif column_to_check == column_index
+            possible_moves.push([row_index, column_index])
+          end
         end
+        column_to_check += 1
       end
     end
-    moves_to_look_through
+    possible_moves
   end
 
   def movements_up_right(board, piece_location)
@@ -42,6 +46,28 @@ module Movements
     end
 
     possible_moves
+  end
+
+  def row_to_look_through(board, starting_row)
+    moves_to_look_through = Array.new     
+    board.each_with_index do |board_row, row_index|
+      if starting_row == row_index
+        moves_to_look_through = board_row
+      end
+    end
+    moves_to_look_through
+  end
+
+  def column_to_look_through(board, starting_column)
+    moves_to_look_through = Array.new 
+    board.each_with_index do |board_row, row_index|
+      board_row.each_with_index do |value, column_index| 
+        if starting_column == column_index
+          moves_to_look_through.push(value)
+        end
+      end
+    end
+    moves_to_look_through
   end
 
   def movements_right(board, piece_location)

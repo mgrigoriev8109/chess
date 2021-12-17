@@ -54,4 +54,54 @@ describe Bishop do
 
     end
   end
+
+  describe '#movements_down_right' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:bishop) {described_class.new('white')}
+
+    context 'When a bishop is looking for possible down right diagonal movements' do
+
+      it "from [6,6] returns an array of [[7,7]] when stopping at the bottom right board corner" do
+
+        board[6][6] = Bishop.new('white')
+
+        possible_movements = bishop.movements_down_right(board, [6,6])
+        
+        expect(possible_movements).to eq([[7,7]])
+
+      end
+
+      it "from [5,5] returns an array of [[6,6],[7,7]] when stopping at the bottom right board corner" do
+
+        board[5][5] = Bishop.new('white')
+
+        possible_movements = bishop.movements_down_right(board, [5,5])
+        
+        expect(possible_movements).to eq([[6,6],[7,7]])
+
+      end
+
+      it "from [4,5] returns an array of [[5,6],[6,7]] when stopping at the bottom right board corner" do
+
+        board[4][5] = Bishop.new('white')
+
+        possible_movements = bishop.movements_down_right(board, [4,5])
+        
+        expect(possible_movements).to eq([[5,6],[6,7]])
+
+      end
+
+      it "from [4,4] returns an array of [[5,5]] when stopping at a White Bishop at [6][6]" do
+
+        board[4][4] = Bishop.new('white')
+        board[6][6] = Bishop.new('white')
+
+        possible_movements = bishop.movements_down_right(board, [4,4])
+        
+        expect(possible_movements).to eq([[5,5]])
+
+      end
+    end
+  end
 end
