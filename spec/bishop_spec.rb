@@ -214,7 +214,35 @@ describe Bishop do
         expect(possible_movements).to eq([[3,2]])
 
       end
+    end
+  end
 
+  describe '#all_possible_movements' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:bishop) {described_class.new('white')}
+
+    context 'A White Bishop starting' do
+
+      it "at [1,1] returns an array of [[0,1],[0,2],[1,0],[2,0]] when another White Bishop is at [3,3]" do
+        
+        board[1][1] = Bishop.new('white')
+        board[3][3] = Bishop.new('white')
+
+        possible_movements = bishop.all_possible_movements(board, [1,1])
+
+        expect(possible_movements).to eq([[2, 0], [2, 2], [0, 0], [0, 2]])
+      end
+
+      it "at [1,2] returns an array of [[0,1],[0,2],[1,0],[2,0]] when another White Bishop is at [2,3]" do
+        
+        board[1][2] = Bishop.new('white')
+        board[2][3] = Bishop.new('white')
+
+        possible_movements = bishop.all_possible_movements(board, [1,2])
+
+        expect(possible_movements).to eq([[2, 1], [3, 0], [0, 1], [0, 3]])
+      end
     end
   end
 end
