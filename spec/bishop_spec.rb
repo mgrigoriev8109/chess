@@ -299,4 +299,58 @@ describe Bishop do
       end
     end
   end
+
+  describe '#attacks_down_right' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:bishop) {described_class.new('white')}
+
+    context 'A White Bishop looking for pieces to attack to the down right' do
+
+      it "returns an array of [7,7] when attacking from [6][6] and seeing a Black Bishop at [7][7]" do
+
+        board[6][6] = Bishop.new('white')
+        board[7][7] = Bishop.new('black')
+
+        possible_attacks = bishop.attacks_down_right(board, [6,6])
+        
+        expect(possible_attacks).to eq([[7,7]])
+
+      end
+
+      it "returns an array of [] when attacking from [6][6] and seeing nothing" do
+
+        board[6][6] = Bishop.new('white')
+
+        possible_attacks = bishop.attacks_down_right(board, [6,6])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+
+      it "returns an array of [] when attacking from [5][5] and seeing a White Bishop in the way" do
+
+        board[5][5] = Bishop.new('white')
+        board[6][6] = Bishop.new('white')
+        board[7][7] = Bishop.new('black')
+
+        possible_attacks = bishop.attacks_down_right(board, [5,5])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+      
+      it "returns an array of [6,6] when attacking from [5][5] and seeing Black Bishops at [6,6] and [7,7]" do
+
+        board[5][5] = Bishop.new('white')
+        board[6][6] = Bishop.new('black')
+        board[7][7] = Bishop.new('black')
+
+        possible_attacks = bishop.attacks_down_right(board, [5,5])
+        
+        expect(possible_attacks).to eq([[6,6]])
+
+      end
+    end
+  end
 end

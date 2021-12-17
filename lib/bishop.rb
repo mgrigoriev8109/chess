@@ -51,4 +51,31 @@ class Bishop < Piece
     possible_attack
   end
 
+  def attacks_down_right(board, piece_location)
+    starting_row = piece_location[0]
+    starting_column = piece_location[1]
+    possible_attack = Array.new
+    column_to_check = starting_column + 1
+    piece_in_the_way = false
+
+    board.each_with_index do |board_row, row_index|
+      if piece_in_the_way
+        break
+      end
+
+      if row_index > starting_row
+        board_row.each_with_index do |value, column_index| 
+          if column_to_check == column_index && value.is_a?(Piece) && value.color != @color
+            piece_in_the_way = true
+            possible_attack.push([row_index, column_index])
+          elsif column_to_check == column_index && value.is_a?(Piece) && value.color == @color
+            piece_in_the_way = true
+          end
+        end
+        column_to_check += 1
+      end
+    end
+    possible_attack
+  end
+
 end
