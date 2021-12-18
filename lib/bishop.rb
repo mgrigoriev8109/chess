@@ -19,14 +19,24 @@ class Bishop < Piece
     symbol
   end
 
-  def all_possible_movements(board, rook_location)
+  def all_possible_movements(board, piece_location)
     movements_array = Array.new
-    movements_array.push(*movements_down_left(board, rook_location))
-    movements_array.push(*movements_down_right(board, rook_location))
-    movements_array.push(*movements_up_left(board, rook_location))
-    movements_array.push(*movements_up_right(board, rook_location))
+    movements_array.push(*movements_down_left(board, piece_location))
+    movements_array.push(*movements_down_right(board, piece_location))
+    movements_array.push(*movements_up_left(board, piece_location))
+    movements_array.push(*movements_up_right(board, piece_location))
     movements_array.delete([])
     movements_array
+  end
+
+  def all_possible_attacks(board, piece_location)
+    attacks_array = Array.new
+    attacks_array.push(*attacks_down_left(board, piece_location))
+    attacks_array.push(*attacks_down_right(board, piece_location))
+    attacks_array.push(*attacks_up_left(board, piece_location))
+    attacks_array.push(*attacks_up_right(board, piece_location))
+    attacks_array.delete([])
+    attacks_array
   end
 
   def attacks_up_right(board, piece_location)

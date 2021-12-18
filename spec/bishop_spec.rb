@@ -482,4 +482,26 @@ describe Bishop do
       end
     end
   end
+
+  describe '#all_possible_attacks' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:bishop) {described_class.new('white')}
+
+    context 'A White Bishop starting at [1,1]' do
+
+      it "returns an attacking array of [[2, 0], [0, 2]] when two black Bishops and one white Bishop diagonal of it" do
+        
+        board[1][1] = Bishop.new('white')
+        board[1][3] = Bishop.new('black')
+        board[0][0] = Bishop.new('white')
+        board[2][0] = Bishop.new('black')
+        board[0][2] = Bishop.new('black')
+
+        possible_attacks = bishop.all_possible_attacks(board, [1,1])
+
+        expect(possible_attacks).to eq([[2, 0], [0, 2]])
+      end
+    end
+  end
 end
