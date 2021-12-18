@@ -446,6 +446,40 @@ describe Bishop do
         expect(possible_attacks).to eq([[7,0]])
 
       end
+
+      it "returns an array of [5,2] when attacking from [0][7] and seeing a Black Bishop at [5][2]" do
+
+        board[0][7] = Bishop.new('white')
+        board[5][2] = Bishop.new('black')
+        board[7][0] = Bishop.new('black')
+
+        possible_attacks = bishop.attacks_down_left(board, [0,7])
+        
+        expect(possible_attacks).to eq([[5,2]])
+
+      end
+
+      it "returns an array of [] when attacking from [0][7] and seeing a White Bishop at [5][2]" do
+
+        board[0][7] = Bishop.new('white')
+        board[5][2] = Bishop.new('white')
+        board[7][0] = Bishop.new('black')
+
+        possible_attacks = bishop.attacks_down_left(board, [0,7])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+
+      it "returns an array of [] when attacking from [0][7] and seeing no units to attack" do
+
+        board[0][7] = Bishop.new('white')
+
+        possible_attacks = bishop.attacks_down_left(board, [0,7])
+        
+        expect(possible_attacks).to eq([])
+
+      end
     end
   end
 end
