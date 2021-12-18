@@ -64,6 +64,39 @@ class CurrentGame
 
     can_piece_move_or_attack
   end
+  
+  #So, who would #verify_king_ending_location? 
+  #it should happen inside of #play_turn, but after the until loop
+  #it should happen as an if conditional - if the player's starting piece is a king
+
+  #if the starting piece is a king
+  #then we first run a method called #verify_check
+  #this method will look at all of the other player's array_of_attacks, for ALL his pieces
+  #this giant array will whittle down the king's array_of_movements to avoid ones that land
+  #the king in Check
+
+  #verify_check can also be used after a non-king piece moves to see if the move resulted
+  #in a Check
+
+  #the problem occurs when the king can attack something
+
+  #the only way i can think of to check for that is to simulate one movement ahead
+  #i'll have an instance variable called @simulation_board, that each turn gets updated
+  #when it's time for the king to #verify_king_ending_location, we take the array of
+  #the king's array_of_attacks, and we iterate through it using #simulate_king_attacks
+  #this third method will perform king attack #move_gamepiece on the @simulation_board
+  #then inside of #simulate_king_attacks we run #verify_check
+  #if the king is now in check, then we remove this from the king's array_of_attacks
+
+  #after check is running successfuly we can build checkmate
+  #checkmate will occur when the king has nowhere to move. this doesn't mean the player
+  #has to be moving the king. This could happen at any point, so it should be checked
+  #immediately after #move_gamepiece, a #verify_checkmate method will run logic
+  #very similar to #verify_king_ending_location, checking is there is anywhere for 
+  #either of the player's kings to currently move or attack that would not land them
+  #in a check position. If the array of moves/attacks is empty, that player is in checkmate
+  #and it is a game over
+
 
   def move_gamepiece(player)
     starting_row = player.starting_location[0]
