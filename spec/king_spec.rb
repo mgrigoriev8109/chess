@@ -12,24 +12,13 @@ describe King do
 
     context 'A king searching for possible movements' do
 
-      it "starting at [0,0] returns an array of [[0,1],[1,0],[1,1]]" do
-        
-        board[0][0] = King.new('white')
-        board[3][0] = King.new('black')
-
-        possible_movements = king.all_possible_movements(board, [0,0])
-
-        expect(possible_movements).to eq([[0,1],[1,0],[1,1]])
-      end
-
-      it "starting at [1,1] returns an array of [[1, 2], [1, 0], [0, 1], [2, 1], [2, 0], [2, 2], [0, 2]] when unable to move to [0,0]" do
+      it "starting at [1,1] returns an array of[[1, 2], [1, 0], [0, 1], [2, 1], [2, 0], [2, 2], [0, 0], [0, 2]]" do
         
         board[1][1] = King.new('white')
-        board[0][0] = King.new('black')
 
         possible_movements = king.all_possible_movements(board, [1,1])
 
-        expect(possible_movements).to eq([[1, 2], [1, 0], [0, 1], [2, 1], [2, 0], [2, 2], [0, 2]])
+        expect(possible_movements).to eq([[1, 2], [1, 0], [0, 1], [2, 1], [2, 0], [2, 2], [0, 0], [0, 2]])
       end
 
     end
