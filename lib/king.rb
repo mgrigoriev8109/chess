@@ -19,12 +19,16 @@ class King < Piece
     symbol
   end
 
-  def all_possible_movements(board, king_location)
+  def all_possible_movements(board, piece_location)
     movements_array = Array.new
-    movements_array.push(movements_right(board, king_location)[0])
-    movements_array.push(movements_left(board, king_location)[0])
-    movements_array.push(movements_up(board, king_location)[0])
-    movements_array.push(movements_down(board, king_location)[0])
+    movements_array.push(movements_right(board, piece_location)[0])
+    movements_array.push(movements_left(board, piece_location)[0])
+    movements_array.push(movements_up(board, piece_location)[0])
+    movements_array.push(movements_down(board, piece_location)[0])
+    movements_array.push(movements_down_left(board, piece_location)[0])
+    movements_array.push(movements_down_right(board, piece_location)[0])
+    movements_array.push(movements_up_left(board, piece_location)[0])
+    movements_array.push(movements_up_right(board, piece_location)[0])
     movements_array.delete(nil)
     movements_array
   end
