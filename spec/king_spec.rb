@@ -344,4 +344,57 @@ describe King do
     end
   end
 
+  describe '#attacks_down_left' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:king) {described_class.new('white')}
+
+    context 'A White King looking for pieces to attack to the down left' do
+
+      it "returns an array of [7,0] when attacking from [6][1] and seeing a Black King at [7][0]" do
+
+        board[6][1] = King.new('white')
+        board[7][0] = King.new('black')
+
+        possible_attacks = king.attacks_down_left(board, [6,1])
+        
+        expect(possible_attacks).to eq([[7,0]])
+
+      end
+
+      it "returns an array of [] when attacking from [0][7] and seeing a Black King too far away" do
+
+        board[0][7] = King.new('white')
+        board[5][2] = King.new('black')
+
+        possible_attacks = king.attacks_down_left(board, [0,7])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+
+      it "returns an array of [] when attacking from [0][7] and seeing a White King at [5][2]" do
+
+        board[0][7] = King.new('white')
+        board[5][2] = King.new('white')
+        board[7][0] = King.new('black')
+
+        possible_attacks = king.attacks_down_left(board, [0,7])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+
+      it "returns an array of [] when attacking from [0][7] and seeing no units to attack" do
+
+        board[0][7] = King.new('white')
+
+        possible_attacks = king.attacks_down_left(board, [0,7])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+    end
+  end
+
 end
