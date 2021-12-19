@@ -404,7 +404,7 @@ describe Bishop do
 
       end
 
-      it "returns an array of [0,1] when attacking from [1][2] and seeing a White Bishop at [0][1]" do
+      it "returns an array of [] when attacking from [1][2] and seeing a White Bishop at [0][1]" do
 
         board[1][2] = Bishop.new('white')
         board[0][1] = Bishop.new('white')
