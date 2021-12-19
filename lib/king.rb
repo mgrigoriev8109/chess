@@ -93,4 +93,19 @@ class King < Piece
     possible_attack
   end
 
+  def attacks_up_right(board, piece_location)
+    starting_row = piece_location[0]
+    starting_column = piece_location[1]
+    possible_attack = Array.new
+
+    board.each_with_index do |board_row, row_index|
+      board_row.each_with_index do |value, column_index| 
+        if (row_index == starting_row - 1) && (column_index == starting_column + 1) && value.is_a?(Piece) && value.color != @color
+          possible_attack.push([row_index, column_index])
+        end
+      end
+    end
+
+    possible_attack
+  end
 end
