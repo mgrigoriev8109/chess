@@ -33,6 +33,20 @@ class King < Piece
     movements_array
   end
 
+  def all_possible_attacks(board, piece_location)
+    attacks_array = Array.new
+    attacks_array.push(*attacks_right(board, piece_location))
+    attacks_array.push(*attacks_left(board, piece_location))
+    attacks_array.push(*attacks_up(board, piece_location))
+    attacks_array.push(*attacks_down(board, piece_location))
+    attacks_array.push(*attacks_down_left(board, piece_location))
+    attacks_array.push(*attacks_down_right(board, piece_location))
+    attacks_array.push(*attacks_up_left(board, piece_location))
+    attacks_array.push(*attacks_up_right(board, piece_location))
+    attacks_array.delete([])
+    attacks_array
+  end
+
   def attacks_right(board, rook_location)
     starting_row = rook_location[0]
     starting_column = rook_location[1]

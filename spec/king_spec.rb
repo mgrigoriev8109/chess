@@ -397,4 +397,26 @@ describe King do
     end
   end
 
+  describe '#all_possible_attacks' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:king) {described_class.new('white')}
+
+    context 'A White King starting at [1,1]' do
+
+      it "returns an attacking array of [[2, 0], [0, 2], [1,0]] when two black Kings and one white King diagonal of it" do
+        
+        board[1][1] = King.new('white')
+        board[1][3] = King.new('black')
+        board[0][0] = King.new('white')
+        board[2][0] = King.new('black')
+        board[0][2] = King.new('black')
+        board[1][0] = King.new('black')
+
+        possible_attacks = king.all_possible_attacks(board, [1,1])
+
+        expect(possible_attacks).to eq([[1, 0], [2, 0], [0, 2]])
+      end
+    end
+  end
 end
