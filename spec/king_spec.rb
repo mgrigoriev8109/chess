@@ -66,4 +66,36 @@ describe King do
       end
     end
   end
+
+  describe '#attacks_left' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:king) {described_class.new('white')}
+
+    context 'A White King looking for pieces to attack to the left' do
+
+      it "returns an array of [0,2] when attacking from [0][3] and seeing a Black King at [0][2]" do
+
+        board[0][3] = King.new('white')
+        board[0][2] = King.new('black')
+        board[0][4] = King.new('black')
+
+        possible_attacks = king.attacks_left(board, [0,3])
+        
+        expect(possible_attacks).to eq([[0,2]])
+
+      end
+
+      it "returns an array of [] when attacking from [0][4] and seeing a Black King at [0][2]" do
+
+        board[0][2] = King.new('black')
+        board[0][4] = King.new('white')
+
+        possible_attacks = king.attacks_left(board, [0,4])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+    end
+  end
 end

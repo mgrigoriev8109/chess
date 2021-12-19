@@ -48,4 +48,19 @@ class King < Piece
     possible_attack
   end
 
+  def attacks_left(board, rook_location)
+    starting_row = rook_location[0]
+    starting_column = 7 - rook_location[1]
+    attacks_to_look_through = row_to_look_through(board, starting_row)
+    possible_attacks = Array.new
+
+    attacks_to_look_through.reverse.each_with_index do |value, index|
+      if (index == starting_column + 1) && value.is_a?(Piece) && value.color != @color
+        index = 7 - index
+        possible_attacks.push([starting_row, index])
+      end
+    end
+    possible_attacks
+  end
+
 end
