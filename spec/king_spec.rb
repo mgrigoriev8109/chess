@@ -269,4 +269,79 @@ describe King do
     end
   end
 
+  describe '#attacks_up_left' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:king) {described_class.new('white')}
+
+    context 'A White King looking for pieces to attack to the up left' do
+
+      it "returns an array of [0,0] when attacking from [1][1] and seeing a Black King at [0][0]" do
+
+        board[1][1] = King.new('white')
+        board[0][0] = King.new('black')
+
+        possible_attacks = king.attacks_up_left(board, [1,1])
+        
+        expect(possible_attacks).to eq([[0,0]])
+
+      end
+
+      it "returns an array of [1,0] when attacking from [2][1] and seeing a Black King at [1][0]" do
+
+        board[2][1] = King.new('white')
+        board[1][0] = King.new('black')
+
+        possible_attacks = king.attacks_up_left(board, [2,1])
+        
+        expect(possible_attacks).to eq([[1,0]])
+
+      end
+
+      it "returns an array of [0,1] when attacking from [1][2] and seeing a Black King at [0][1]" do
+
+        board[1][2] = King.new('white')
+        board[0][1] = King.new('black')
+
+        possible_attacks = king.attacks_up_left(board, [1,2])
+        
+        expect(possible_attacks).to eq([[0,1]])
+
+      end
+
+      it "returns an array of [] when attacking from [1][2] and seeing no pieces" do
+
+        board[1][2] = King.new('white')
+
+        possible_attacks = king.attacks_up_left(board, [1,2])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+
+      it "returns an array of [] when attacking from [1][2] and seeing a White King at [0][1]" do
+
+        board[1][2] = King.new('white')
+        board[0][1] = King.new('white')
+
+        possible_attacks = king.attacks_up_left(board, [1,2])
+        
+        expect(possible_attacks).to eq([])
+
+      end
+
+      it "returns an array of [1,2] when attacking from [2][3] and seeing a Black King at [0][1] and [1][2]" do
+
+        board[2][3] = King.new('white')
+        board[1][2] = King.new('black')
+        board[0][1] = King.new('black')
+
+        possible_attacks = king.attacks_up_left(board, [2,3])
+        
+        expect(possible_attacks).to eq([[1,2]])
+
+      end
+    end
+  end
+
 end
