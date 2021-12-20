@@ -3,6 +3,7 @@ require 'current_game'
 require 'player'
 require 'rook'
 require 'king'
+require 'bishop'
 
 describe CurrentGame do
 
@@ -139,16 +140,46 @@ describe CurrentGame do
     let(:attacking_player){instance_double(Player, color: 'black', name: 'player') } 
     subject(:current_game) {described_class.new}
 
-    context 'When moving checking if the attacking player can perform Check on a King piece' do
+    context 'When checking if the attacking Black player can perform Check on a White King piece' do
 
-      it "will return true when the attacker Black has a Rook [0,1] adjescent to a White King [0,0]" do
+      it "returns true when Black has a Rook [0,2] adjescent to a White King [0,0]" do
         
         current_game.board[0][0] = King.new('white')
-        current_game.board[0][1] = Rook.new('black')
+        current_game.board[0][2] = Rook.new('black')
 
         is_player_performing_check = current_game.verify_check(attacking_player)
         
         expect(is_player_performing_check).to be true
+      end
+
+      it "returns true when Black has a Bishop [1,1] adjescent to a White King [0,0]" do
+        
+        current_game.board[0][0] = King.new('white')
+        current_game.board[1][1] = Bishop.new('black')
+
+        is_player_performing_check = current_game.verify_check(attacking_player)
+        
+        expect(is_player_performing_check).to be true
+      end
+
+      it "returns true when Black has a King [1,1] adjescent to a White King [0,0]" do
+        
+        current_game.board[0][0] = King.new('white')
+        current_game.board[1][1] = King.new('black')
+
+        is_player_performing_check = current_game.verify_check(attacking_player)
+        
+        expect(is_player_performing_check).to be true
+      end
+
+      it "returns false when Black has a Rook [1,1] adjescent to a White King [0,0]" do
+        
+        current_game.board[0][0] = King.new('white')
+        current_game.board[1][1] = Rook.new('black')
+
+        is_player_performing_check = current_game.verify_check(attacking_player)
+        
+        expect(is_player_performing_check).to be false
       end
     end
   end

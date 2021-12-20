@@ -2,6 +2,7 @@ require_relative 'player'
 require_relative 'display'
 require_relative 'rook'
 require_relative 'king'
+require_relative 'bishop'
 
 class CurrentGame
   attr_reader :board, :display
