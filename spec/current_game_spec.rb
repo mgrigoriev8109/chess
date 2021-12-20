@@ -2,6 +2,7 @@
 require 'current_game'
 require 'player'
 require 'rook'
+require 'king'
 
 describe CurrentGame do
 
@@ -129,6 +130,25 @@ describe CurrentGame do
         ending_location_verification = current_game.verify_ending_location(player)
         
         expect(ending_location_verification).to be true
+      end
+    end
+  end
+
+  describe '#verify_check' do
+
+    let(:attacking_player){instance_double(Player, color: 'black', name: 'player') } 
+    subject(:current_game) {described_class.new}
+
+    context 'When moving checking if the attacking player can perform Check on a King piece' do
+
+      it "will return true when the attacker Black has a Rook [0,1] adjescent to a White King [0,0]" do
+        
+        current_game.board[0][0] = King.new('white')
+        current_game.board[0][1] = Rook.new('black')
+
+        is_player_performing_check = current_game.verify_check(attacking_player)
+        
+        expect(is_player_performing_check).to be true
       end
     end
   end
