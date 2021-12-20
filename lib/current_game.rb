@@ -67,29 +67,64 @@ class CurrentGame
     can_piece_move_or_attack
   end
 
-  def verify_check(attacking_player)
-    is_defending_king_in_check = false
+  def get_player_possible_attacks(attacking_player)
     all_of_players_attacks = Array.new
+
+    @board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        if cell.is_a?(Piece) && cell.color == attacking_player.color
+          cells_attacks = cell.all_possible_attacks(@board, [row_index, column_index])
+          all_of_players_attacks.push(*cells_attacks)
+        end
+      end
+    end
+    all_of_players_attacks
+  end
+
+  def get_king_location(attacking_player)
     king_location = []
 
     @board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         if cell.is_a?(King) && cell.color != attacking_player.color
           king_location = [row_index, column_index]
-        elsif cell.is_a?(Piece) && cell.color == attacking_player.color
-          cells_attacks = cell.all_possible_attacks(@board, [row_index, column_index])
-          all_of_players_attacks.push(*cells_attacks)
         end
       end
     end
+    king_location
+  end
 
-    if all_of_players_attacks.include?(king_location)
+  def verify_check(attacking_player)
+    is_defending_king_in_check = false
+    all_of_players_attacks = get_player_possible_attacks(attacking_player)
+    defending_king_location = get_king_location(attacking_player)
+
+    if all_of_players_attacks.include?(defending_king_location)
       is_defending_king_in_check = true
     end
 
     is_defending_king_in_check
   end
   
+  def verify_king_ending_location(player)
+    row = player.starting_location[0]
+    column = player.starting_location[1]
+    starting_piece = @board[row][column]
+
+    array_of_movements = starting_piece.all_possible_movements(@board, player.starting_location)
+    array_of_attacks = starting_piece.all_possible_attacks(@board, player.starting_location)
+    can_piece_move_or_attack = false
+
+    if array_of_movements.include?(player.ending_location)
+      can_piece_move_or_attack = true
+    elsif array_of_attacks.include?(player.ending_location)
+      can_piece_move_or_attack = true
+    end 
+
+    can_piece_move_or_attack
+
+  end
+
   #So, who would #verify_king_ending_location? 
   #it should happen inside of #play_turn, but after the until loop
   #it should happen as an if conditional - if the player's starting piece is a king
