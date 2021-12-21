@@ -9,6 +9,7 @@ class CurrentGame
 
   def initialize
     @board = Array.new(8) { Array.new(8, " ")}
+    @simulation_board = Array.new
   end 
 
   def show_display
@@ -46,13 +47,18 @@ class CurrentGame
     until verify_starting_location(player) &&  verify_ending_location(player)
       player.get_input_array
     end
-    move_gamepiece(player)
+    move_gamepiece(player, @board)
   end
 
-  def verify_ending_location(player)
+  def get_starting_piece(player)
     row = player.starting_location[0]
     column = player.starting_location[1]
     starting_piece = @board[row][column]
+    starting_piece
+  end
+
+  def verify_ending_location(player)
+    starting_piece = get_starting_piece(player)
 
     array_of_movements = starting_piece.all_possible_movements(@board, player.starting_location)
     array_of_attacks = starting_piece.all_possible_attacks(@board, player.starting_location)
@@ -67,10 +73,10 @@ class CurrentGame
     can_piece_move_or_attack
   end
 
-  def get_player_possible_attacks(attacking_player)
+  def get_player_possible_attacks(attacking_player, board)
     all_of_players_attacks = Array.new
 
-    @board.each_with_index do |row, row_index|
+    board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         if cell.is_a?(Piece) && cell.color == attacking_player.color
           cells_attacks = cell.all_possible_attacks(@board, [row_index, column_index])
@@ -78,6 +84,7 @@ class CurrentGame
         end
       end
     end
+    p all_of_players_attacks
     all_of_players_attacks
   end
 
@@ -94,9 +101,9 @@ class CurrentGame
     king_location
   end
 
-  def verify_check(attacking_player)
+  def verify_check(attacking_player, board)
     is_defending_king_in_check = false
-    all_of_players_attacks = get_player_possible_attacks(attacking_player)
+    all_of_players_attacks = get_player_possible_attacks(attacking_player, board)
     defending_king_location = get_king_location(attacking_player)
 
     if all_of_players_attacks.include?(defending_king_location)
@@ -106,47 +113,55 @@ class CurrentGame
     is_defending_king_in_check
   end
   
-  def verify_king_ending_location(player)
-    row = player.starting_location[0]
-    column = player.starting_location[1]
-    starting_piece = @board[row][column]
-
-    array_of_movements = starting_piece.all_possible_movements(@board, player.starting_location)
-    array_of_attacks = starting_piece.all_possible_attacks(@board, player.starting_location)
+  def verify_king_ending_location(king_player, other_player)
+    simulated_board = @board
+    king_movements = Array.new
+    impossible_movements = Array.new
     can_piece_move_or_attack = false
 
-    if array_of_movements.include?(player.ending_location)
-      can_piece_move_or_attack = true
-    elsif array_of_attacks.include?(player.ending_location)
+    king_movements.push(*starting_piece.all_possible_movements(@board, king_player.starting_location))
+    king_movements.push(*starting_piece.all_possible_attacks(@board, king_player.starting_location))
+    
+    king_movements.each do |movement|
+      king_player.ending_location = movement
+      move_gamepiece(king_player, simulated_board)
+      if verify_check(other_player, simulated_board)
+        impossible_movements.push(movement)
+      end
+    end
+    king_movements = king_movements - impossible_movements
+
+    if king_movements.include?(king_player.ending_location)
       can_piece_move_or_attack = true
     end 
 
     can_piece_move_or_attack
-
   end
 
-  #So, who would #verify_king_ending_location? 
-  #it should happen inside of #play_turn, but after the until loop
-  #it should happen as an if conditional - if the player's starting piece is a king
 
-  #if the starting piece is a king
-  #then we first run a method called #verify_check
-  #this method will look at all of the other player's array_of_attacks, for ALL his pieces
-  #this giant array will whittle down the king's array_of_movements to avoid ones that land
-  #the king in Check
 
-  #verify_check can also be used after a non-king piece moves to see if the move resulted
-  #in a Check
+  #verify_check will be its own method used to verify if a defending king is in check
+  #after a moving player makes a movement or an attack
+  # by looking through all the possible attacks of an attacking player
+  #this will be used to tell the USERS that there is a check occuring
 
-  #the problem occurs when the king can attack something
+  #verify_king_ending_location will be inside of play_turn after t
+  #the until loop, it will be a conditional which will verify
+  #if the player moving a king can actually place it on the desired landing location
 
-  #the only way i can think of to check for that is to simulate one movement ahead
-  #i'll have an instance variable called @simulation_board, that each turn gets updated
-  #when it's time for the king to #verify_king_ending_location, we take the array of
-  #the king's array_of_attacks, and we iterate through it using #simulate_king_attacks
-  #this third method will perform king attack #move_gamepiece on the @simulation_board
-  #then inside of #simulate_king_attacks we run #verify_check
-  #if the king is now in check, then we remove this from the king's array_of_attacks
+  #verify_king_ending_location will need to check if the king is landing on a spot 
+  #the opponents pieces can attack. I might as well keep this simple. 
+  #I'll simulate one movement ahead using @simulation_board, that each turn gets updated
+  #with the present state of the board
+
+  #inside of #verify_king_ending_location, we take the array of
+  #the king's possible movements and attacks, and we iterate through it using #simulate_king_movements
+  
+  #simulate_king_movements will #move_gamepiece and then run #verify_check on the @simulated_board
+  #if the king is now in check, then we add that movement to an array impossible_moves
+
+  #after we iterate through every possible king move and attack, we take the ones left over, 
+  #and use if to check if the desired movement is included in them
 
   #after check is running successfuly we can build checkmate
   #checkmate will occur when the king has nowhere to move. this doesn't mean the player
@@ -158,16 +173,16 @@ class CurrentGame
   #and it is a game over
 
 
-  def move_gamepiece(player)
+  def move_gamepiece(player, board)
     starting_row = player.starting_location[0]
     starting_column = player.starting_location[1]
 
     ending_row = player.ending_location[0]
     ending_column = player.ending_location[1]
 
-    @board[ending_row][ending_column] = @board[starting_row][starting_column]
+    board[ending_row][ending_column] = @board[starting_row][starting_column]
 
-    @board[starting_row][starting_column] = ' '
+    board[starting_row][starting_column] = ' '
   end
 
   def verify_starting_location(player)

@@ -78,7 +78,7 @@ describe CurrentGame do
       it "the board will return a Black Rook at A7, aka [1.0], aka [1][0]" do
         
         current_game.board[0][0] = Rook.new('black')
-        current_game.move_gamepiece(player)
+        current_game.move_gamepiece(player, current_game.board)
 
         ending_coordinates = current_game.board[1][0]
         
@@ -88,7 +88,7 @@ describe CurrentGame do
       it "and also return empty space ' ' at [0][0]" do
 
         current_game.board[0][0] = Rook.new('black')
-        current_game.move_gamepiece(player)
+        current_game.move_gamepiece(player, current_game.board)
 
         starting_coordinates = current_game.board[0][0]
         
@@ -147,7 +147,7 @@ describe CurrentGame do
         current_game.board[0][0] = King.new('white')
         current_game.board[0][2] = Rook.new('black')
 
-        is_player_performing_check = current_game.verify_check(attacking_player)
+        is_player_performing_check = current_game.verify_check(attacking_player, current_game.board)
         
         expect(is_player_performing_check).to be true
       end
@@ -157,7 +157,7 @@ describe CurrentGame do
         current_game.board[0][0] = King.new('white')
         current_game.board[1][1] = Bishop.new('black')
 
-        is_player_performing_check = current_game.verify_check(attacking_player)
+        is_player_performing_check = current_game.verify_check(attacking_player, current_game.board)
         
         expect(is_player_performing_check).to be true
       end
@@ -167,7 +167,7 @@ describe CurrentGame do
         current_game.board[0][0] = King.new('white')
         current_game.board[1][1] = King.new('black')
 
-        is_player_performing_check = current_game.verify_check(attacking_player)
+        is_player_performing_check = current_game.verify_check(attacking_player, current_game.board)
         
         expect(is_player_performing_check).to be true
       end
@@ -177,9 +177,39 @@ describe CurrentGame do
         current_game.board[0][0] = King.new('white')
         current_game.board[1][1] = Rook.new('black')
 
-        is_player_performing_check = current_game.verify_check(attacking_player)
+        is_player_performing_check = current_game.verify_check(attacking_player, current_game.board)
         
         expect(is_player_performing_check).to be false
+      end
+    end
+  end
+
+  describe '#verify_king_ending_location' do
+
+    let(:king_player){instance_double(Player, color: 'white', name: 'king_player', starting_location: [0,0], ending_location: [0,1]) } 
+    let(:other_player){instance_double(Player, color: 'black', name: 'other_player') } 
+    subject(:current_game) {described_class.new}
+
+    context 'When moving a Black Rook and checking availability of the ending location' do
+
+      it "returns true moving a White King from [0][0] to [0][1] with a Black Rook at [1][0]" do
+        
+        current_game.board[0][0] = King.new('white')
+        current_game.board[1][0] = Rook.new('black')
+
+        ending_location_verification = current_game.verify_king_ending_location(king_player, other_player)
+        
+        expect(ending_location_verification).to be true
+      end
+
+      it "returns false moving a White King from [0][0] to [0][1] with a Black Rook at [2][1]" do
+        
+        current_game.board[0][0] = King.new('white')
+        current_game.board[2][1] = Rook.new('black')
+
+        ending_location_verification = current_game.verify_king_ending_location(king_player, other_player)
+        
+        expect(ending_location_verification).to be false
       end
     end
   end
