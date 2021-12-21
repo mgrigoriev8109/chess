@@ -84,7 +84,6 @@ class CurrentGame
         end
       end
     end
-    p all_of_players_attacks
     all_of_players_attacks
   end
 
@@ -114,23 +113,25 @@ class CurrentGame
   end
   
   def verify_king_ending_location(king_player, other_player)
-    simulated_board = @board
+    starting_piece = get_starting_piece(king_player)
     king_movements = Array.new
-    impossible_movements = Array.new
-    can_piece_move_or_attack = false
-
     king_movements.push(*starting_piece.all_possible_movements(@board, king_player.starting_location))
     king_movements.push(*starting_piece.all_possible_attacks(@board, king_player.starting_location))
-    
+    p king_movements
+
+    impossible_movements = Array.new
     king_movements.each do |movement|
-      king_player.ending_location = movement
-      move_gamepiece(king_player, simulated_board)
+      simulated_board = Marshal.load(Marshal.dump(@board))
+      move_gamepiece(king_player.starting_location, movement, simulated_board)
       if verify_check(other_player, simulated_board)
         impossible_movements.push(movement)
       end
     end
+
+    p impossible_movements
     king_movements = king_movements - impossible_movements
 
+    can_piece_move_or_attack = false
     if king_movements.include?(king_player.ending_location)
       can_piece_move_or_attack = true
     end 
@@ -173,12 +174,12 @@ class CurrentGame
   #and it is a game over
 
 
-  def move_gamepiece(player, board)
-    starting_row = player.starting_location[0]
-    starting_column = player.starting_location[1]
+  def move_gamepiece(starting_location, ending_location, board)
+    starting_row = starting_location[0]
+    starting_column = starting_location[1]
 
-    ending_row = player.ending_location[0]
-    ending_column = player.ending_location[1]
+    ending_row = ending_location[0]
+    ending_column = ending_location[1]
 
     board[ending_row][ending_column] = @board[starting_row][starting_column]
 

@@ -78,7 +78,10 @@ describe CurrentGame do
       it "the board will return a Black Rook at A7, aka [1.0], aka [1][0]" do
         
         current_game.board[0][0] = Rook.new('black')
-        current_game.move_gamepiece(player, current_game.board)
+        starting_location = player.starting_location
+        ending_location = player.ending_location
+
+        current_game.move_gamepiece(starting_location, ending_location, current_game.board)
 
         ending_coordinates = current_game.board[1][0]
         
@@ -88,7 +91,10 @@ describe CurrentGame do
       it "and also return empty space ' ' at [0][0]" do
 
         current_game.board[0][0] = Rook.new('black')
-        current_game.move_gamepiece(player, current_game.board)
+        starting_location = player.starting_location
+        ending_location = player.ending_location
+
+        current_game.move_gamepiece(starting_location, ending_location, current_game.board)
 
         starting_coordinates = current_game.board[0][0]
         
@@ -205,6 +211,17 @@ describe CurrentGame do
       it "returns false moving a White King from [0][0] to [0][1] with a Black Rook at [2][1]" do
         
         current_game.board[0][0] = King.new('white')
+        current_game.board[2][1] = Rook.new('black')
+
+        ending_location_verification = current_game.verify_king_ending_location(king_player, other_player)
+        
+        expect(ending_location_verification).to be false
+      end
+
+      it "returns false moving a White King from [0][0] to [0][1] with a Black Rook at [2][1]" do
+        
+        current_game.board[0][0] = King.new('white')
+        current_game.board[0][1] = Rook.new('black')
         current_game.board[2][1] = Rook.new('black')
 
         ending_location_verification = current_game.verify_king_ending_location(king_player, other_player)
