@@ -75,11 +75,10 @@ class CurrentGame
 
   def get_player_possible_attacks(attacking_player, board)
     all_of_players_attacks = Array.new
-
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         if cell.is_a?(Piece) && cell.color == attacking_player.color
-          cells_attacks = cell.all_possible_attacks(@board, [row_index, column_index])
+          cells_attacks = cell.all_possible_attacks(board, [row_index, column_index])
           all_of_players_attacks.push(*cells_attacks)
         end
       end
@@ -87,10 +86,10 @@ class CurrentGame
     all_of_players_attacks
   end
 
-  def get_king_location(attacking_player)
+  def get_king_location(attacking_player, board)
     king_location = []
 
-    @board.each_with_index do |row, row_index|
+    board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         if cell.is_a?(King) && cell.color != attacking_player.color
           king_location = [row_index, column_index]
@@ -103,7 +102,7 @@ class CurrentGame
   def verify_check(attacking_player, board)
     is_defending_king_in_check = false
     all_of_players_attacks = get_player_possible_attacks(attacking_player, board)
-    defending_king_location = get_king_location(attacking_player)
+    defending_king_location = get_king_location(attacking_player, board)
 
     if all_of_players_attacks.include?(defending_king_location)
       is_defending_king_in_check = true
@@ -117,18 +116,15 @@ class CurrentGame
     king_movements = Array.new
     king_movements.push(*starting_piece.all_possible_movements(@board, king_player.starting_location))
     king_movements.push(*starting_piece.all_possible_attacks(@board, king_player.starting_location))
-    p king_movements
 
     impossible_movements = Array.new
     king_movements.each do |movement|
       simulated_board = Marshal.load(Marshal.dump(@board))
       move_gamepiece(king_player.starting_location, movement, simulated_board)
-      if verify_check(other_player, simulated_board)
+      if verify_check(other_player, simulated_board) == true
         impossible_movements.push(movement)
       end
     end
-
-    p impossible_movements
     king_movements = king_movements - impossible_movements
 
     can_piece_move_or_attack = false
