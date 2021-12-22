@@ -13,6 +13,25 @@ class CurrentGame
     @checkmate = false
   end 
 
+  def introduction
+    puts "Welcome to a CLI game of Chess!"
+    puts "Two players will take turns playing against each other until one player achieves Checkmate"
+    puts "The white player will be taking the first turn."
+    puts "What are the names of the two players playing this game?"
+  end
+
+  def populate_gameboard
+    create_starting_rooks
+    create_starting_bishops
+    create_starting_kings
+  end
+
+  def create_player(color)
+    player_name = gets.chomp
+    player = Player.new((color, player_name))
+    player
+  end
+
   def show_display
     display = Display.new
     display.transform_to_symbol(@board)
@@ -27,16 +46,17 @@ class CurrentGame
   end
 
   def create_starting_bishops
-    board[0][2] = Bishop.new('white')
-    board[0][5] = Bishop.new('black')
-    board[7][2] = Bishop.new('white')
-    board[7][5] = Bishop.new('black')
+    @board[0][2] = Bishop.new('white')
+    @board[0][5] = Bishop.new('black')
+    @board[7][2] = Bishop.new('white')
+    @board[7][5] = Bishop.new('black')
+  end
+
+  def create_starting_kings
+    @board[7][4] = Bishop.new('white')
+    @board[0][4] = Bishop.new('black')
   end
   
-  def populate_gameboard
-    create_players
-    create_starting_rooks
-  end
 
   def play_turn(player)
     puts "#{player.name} it is now your turn."
