@@ -10,6 +10,7 @@ class CurrentGame
   def initialize
     @board = Array.new(8) { Array.new(8, " ")}
     @simulation_board = Array.new
+    @checkmate = false
   end 
 
   def show_display
@@ -32,11 +33,6 @@ class CurrentGame
     board[7][5] = Bishop.new('black')
   end
   
-  def create_players
-    player_black = Player.new('black', 'player_black')
-    player_white = Player.new('white', 'player_white')
-  end
-
   def populate_gameboard
     create_players
     create_starting_rooks
@@ -44,10 +40,12 @@ class CurrentGame
 
   def play_turn(player)
     puts "#{player.name} it is now your turn."
-    until verify_starting_location(player) &&  verify_ending_location(player)
-      player.get_input_array
+    until verify(player.movement)
+      player.get_input
     end
-    move_gamepiece(player, @board)
+    move_gamepiece(player.movement)
+    @checkmate = assess_checkmate
+    show_display
   end
 
   def get_starting_piece(player)
@@ -134,41 +132,6 @@ class CurrentGame
 
     can_piece_move_or_attack
   end
-
-
-
-  #verify_check will be its own method used to verify if a defending king is in check
-  #after a moving player makes a movement or an attack
-  # by looking through all the possible attacks of an attacking player
-  #this will be used to tell the USERS that there is a check occuring
-
-  #verify_king_ending_location will be inside of play_turn after t
-  #the until loop, it will be a conditional which will verify
-  #if the player moving a king can actually place it on the desired landing location
-
-  #verify_king_ending_location will need to check if the king is landing on a spot 
-  #the opponents pieces can attack. I might as well keep this simple. 
-  #I'll simulate one movement ahead using @simulation_board, that each turn gets updated
-  #with the present state of the board
-
-  #inside of #verify_king_ending_location, we take the array of
-  #the king's possible movements and attacks, and we iterate through it using #simulate_king_movements
-  
-  #simulate_king_movements will #move_gamepiece and then run #verify_check on the @simulated_board
-  #if the king is now in check, then we add that movement to an array impossible_moves
-
-  #after we iterate through every possible king move and attack, we take the ones left over, 
-  #and use if to check if the desired movement is included in them
-
-  #after check is running successfuly we can build checkmate
-  #checkmate will occur when the king has nowhere to move. this doesn't mean the player
-  #has to be moving the king. This could happen at any point, so it should be checked
-  #immediately after #move_gamepiece, a #verify_checkmate method will run logic
-  #very similar to #verify_king_ending_location, checking is there is anywhere for 
-  #either of the player's kings to currently move or attack that would not land them
-  #in a check position. If the array of moves/attacks is empty, that player is in checkmate
-  #and it is a game over
-
 
   def move_gamepiece(starting_location, ending_location, board)
     starting_row = starting_location[0]
