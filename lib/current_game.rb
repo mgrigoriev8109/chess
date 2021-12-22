@@ -12,7 +12,6 @@ class CurrentGame
   def initialize
     @board = Array.new(8) { Array.new(8, " ")}
     @simulation_board = Array.new
-    @checkmate = false
   end 
 
   def introduction
@@ -42,97 +41,72 @@ class CurrentGame
 
   def play_turn(player)
     puts "#{player.name} it is now your turn."
-    until verify(player.movement)
+    until verify_movement(player.movement, player.color)
       player.get_input
     end
     move_gamepiece(player.movement)
-    @checkmate = assess_checkmate
+
+    #if assess_endofround_checkmate(player.color)
+      #puts "Looks like #{player.name} has won and put the opposing player into Checkmate!"
+    #elsif assess_endofround_check(player.color)
+      #puts "Looks like #{player.name} has put the opposing player into Check!"
+    #end
     show_display
   end
 
-  def get_starting_piece(player)
-    row = player.starting_location[0]
-    column = player.starting_location[1]
-    starting_piece = @board[row][column]
-    starting_piece
+  def verify_movement(movement, color)
+    is_movement_verified = false
+    starting_coordinates = [movement[0], movement[1]]
+    ending_coordinates = [movement[2], movement[3]]
+    is_movement_verified = verify_start(starting_coordinates, color)
+    is_movement_verified = verify_end(starting_coordinates, ending_coordinates, color)
+    is_movement_verified
   end
 
-  def verify_ending_location(player)
-    starting_piece = get_starting_piece(player)
+  def verify_start(starting_coordinates, color)
+    is_location_verified = false
+    @board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        if starting_coordinates == [row_index, column_index] && cell == ' '
+          is_location_verified = false
+        elsif starting_coordinates == [row_index, column_index] && cell.color == color
+          is_location_verified = true
+        end
+      end
+    end
 
-    array_of_movements = starting_piece.all_possible_movements(@board, player.starting_location)
-    array_of_attacks = starting_piece.all_possible_attacks(@board, player.starting_location)
+    is_location_verified
+  end
+
+  def verify_end(starting_coordinates, ending_coordinates, color)
+    starting_piece = get_piece(starting_coordinates)
+    all_movements = Array.new
+    impossible_movements = Array.new
     can_piece_move_or_attack = false
 
-    if array_of_movements.include?(player.ending_location)
-      can_piece_move_or_attack = true
-    elsif array_of_attacks.include?(player.ending_location)
-      can_piece_move_or_attack = true
-    end 
+    all_movements.push(*starting_piece.all_possible_movements(@board, starting_coordinates))
+    all_movements.push(*starting_piece.all_possible_attacks(@board, starting_coordinates))
 
-    can_piece_move_or_attack
-  end
-
-  def get_player_possible_attacks(attacking_player, board)
-    all_of_players_attacks = Array.new
-    board.each_with_index do |row, row_index|
-      row.each_with_index do |cell, column_index|
-        if cell.is_a?(Piece) && cell.color == attacking_player.color
-          cells_attacks = cell.all_possible_attacks(board, [row_index, column_index])
-          all_of_players_attacks.push(*cells_attacks)
-        end
-      end
-    end
-    all_of_players_attacks
-  end
-
-  def get_king_location(attacking_player, board)
-    king_location = []
-
-    board.each_with_index do |row, row_index|
-      row.each_with_index do |cell, column_index|
-        if cell.is_a?(King) && cell.color != attacking_player.color
-          king_location = [row_index, column_index]
-        end
-      end
-    end
-    king_location
-  end
-
-  def verify_check(attacking_player, board)
-    is_defending_king_in_check = false
-    all_of_players_attacks = get_player_possible_attacks(attacking_player, board)
-    defending_king_location = get_king_location(attacking_player, board)
-
-    if all_of_players_attacks.include?(defending_king_location)
-      is_defending_king_in_check = true
-    end
-
-    is_defending_king_in_check
-  end
-  
-  def verify_king_ending_location(king_player, other_player)
-    starting_piece = get_starting_piece(king_player)
-    king_movements = Array.new
-    king_movements.push(*starting_piece.all_possible_movements(@board, king_player.starting_location))
-    king_movements.push(*starting_piece.all_possible_attacks(@board, king_player.starting_location))
-
-    impossible_movements = Array.new
-    king_movements.each do |movement|
+    all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(@board))
-      move_gamepiece(king_player.starting_location, movement, simulated_board)
-      if verify_check(other_player, simulated_board) == true
+      move_gamepiece(starting_coordinates, possible_end, simulated_board)
+      if verify_check(color, simulated_board) == true
         impossible_movements.push(movement)
       end
     end
-    king_movements = king_movements - impossible_movements
+    all_movements = all_movements - impossible_movements
 
-    can_piece_move_or_attack = false
-    if king_movements.include?(king_player.ending_location)
+    if all_movements.include?(ending_coordinates)
       can_piece_move_or_attack = true
     end 
-
     can_piece_move_or_attack
+  end
+
+  def get_piece(coordinates)
+    row = coordinates[0]
+    column = coordinates[1]
+    starting_piece = @board[row][column]
+    starting_piece
   end
 
   def move_gamepiece(starting_location, ending_location, board)
@@ -147,19 +121,43 @@ class CurrentGame
     board[starting_row][starting_column] = ' '
   end
 
-  def verify_starting_location(player)
-    is_location_verified = false
-    @board.each_with_index do |row, row_index|
+  def verify_check(color, board)
+    is_defending_king_in_check = false
+    all_possible_attacks = get_all_attacks_against(color, board)
+    defending_king_location = get_king_location(color, board)
+
+    if all_possible_attacks.include?(defending_king_location)
+      is_defending_king_in_check = true
+    end
+
+    is_defending_king_in_check
+  end
+
+  def get_all_attacks_against(color, board)
+    all_attacks = Array.new
+
+    board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
-        if player.starting_location == [row_index, column_index] && cell == ' '
-          is_location_verified = false
-        elsif player.starting_location == [row_index, column_index] && cell.color == player.color
-          is_location_verified = true
+        if cell.is_a?(Piece) && cell.color != color
+          cells_attacks = cell.all_possible_attacks(board, [row_index, column_index])
+          all_attacks.push(*cells_attacks)
         end
       end
     end
-
-    is_location_verified
+    all_attacks
   end
-  
+
+  def get_king_location(color, board)
+    king_location = []
+
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        if cell.is_a?(King) && cell.color == color
+          king_location = [row_index, column_index]
+        end
+      end
+    end
+    king_location
+  end
+
 end

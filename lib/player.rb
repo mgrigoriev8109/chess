@@ -32,4 +32,11 @@ class Player
     ending_column = 8 - @alg_notation[3].to_i
     player_ending_location = [ending_row, ending_column]
   end
+
+  def movement
+    movement = Array.new
+    movement.push(*starting_location)
+    movement.push(*ending_location)
+    movement
+  end
 end
