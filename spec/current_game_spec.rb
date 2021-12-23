@@ -225,5 +225,22 @@ describe CurrentGame do
         expect(all_attacks_against_black).to eq([[0,0], [2,2]])
       end
     end
+  end  
+  
+  describe '#get_piece' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When trying to retrieve the gamepiece from a given coordinate' do
+
+      it "returns from a Black King located at [0,0]" do
+        
+        current_game.board[0][0] = King.new('black')
+
+        piece = current_game.get_piece([0,0])
+        
+        expect(piece).to be_a(King)
+      end
+    end
   end
 end
