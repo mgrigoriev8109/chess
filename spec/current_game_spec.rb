@@ -208,4 +208,25 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#get_all_attacks_against' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When getting array of all the possible attack coordinates against a player' do
+
+      it "returns [[0,0], [2,2]] because the white rook at [0,2] can attack the two black pieces" do
+        
+        current_game.board[0][0] = King.new('black')
+        current_game.board[0][2] = Rook.new('white')
+        current_game.board[2][2] = Bishop.new('black')
+        current_game.board[3][3] = Bishop.new('black')
+        current_game.board[0][5] = King.new('white')
+
+        all_attacks_against_black = current_game.get_all_attacks_against('black', current_game.board)
+        
+        expect(all_attacks_against_black).to eq([[0,0], [2,2]])
+      end
+    end
+  end
 end
