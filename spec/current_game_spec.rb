@@ -190,43 +190,21 @@ describe CurrentGame do
     end
   end
 
-  describe '#verify_king_ending_location' do
+  describe '#get_king_location' do
 
-    let(:king_player){instance_double(Player, color: 'white', name: 'king_player', starting_location: [0,0], ending_location: [0,1]) } 
-    let(:other_player){instance_double(Player, color: 'black', name: 'other_player') } 
     subject(:current_game) {described_class.new}
 
-    context 'When moving a Black Rook and checking availability of the ending location' do
+    context 'When looking for the black player king' do
 
-      it "returns true moving a White King from [0][0] to [0][1] with a Black Rook at [1][0]" do
+      it "returns the location at [0,0]" do
         
-        current_game.board[0][0] = King.new('white')
-        current_game.board[1][0] = Rook.new('black')
+        current_game.board[0][0] = King.new('black')
+        current_game.board[0][2] = Rook.new('black')
+        current_game.board[0][3] = King.new('white')
 
-        ending_location_verification = current_game.verify_king_ending_location(king_player, other_player)
+        black_king_location = current_game.get_king_location('black', current_game.board)
         
-        expect(ending_location_verification).to be true
-      end
-
-      it "returns false moving a White King from [0][0] to [0][1] with a Black Rook at [2][1]" do
-        
-        current_game.board[0][0] = King.new('white')
-        current_game.board[2][1] = Rook.new('black')
-
-        ending_location_verification = current_game.verify_king_ending_location(king_player, other_player)
-        
-        expect(ending_location_verification).to be false
-      end
-
-      it "returns false moving a White King from [0][0] to [0][1] with a Black Rook at [2][1]" do
-        
-        current_game.board[0][0] = King.new('white')
-        current_game.board[0][1] = Rook.new('black')
-        current_game.board[2][1] = Rook.new('black')
-
-        ending_location_verification = current_game.verify_king_ending_location(king_player, other_player)
-        
-        expect(ending_location_verification).to be false
+        expect(black_king_location).to eq([0,0])
       end
     end
   end

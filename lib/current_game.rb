@@ -29,7 +29,7 @@ class CurrentGame
 
   def create_player(color)
     player_name = gets.chomp
-    player = Player.new((color, player_name))
+    player = Player.new(color, player_name)
     player
   end
 
