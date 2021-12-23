@@ -143,7 +143,6 @@ describe CurrentGame do
 
   describe '#verify_check' do
 
-    let(:attacking_player){instance_double(Player, color: 'black', name: 'player') } 
     subject(:current_game) {described_class.new}
 
     context 'When checking if the attacking Black player can perform Check on a White King piece' do
@@ -153,9 +152,9 @@ describe CurrentGame do
         current_game.board[0][0] = King.new('white')
         current_game.board[0][2] = Rook.new('black')
 
-        is_player_performing_check = current_game.verify_check(attacking_player, current_game.board)
+        is_check_occurring = current_game.verify_check('white', current_game.board)
         
-        expect(is_player_performing_check).to be true
+        expect(is_check_occurring).to be true
       end
 
       it "returns true when Black has a Bishop [1,1] adjescent to a White King [0,0]" do
@@ -163,9 +162,9 @@ describe CurrentGame do
         current_game.board[0][0] = King.new('white')
         current_game.board[1][1] = Bishop.new('black')
 
-        is_player_performing_check = current_game.verify_check(attacking_player, current_game.board)
+        is_check_occurring = current_game.verify_check('white', current_game.board)
         
-        expect(is_player_performing_check).to be true
+        expect(is_check_occurring).to be true
       end
 
       it "returns true when Black has a King [1,1] adjescent to a White King [0,0]" do
@@ -173,9 +172,9 @@ describe CurrentGame do
         current_game.board[0][0] = King.new('white')
         current_game.board[1][1] = King.new('black')
 
-        is_player_performing_check = current_game.verify_check(attacking_player, current_game.board)
+        is_check_occurring = current_game.verify_check('white', current_game.board)
         
-        expect(is_player_performing_check).to be true
+        expect(is_check_occurring).to be true
       end
 
       it "returns false when Black has a Rook [1,1] adjescent to a White King [0,0]" do
@@ -183,9 +182,9 @@ describe CurrentGame do
         current_game.board[0][0] = King.new('white')
         current_game.board[1][1] = Rook.new('black')
 
-        is_player_performing_check = current_game.verify_check(attacking_player, current_game.board)
+        is_check_occurring = current_game.verify_check('white', current_game.board)
         
-        expect(is_player_performing_check).to be false
+        expect(is_check_occurring).to be false
       end
     end
   end
