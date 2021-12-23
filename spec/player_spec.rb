@@ -94,5 +94,18 @@ describe Player do
       end
     end
   end
-  
+  describe '#movement' do
+
+    subject(:player) {described_class.new('white', 'test_player')}
+    context 'When transforming alg_notation to coordinate notation' do
+
+      it 'returns [0,0,1,1] as the corresponding coordinates for A8 to B7' do
+        player.alg_notation = ['A','8','B','7']
+
+        transformed_coordinates = player.movement
+
+        expect(transformed_coordinates).to eq([0,0,1,1])
+      end
+    end
+  end
 end
