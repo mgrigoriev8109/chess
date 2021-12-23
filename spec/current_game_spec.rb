@@ -78,11 +78,10 @@ describe CurrentGame do
       it "the board will return a Black Rook at A7, aka [1.0], aka [1][0]" do
         
         current_game.board[0][0] = Rook.new('black')
-        starting_location = player.starting_location
-        ending_location = player.ending_location
+        starting_location = [0,0]
+        ending_location = [1,0]
 
         current_game.move_gamepiece(starting_location, ending_location, current_game.board)
-
         ending_coordinates = current_game.board[1][0]
         
         expect(ending_coordinates).to be_a Rook
@@ -91,11 +90,10 @@ describe CurrentGame do
       it "and also return empty space ' ' at [0][0]" do
 
         current_game.board[0][0] = Rook.new('black')
-        starting_location = player.starting_location
-        ending_location = player.ending_location
+        starting_location = [0,0]
+        ending_location = [1,0]
 
         current_game.move_gamepiece(starting_location, ending_location, current_game.board)
-
         starting_coordinates = current_game.board[0][0]
         
         expect(starting_coordinates).to eq(' ')
