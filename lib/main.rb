@@ -14,16 +14,7 @@ until current_game.checkmate do
 end
 
 #How to go about testing this (most tests should only need refactoring/rewording):
-#1) test Player's new #movement method
-#2) test CurrentGame's #get_king_location
-#3) test CurrentGame's #get_all_attacks_against
-#4) test CurrentGame's #verify_check
-#5) test CurrentGame's #move_gamepiece
-#6) test CurrentGame's #get_piece
 #7) test CurrentGame's #verify_end
-  #- make sure that king can't move into a check position
-  #- make sure king can't attack into a check position
-  #- make sure king CAN attack regular piece out of a check position
   #- make sure player's same color rook can't move into a check position
   #- make sure player's same color rook can't attack into a check position
   #- make sure player's same color rook can move in front of king to get king out of check

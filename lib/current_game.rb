@@ -44,7 +44,7 @@ class CurrentGame
     until verify_movement(player.movement, player.color)
       player.get_input
     end
-    move_gamepiece(player.movement)
+    move_gamepiece(player.starting_location, player.ending_location, @board)
 
     #if assess_endofround_checkmate(player.color)
       #puts "Looks like #{player.name} has won and put the opposing player into Checkmate!"
@@ -91,7 +91,7 @@ class CurrentGame
       simulated_board = Marshal.load(Marshal.dump(@board))
       move_gamepiece(starting_coordinates, possible_end, simulated_board)
       if verify_check(color, simulated_board) == true
-        impossible_movements.push(movement)
+        impossible_movements.push(possible_end)
       end
     end
     all_movements = all_movements - impossible_movements

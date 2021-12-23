@@ -101,40 +101,47 @@ describe CurrentGame do
     end
   end
 
-  describe '#verify_ending_location' do
+  describe '#verify_end' do
 
-    let(:player){instance_double(Player, color: 'black', name: 'player', starting_location: [0,0], ending_location: [1,0]) } 
     subject(:current_game) {described_class.new}
 
-    context 'When moving a Black Rook and checking availability of the ending location' do
+    context 'When player verifying if move legal or will cause him/her to go into check' do
 
-      it "will return true when moving a Black Rook from [0][0] to an empty space at [1][0]" do
+      it "returns false moving Black King from [0][0] to [1][0] where White Rook can attack" do
         
-        current_game.board[0][0] = Rook.new('black')
+        current_game.board[0][0] = King.new('black')
+        current_game.board[1][0] = Rook.new('white')
+        current_game.board[1][1] = Rook.new('white')
+        start_coord = [0,0]
+        end_coord = [1,0]
 
-        ending_location_verification = current_game.verify_ending_location(player)
+        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord, 'black')
         
-        expect(ending_location_verification).to be true
+        expect(is_ending_coordinate_legal).to be false
       end
 
-      it "will return false when moving Black Rook from [0][0] to attack a Black Rook at [1][0]" do
+      it "returns true moving Black King from [0][0] to attack White Rook at [1][0] to escape from a check" do
         
-        current_game.board[0][0] = Rook.new('black')
-        current_game.board[1][0] = Rook.new('black')
+        current_game.board[0][0] = King.new('black')
+        current_game.board[1][0] = Rook.new('white')
+        start_coord = [0,0]
+        end_coord = [1,0]
 
-        ending_location_verification = current_game.verify_ending_location(player)
+        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord, 'black')
         
-        expect(ending_location_verification).to be false
+        expect(is_ending_coordinate_legal).to be true
       end
 
       it "will return true when moving a Black Rook from [0][0] to attack a White Rook at [1][0]" do
         
         current_game.board[0][0] = Rook.new('black')
         current_game.board[1][0] = Rook.new('white')
+        start_coord = [0,0]
+        end_coord = [1,0]
 
-        ending_location_verification = current_game.verify_ending_location(player)
+        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord, 'black')
         
-        expect(ending_location_verification).to be true
+        expect(is_ending_coordinate_legal).to be true
       end
     end
   end
