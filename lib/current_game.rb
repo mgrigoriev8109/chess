@@ -160,4 +160,18 @@ class CurrentGame
     king_location
   end
 
+  def assess_endofround_check(current_player_color, board)
+    is_other_player_in_check = false
+    current_player_color
+
+    if current_player_color == 'white'
+      other_player_color = 'black'
+      is_other_player_in_check = verify_check(other_player_color, board)
+    elsif current_player_color =='black'
+      other_player_color = 'white'
+      is_other_player_in_check = verify_check(other_player_color, board)
+    end
+    
+    is_other_player_in_check
+  end
 end
