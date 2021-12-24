@@ -23,6 +23,27 @@ describe CurrentGame do
     end
   end
 
+  describe '#verify_movement' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When verifying that a piece of a color can make a certain movement' do
+
+      it "returns false with movement [1,0,1,1] moving Black Rook from [1][0] to [1][1] placing Black King in Check" do
+        
+        current_game.board[0][0] = King.new('black')
+        current_game.board[1][0] = Rook.new('black')
+        current_game.board[2][0] = Rook.new('white')
+        movement = [1,0,1,1]
+        color = 'black'
+
+        is_movement_legal = current_game.verify_movement(movement, color)
+        
+        expect(is_movement_legal).to be false
+      end
+    end
+  end
+
   describe '#verify_start' do
 
     subject(:current_game) {described_class.new}
@@ -72,39 +93,6 @@ describe CurrentGame do
         is_start_verified = current_game.verify_start(starting_coordinates, color)
         
         expect(is_start_verified).to be false
-      end
-    end
-  end
-
-  describe '#move_gamepiece' do
-
-    let(:player){instance_double(Player, color: 'white', name: 'player', starting_location: [0,0], ending_location: [1,0]) } 
-    subject(:current_game) {described_class.new}
-
-    context 'When moving a Black Rook from A8, aka [0,0] aka [0][0]' do
-
-      it "the board will return a Black Rook at A7, aka [1.0], aka [1][0]" do
-        
-        current_game.board[0][0] = Rook.new('black')
-        starting_location = [0,0]
-        ending_location = [1,0]
-
-        current_game.move_gamepiece(starting_location, ending_location, current_game.board)
-        ending_coordinates = current_game.board[1][0]
-        
-        expect(ending_coordinates).to be_a Rook
-      end
-
-      it "and also return empty space ' ' at [0][0]" do
-
-        current_game.board[0][0] = Rook.new('black')
-        starting_location = [0,0]
-        ending_location = [1,0]
-
-        current_game.move_gamepiece(starting_location, ending_location, current_game.board)
-        starting_coordinates = current_game.board[0][0]
-        
-        expect(starting_coordinates).to eq(' ')
       end
     end
   end
@@ -183,6 +171,56 @@ describe CurrentGame do
     end
   end
 
+  describe '#get_piece' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When trying to retrieve the gamepiece from a given coordinate' do
+
+      it "returns from a Black King located at [0,0]" do
+        
+        current_game.board[0][0] = King.new('black')
+
+        piece = current_game.get_piece([0,0])
+        
+        expect(piece).to be_a(King)
+      end
+    end
+  end  
+
+  describe '#move_gamepiece' do
+
+    let(:player){instance_double(Player, color: 'white', name: 'player', starting_location: [0,0], ending_location: [1,0]) } 
+    subject(:current_game) {described_class.new}
+
+    context 'When moving a Black Rook from A8, aka [0,0] aka [0][0]' do
+
+      it "the board will return a Black Rook at A7, aka [1.0], aka [1][0]" do
+        
+        current_game.board[0][0] = Rook.new('black')
+        starting_location = [0,0]
+        ending_location = [1,0]
+
+        current_game.move_gamepiece(starting_location, ending_location, current_game.board)
+        ending_coordinates = current_game.board[1][0]
+        
+        expect(ending_coordinates).to be_a Rook
+      end
+
+      it "and also return empty space ' ' at [0][0]" do
+
+        current_game.board[0][0] = Rook.new('black')
+        starting_location = [0,0]
+        ending_location = [1,0]
+
+        current_game.move_gamepiece(starting_location, ending_location, current_game.board)
+        starting_coordinates = current_game.board[0][0]
+        
+        expect(starting_coordinates).to eq(' ')
+      end
+    end
+  end
+
   describe '#verify_check' do
 
     subject(:current_game) {described_class.new}
@@ -231,25 +269,6 @@ describe CurrentGame do
     end
   end
 
-  describe '#get_king_location' do
-
-    subject(:current_game) {described_class.new}
-
-    context 'When looking for the black player king' do
-
-      it "returns the location at [0,0]" do
-        
-        current_game.board[0][0] = King.new('black')
-        current_game.board[0][2] = Rook.new('black')
-        current_game.board[0][3] = King.new('white')
-
-        black_king_location = current_game.get_king_location('black', current_game.board)
-        
-        expect(black_king_location).to eq([0,0])
-      end
-    end
-  end
-
   describe '#get_all_attacks_against' do
 
     subject(:current_game) {described_class.new}
@@ -270,20 +289,22 @@ describe CurrentGame do
       end
     end
   end  
-  
-  describe '#get_piece' do
+
+  describe '#get_king_location' do
 
     subject(:current_game) {described_class.new}
 
-    context 'When trying to retrieve the gamepiece from a given coordinate' do
+    context 'When looking for the black player king' do
 
-      it "returns from a Black King located at [0,0]" do
+      it "returns the location at [0,0]" do
         
         current_game.board[0][0] = King.new('black')
+        current_game.board[0][2] = Rook.new('black')
+        current_game.board[0][3] = King.new('white')
 
-        piece = current_game.get_piece([0,0])
+        black_king_location = current_game.get_king_location('black', current_game.board)
         
-        expect(piece).to be_a(King)
+        expect(black_king_location).to eq([0,0])
       end
     end
   end
