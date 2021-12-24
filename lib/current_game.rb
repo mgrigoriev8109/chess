@@ -174,4 +174,44 @@ class CurrentGame
     
     is_other_player_in_check
   end
+
+  def assess_endofround_checkmate(current_player_color, board)
+    is_other_player_in_check = false
+    current_player_color
+
+    if current_player_color == 'white'
+      other_player_color = 'black'
+      is_other_player_in_check = verify_checkmate(other_player_color, board)
+    elsif current_player_color =='black'
+      other_player_color = 'white'
+      is_other_player_in_check = verify_checkmate(other_player_color, board)
+    end
+    
+    is_other_player_in_check
+  end
+
+  def verify_checkmate(color, board)
+    king_coordinates = get_king_location(color, board)
+    starting_piece = get_piece(king_coordinates)
+    all_movements = Array.new
+    impossible_movements = Array.new
+    is_king_in_checkmate = false
+
+    all_movements.push(*starting_piece.all_possible_movements(@board, king_coordinates))
+    all_movements.push(*starting_piece.all_possible_attacks(@board, king_coordinates))
+
+    all_movements.each do |possible_end|
+      simulated_board = Marshal.load(Marshal.dump(@board))
+      move_gamepiece(king_coordinates, possible_end, simulated_board)
+      if verify_check(color, simulated_board) == true
+        impossible_movements.push(possible_end)
+      end
+    end
+    all_movements = all_movements - impossible_movements
+
+    if all_movements.empty?
+      is_king_in_checkmate = true
+    end 
+    is_king_in_checkmate
+  end
 end

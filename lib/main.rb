@@ -14,12 +14,6 @@ until current_game.checkmate do
 end
 
 #How to go about testing this (most tests should only need refactoring/rewording):
-#7) test CurrentGame's #verify_end
-  #- make sure player's same color rook can't move into a check position
-  #- make sure player's same color rook can't attack into a check position
-  #- make sure player's same color rook can move in front of king to get king out of check
-#8) test CurrentGame's #verify_start
-#9) test CurrentGame's #verify_movement
 
 #then continue on to create the following methods:
 #1) CurrentGame's #assess_endofround_checkmate

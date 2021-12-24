@@ -352,4 +352,36 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#assess_endofround_checkmate' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When checking if a color is placing the opponent in checkmate' do
+
+      it "returns true when two White Rooks placing Black King in Checkmate at [0,0]" do
+        
+        current_game.board[0][2] = Rook.new('white')
+        current_game.board[1][2] = Rook.new('white')
+        current_game.board[0][0] = King.new('black')
+        current_player_color = 'white'
+
+        is_opponent_in_check = current_game.assess_endofround_checkmate(current_player_color, current_game.board)
+        
+        expect(is_opponent_in_check).to be true
+      end
+
+      it "returns false when two White Rooks are not placing Black King in Checkmate at [0,0]" do
+        
+        current_game.board[0][2] = Rook.new('white')
+        current_game.board[2][2] = Rook.new('white')
+        current_game.board[0][0] = King.new('black')
+        current_player_color = 'white'
+
+        is_opponent_in_check = current_game.assess_endofround_checkmate(current_player_color, current_game.board)
+        
+        expect(is_opponent_in_check).to be false
+      end
+    end
+  end
 end
