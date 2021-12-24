@@ -23,47 +23,55 @@ describe CurrentGame do
     end
   end
 
-  describe '#verify_starting_location' do
+  describe '#verify_start' do
 
-    let(:player){instance_double(Player, starting_location: [0,0], color: 'black') } 
     subject(:current_game) {described_class.new}
 
-    context 'When verifying a starting location of [0.0]' do
+    context 'When verifying a piece has a certain color at certain starting coordinates' do
 
       it "returns false if the no pieces have been created on the board" do
 
-        verified_starting_location = current_game.verify_starting_location(player)
-        
-        expect(verified_starting_location).to be_falsy
-      end
-
-      it "returns false if the Rook at [0,0] created, and then deleted" do
-
-        current_game.create_starting_rooks
         current_game.board[0][0] = " "
+        starting_coordinates = [0,0]
+        color = 'white'
 
-        verified_starting_location = current_game.verify_starting_location(player)
-        
-        expect(verified_starting_location).to be_falsy
+        is_start_verified = current_game.verify_start(starting_coordinates, color)
+
+        expect(is_start_verified).to be false
       end
 
-      it "returns true if a Black Color Player finds that a Black Rook is at [0,0]" do
+      it "returns false if the White Rook at [0,0] was created, and then deleted" do
 
-        current_game.create_starting_rooks
+        current_game.board[0][0] = Rook.new('white')
+        current_game.board[0][0] = " "
+        starting_coordinates = [0,0]
+        color = 'white'
 
-        verified_starting_location = current_game.verify_starting_location(player)
+        is_start_verified = current_game.verify_start(starting_coordinates, color)
         
-        expect(verified_starting_location).to be_truthy
+        expect(is_start_verified).to be false
+      end
+
+      it "returns true if looking for black piece at [0,0] and a Black Rook exists there" do
+
+        current_game.board[0][0] = Rook.new('black')
+        starting_coordinates = [0,0]
+        color = 'black'
+
+        is_start_verified = current_game.verify_start(starting_coordinates, color)
+        
+        expect(is_start_verified).to be true
       end
       
-      it "returns false if a Black Color Player finds that a White Rook is at [0,0]" do
+      it "returns false if looking for a black piece at [0,0] and a White Rook exists there" do
 
-        current_game.create_starting_rooks
         current_game.board[0][0] = Rook.new('white')
+        starting_coordinates = [0,0]
+        color = 'black'
 
-        verified_starting_location = current_game.verify_starting_location(player)
+        is_start_verified = current_game.verify_start(starting_coordinates, color)
         
-        expect(verified_starting_location).to be_falsy
+        expect(is_start_verified).to be false
       end
     end
   end
