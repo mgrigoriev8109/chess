@@ -46,11 +46,11 @@ class CurrentGame
     end
     move_gamepiece(player.starting_location, player.ending_location, @board)
 
-    #if assess_endofround_checkmate(player.color)
-      #puts "Looks like #{player.name} has won and put the opposing player into Checkmate!"
-    #elsif assess_endofround_check(player.color)
-      #puts "Looks like #{player.name} has put the opposing player into Check!"
-    #end
+    if assess_endofround_checkmate(player.color)
+      puts "Looks like #{player.name} has won and put the opposing player into Checkmate!"
+    elsif assess_endofround_check(player.color)
+      puts "Looks like #{player.name} has put the opposing player into Check!"
+    end
     show_display
   end
 
