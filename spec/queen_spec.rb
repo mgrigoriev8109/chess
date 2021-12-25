@@ -26,4 +26,25 @@ describe Queen do
       end
     end
   end
+
+  describe '#all_possible_movements' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:queen) {described_class.new('white')}
+
+    context 'A queen starting at [0,0]' do
+
+      it "returns an array of [[0,1],[0,2],[1,0],[2,0]] when other pieces at [0,3] and [3,0]" do
+        
+        board[0][0] = Queen.new('black')
+        board[0][3] = Rook.new('white')
+        board[3][0] = Rook.new('white')
+        board[2][2] = Bishop.new('white')
+
+        possible_movements = queen.all_possible_movements(board, [0,0])
+
+        expect(possible_movements).to eq([[1, 1], [0, 1], [0, 2], [1, 0], [2, 0]])
+      end
+    end
+  end
 end
