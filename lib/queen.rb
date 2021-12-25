@@ -1,8 +1,8 @@
 require_relative 'piece'
-require 'movements'
+require 'bishop-rook-movements'
 
 class Queen < Piece
-  include Movements
+  include BishopRookMovements
 
   attr_reader :color
 
