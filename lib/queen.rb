@@ -27,10 +27,10 @@ class Queen < Piece
     movements_array.push(*movements_down_right(board, piece_location))
     movements_array.push(*movements_up_left(board, piece_location))
     movements_array.push(*movements_up_right(board, piece_location))
-    movements_array.push(*movements_right(board, rook_location))
-    movements_array.push(*movements_left(board, rook_location))
-    movements_array.push(*movements_up(board, rook_location))
-    movements_array.push(*movements_down(board, rook_location))
+    movements_array.push(*movements_right(board, piece_location))
+    movements_array.push(*movements_left(board, piece_location))
+    movements_array.push(*movements_up(board, piece_location))
+    movements_array.push(*movements_down(board, piece_location))
     movements_array.delete([])
     movements_array
   end
@@ -41,12 +41,12 @@ class Queen < Piece
     attacks_array.push(*attacks_down_right(board, piece_location))
     attacks_array.push(*attacks_up_left(board, piece_location))
     attacks_array.push(*attacks_up_right(board, piece_location))
-    attacks_array.push(*attacks_right(board, rook_location))
-    attacks_array.push(*attacks_left(board, rook_location))
-    attacks_array.push(*attacks_up(board, rook_location))
-    attacks_array.push(*attacks_down(board, rook_location))
+    attacks_array.push(*attacks_right(board, piece_location))
+    attacks_array.push(*attacks_left(board, piece_location))
+    attacks_array.push(*attacks_up(board, piece_location))
+    attacks_array.push(*attacks_down(board, piece_location))
     attacks_array.delete([])
-    attacks_array
+    attacks_array = attacks_array.uniq
   end
 
 end
