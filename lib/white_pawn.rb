@@ -32,4 +32,20 @@ class WhitePawn < Piece
     possible_moves
   end
 
+  def attacks(board, pawn_location)
+    pawn_row = pawn_location[0]
+    pawn_column = pawn_location[1]
+    possible_row = pawn_row - 1
+    possible_columns = [(pawn_column + 1), (pawn_column - 1)]
+    possible_attacks = Array.new
+
+    board.each_with_index do |board_row, row_index|
+      board_row.each_with_index do |value, column_index| 
+        if possible_row == row_index && possible_columns.include?(column_index) && value.is_a?(Piece) && value.color != @color
+          possible_attacks.push([row_index, column_index])
+        end
+      end
+    end
+    possible_attacks
+  end
 end
