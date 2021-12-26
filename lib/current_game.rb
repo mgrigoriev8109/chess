@@ -3,6 +3,9 @@ require_relative 'display'
 require_relative 'rook'
 require_relative 'king'
 require_relative 'bishop'
+require_relative 'queen'
+require_relative 'white_pawn'
+require_relative 'black_pawn'
 require 'create_pieces'
 
 class CurrentGame
