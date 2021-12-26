@@ -19,6 +19,15 @@ describe Knight do
         
         expect(possible_movement).to eq([[1,4]])
       end
+
+      it "from [0,7] returns an array [] due to no possible movements" do
+
+        board[0][7] = Knight.new('white')
+
+        possible_movement = knight.movements_up_right(board, [0,7])
+        
+        expect(possible_movement).to eq([])
+      end
     end
   end
 end
