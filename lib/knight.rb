@@ -1,6 +1,6 @@
 require_relative 'piece'
-require 'knight-movements'
-require 'knight-attacks'
+require 'knight_movements'
+require 'knight_attacks'
 
 class Knight < Piece
   include KnightMovements
