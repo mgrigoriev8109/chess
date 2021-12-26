@@ -30,8 +30,12 @@ end
 #stick promotion into module
 #stick castling into module
 
+#implement simple computer AI that commits randomized movements
+#allow player to choose playing vs player or computer
 #implement save/load
 
 #style the game properly
 #go back through Sandi Met'z Testing video and make sure Tests are appropriate
 #go back through POODR and think about possible ways of refactoring
+
+#include gif and update README with finished project, features, bugs, reflections
