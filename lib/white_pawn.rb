@@ -5,6 +5,7 @@ class WhitePawn < Piece
 
   def initialize(color)
     @color = 'white'
+    @can_en_passant_column = false
   end
 
   def symbol
@@ -41,27 +42,18 @@ class WhitePawn < Piece
 
     board.each_with_index do |board_row, row_index|
       board_row.each_with_index do |value, column_index| 
-        if possible_row == row_index && possible_columns.include?(column_index) && value.is_a?(Piece) && value.color != @color
+        if possible_row == row_index && @can_en_passant_column
+          possible_attacks.push([row_index, @can_en_passant_column])
+          @can_en_passant_column = false
+        elsif possible_row == row_index && possible_columns.include?(column_index) && value.is_a?(Piece) && value.color != @color
           possible_attacks.push([row_index, column_index])
         end
       end
     end
+
+    if @can_en_passant_column
+      en_passant_location = 
+      possible_attacks.push
     possible_attacks
   end
 end
-
-#how and where do we check for en passant
-
-#en passant can only occur when white pawn is at row_index == 3
-#and it's only possible when a Black Pawn is located at row_index == 3 and 
-#  in the last turn made a two-space-movement
-
-#this is something the CurrentGame would have to keep track of, because pieces don't keep
-#track of the movements that other pieces make
-
-#so the CurrentGame would have to each round tell the WhitePawn whether or not en_passant_possible
-
-#this can be an instance variable that's default false
-
-#maybe it can occur in the CurrentGame's #play_turn right after assess_checkmate
-

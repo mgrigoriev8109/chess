@@ -51,7 +51,51 @@ class CurrentGame
     elsif assess_endofround_check(player.color)
       puts "Looks like #{player.name} has put the opposing player into Check!"
     end
+
+    assess_endofround_enpassant(player.starting_location, player.ending_location, @board)
+      
     show_display
+  end
+
+  def assess_endofround_enpassant(starting_location, ending_location, board)
+    starting_piece = get_piece(starting_location)
+    ending_row = ending_location[0]
+    ending_column = ending_location[1]
+
+    if starting_piece.is_a?(WhitePawn)
+      verify_enpassant_by_black_pawn(ending_location)
+    elsif starting_piece.is_a?(BlackPawn
+      verify_enpassant_by_white_pawn(ending_location)
+    end
+
+  end
+
+  def verify_enpassant_by_white_pawn(ending_location)
+    black_pawn_column = ending_location[1]
+    white_pawn_row = ending_location[0] - 1
+    white_pawn_columns = [(ending_location[1] - 1), (ending_location[1] + 1)
+
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        if white_pawn_row == row_index && white_pawn_columns.include?(column_index) && cell.is_a?(WhitePawn)
+          cell.can_en_passant_column = black_pawn_column
+        end
+      end
+    end
+  end
+
+  def verify_enpassant_by_black_pawn(ending_location)
+    white_pawn_column = ending_location[1]
+    black_pawn_row = ending_location[0] + 1
+    black_pawn_columns = [(ending_location[1] - 1), (ending_location[1] + 1)
+
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        if black_pawn_row == row_index && black_pawn_columns.include?(column_index) && cell.is_a?(BlackPawn)
+          cell.can_en_passant_column = white_pawn_column
+        end
+      end
+    end
   end
 
   def verify_movement(movement, color)
@@ -177,17 +221,19 @@ class CurrentGame
 
   def assess_endofround_checkmate(current_player_color, board)
     is_other_player_in_check = false
-    current_player_color
-
-    if current_player_color == 'white'
-      other_player_color = 'black'
-      is_other_player_in_check = verify_checkmate(other_player_color, board)
-    elsif current_player_color =='black'
-      other_player_color = 'white'
-      is_other_player_in_check = verify_checkmate(other_player_color, board)
-    end
-    
+    other_player_color = opposite_player_color(current_player_color)
+    is_other_player_in_check = verify_checkmate(other_player_color, board)
     is_other_player_in_check
+  end
+
+  def opposite_player_color(current_player_color)
+    opposite_color = ''
+    if current_player_color == 'white'
+      opposite_color = 'black'
+    elsif current_player_color =='black'
+      opposite_color = 'white'
+    end
+    opposite_color
   end
 
   def verify_checkmate(color, board)
