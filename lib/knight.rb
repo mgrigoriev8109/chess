@@ -44,4 +44,19 @@ class Knight < Piece
     end
     possible_attack
   end
+
+  def all_possible_movements(board, rook_location)
+    movements_array = Array.new
+    movements_array.push(*movements_up_right(board, rook_location))
+    movements_array.push(*movements_up_left(board, rook_location))
+    movements_array.push(*movements_right_up(board, rook_location))
+    movements_array.push(*movements_right_down(board, rook_location))
+    movements_array.push(*movements_down_right(board, rook_location))
+    movements_array.push(*movements_down_left(board, rook_location))
+    movements_array.push(*movements_left_up(board, rook_location))
+    movements_array.push(*movements_left_down(board, rook_location))
+    movements_array.delete([])
+    movements_array
+  end
+
 end

@@ -185,4 +185,25 @@ describe Knight do
       end
     end
   end
+
+  describe '#all_possible_movements' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:knight) {described_class.new('white')}
+
+    context 'A knight looking for all possible movements' do
+
+      it "returns an array of [1, 4], [1, 2], [2, 5], [5, 4], [5, 2], [2, 1]] when starting at [3.3] with two pieces in the way" do
+        
+        board[3][3] = Knight.new('white')
+        board[4][5] = Knight.new('white')
+        board[4][1] = Knight.new('black')
+
+        possible_movements = knight.all_possible_movements(board, [3,3])
+
+        expect(possible_movements).to eq([[1, 4], [1, 2], [2, 5], [5, 4], [5, 2], [2, 1]])
+      end
+    end
+  end
+
 end
