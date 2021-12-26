@@ -9,7 +9,7 @@ describe Knight do
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:knight) {described_class.new('white')}
 
-    context 'When a knight is looking for possible movement up 2 squares right 1 square' do
+    context 'When a knight is looking for possible movement 2 squares up and 1 square right' do
 
       it "from [3,3] returns an array of [[1,4]] when [1,4] is empty" do
 
@@ -46,7 +46,7 @@ describe Knight do
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:knight) {described_class.new('white')}
 
-    context 'When a knight is looking for possible movement up 2 squares left 1 square' do
+    context 'When a knight is looking for possible movement 2 squares up and 1 square left' do
 
       it "from [3,3] returns an array of [[1,2]] when [1,2] is empty" do
 
@@ -75,6 +75,25 @@ describe Knight do
         
         expect(possible_movement).to eq([])
       end
+    end
+  end
+
+  describe '#movements_right_up' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:knight) {described_class.new('white')}
+
+    context 'When a knight is looking for possible movement 2 squares right and 1 square up' do
+
+      it "from [3,3] returns an array of [[2,5]] when [2,5] is empty" do
+
+        board[3][3] = Knight.new('white')
+
+        possible_movement = knight.movements_right_up(board, [3,3])
+        
+        expect(possible_movement).to eq([[2,5]])
+      end
+
     end
   end
 end
