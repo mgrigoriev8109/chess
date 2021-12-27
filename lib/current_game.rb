@@ -67,7 +67,7 @@ class CurrentGame
 
     if starting_piece.is_a?(WhitePawn)
       verify_enpassant_by_black_pawn(ending_location)
-    elsif starting_piece.is_a?(BlackPawn
+    elsif starting_piece.is_a?(BlackPawn)
       verify_enpassant_by_white_pawn(ending_location)
     end
 
@@ -76,7 +76,7 @@ class CurrentGame
   def verify_enpassant_by_white_pawn(ending_location)
     black_pawn_column = ending_location[1]
     white_pawn_row = ending_location[0] - 1
-    white_pawn_columns = [(ending_location[1] - 1), (ending_location[1] + 1)
+    white_pawn_columns = [(ending_location[1] - 1), (ending_location[1] + 1)]
 
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
@@ -90,7 +90,7 @@ class CurrentGame
   def verify_enpassant_by_black_pawn(ending_location)
     white_pawn_column = ending_location[1]
     black_pawn_row = ending_location[0] + 1
-    black_pawn_columns = [(ending_location[1] - 1), (ending_location[1] + 1)
+    black_pawn_columns = [(ending_location[1] - 1), (ending_location[1] + 1)]
 
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|

@@ -1,5 +1,6 @@
 #spec/white_pawn_spec.rb
 require 'white_pawn'
+require 'black_pawn'
 require 'rook'
 require 'current_game'
 
@@ -70,6 +71,19 @@ describe WhitePawn do
         possible_attacks = white_pawn.attacks(board, [6,1])
         
         expect(possible_attacks).to eq([[5, 2]])
+      end
+
+      it "returns possible [[2,0],[2,2]] regular attack and En Passant possible attack from location [3,1] after BlackPawn moved from [[1,0]] " do
+
+        board[3][1] = WhitePawn.new('white')
+        board[3][0] = BlackPawn.new('black')
+        board[3][2] = BlackPawn.new('black')
+        board[2][2] = BlackPawn.new('black')
+        white_pawn.can_en_passant_column = 0
+
+        possible_attacks = white_pawn.attacks(board, [3,1])
+        
+        expect(possible_attacks).to eq([[2, 0], [2,2]])
       end
     end
   end
