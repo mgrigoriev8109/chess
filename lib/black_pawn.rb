@@ -18,15 +18,18 @@ class BlackPawn < Piece
     pawn_column = pawn_location[1]
     possible_row = pawn_row + 1
     possible_moves = Array.new
+    piece_in_the_way = false
 
     board.each_with_index do |board_row, row_index|
+      break if piece_in_the_way
+
       board_row.each_with_index do |value, column_index| 
         if row_index == possible_row && column_index == pawn_column && value == ' '
           possible_moves.push([row_index, column_index])
+        elsif pawn_row == 1 && row_index == 2 && column_index == pawn_column && value.is_a?(Piece)
+          piece_in_the_way = true
         elsif pawn_row == 1 && row_index == 3 && column_index == pawn_column && value == ' '
           possible_moves.push([row_index, column_index])
-        elsif pawn_row == 1 && row_index == 2 && column_index == pawn_column && value.is_a?(Piece)
-          possible_moves = []
         end
       end
     end
