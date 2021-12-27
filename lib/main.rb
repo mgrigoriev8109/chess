@@ -13,9 +13,6 @@ until current_game.assess_endofround_checkmate(black_player) do
   current_game.play_turn(black_player)
 end
 
-#modify BlackPawn's methods to match correct direction
-#write tests to check WhitePawn's En Passant attack
-#write tests to check all of BlackPawn's movements and attacks (can duplicate WhitePawn pretty much entirely)
 #write tests for CurrentGame's #verify_enpassant_by_white_pawn and #...by_black_pawn
 #write tests for CurrentGame's #assess_endofround_enpassant
 #play a game from beginning to end to make sure nothing is clearly broken
@@ -30,7 +27,7 @@ end
 #stick promotion into module
 #stick castling into module
 
-#implement simple computer AI that commits randomized movements
+#implement simple computer AI that commits movements using simulated board logic to check possible Check attack
 #allow player to choose playing vs player or computer
 #implement save/load
 
