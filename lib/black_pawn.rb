@@ -2,10 +2,11 @@ require_relative 'piece'
 
 class BlackPawn < Piece
   attr_reader :color
+  attr_accessor :can_en_passant_column
 
   def initialize(color)
     @color = 'black'
-    @can_en_passant_column = false
+    @can_en_passant_column
   end
 
   def symbol
@@ -45,18 +46,13 @@ class BlackPawn < Piece
 
     board.each_with_index do |board_row, row_index|
       board_row.each_with_index do |value, column_index| 
-        if possible_row == row_index && @can_en_passant_column
+        if possible_row == row_index && @can_en_passant_column == column_index
           possible_attacks.push([row_index, @can_en_passant_column])
-          @can_en_passant_column = false
+          @can_en_passant_column = nil
         elsif possible_row == row_index && possible_columns.include?(column_index) && value.is_a?(Piece) && value.color != @color
           possible_attacks.push([row_index, column_index])
         end
       end
-    end
-
-    if @can_en_passant_column
-      en_passant_location = [possible_row, @can_en_passant_column]
-      possible_attacks.push(en_passant_location)
     end
     possible_attacks
   end
