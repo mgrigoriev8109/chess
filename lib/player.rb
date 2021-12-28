@@ -5,7 +5,7 @@ class Player
   def initialize(color, name)
     @color = color
     @name = name
-    @alg_notation
+    @alg_notation = []
   end
 
   def get_input_array

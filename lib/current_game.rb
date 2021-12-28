@@ -2,6 +2,7 @@ require_relative 'player'
 require_relative 'display'
 require_relative 'rook'
 require_relative 'king'
+require_relative 'knight'
 require_relative 'bishop'
 require_relative 'queen'
 require_relative 'white_pawn'
@@ -27,6 +28,9 @@ class CurrentGame
     create_starting_rooks
     create_starting_bishops
     create_starting_kings
+    create_starting_queens
+    create_starting_knights
+    create_starting_pawns
   end
 
   def create_player(color)
@@ -42,9 +46,11 @@ class CurrentGame
   end 
 
   def play_turn(player)
+    show_display
     puts "#{player.name} it is now your turn."
+    player.get_input_array
     until verify_movement(player.movement, player.color)
-      player.get_input
+      player.get_input_array
     end
     move_gamepiece(player.starting_location, player.ending_location, @board)
 
@@ -56,7 +62,6 @@ class CurrentGame
 
     assess_endofround_enpassant(player.starting_location, player.ending_location, @board)
       
-    show_display
   end
 
   def assess_endofround_enpassant(starting_coordinates, ending_coordinates, board)
