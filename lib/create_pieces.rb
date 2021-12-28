@@ -7,15 +7,15 @@ module CreatePieces
   end
 
   def create_starting_bishops
-    @board[0][2] = Bishop.new('white')
+    @board[0][2] = Bishop.new('black')
     @board[0][5] = Bishop.new('black')
     @board[7][2] = Bishop.new('white')
-    @board[7][5] = Bishop.new('black')
+    @board[7][5] = Bishop.new('white')
   end
 
   def create_starting_kings
-    @board[7][4] = King.new('white')
     @board[0][4] = King.new('black')
+    @board[7][4] = King.new('white')
   end
 
   def create_starting_queens
@@ -25,8 +25,8 @@ module CreatePieces
 
   def create_starting_knights
     @board[0][1] = Knight.new('black')
-    @board[0][6] = Knight.new('white')
-    @board[7][1] = Knight.new('black')
+    @board[0][6] = Knight.new('black')
+    @board[7][1] = Knight.new('white')
     @board[7][6] = Knight.new('white')
   end
 

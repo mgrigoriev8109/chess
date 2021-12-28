@@ -48,10 +48,15 @@ class CurrentGame
   def play_turn(player)
     show_display
     puts "#{player.name} it is now your turn."
-    player.get_input_array
-    until verify_movement(player.movement, player.color)
-      player.get_input_array
+    while player.get_input_array
+      if verify_movement(player.movement, player.color)
+        puts "This movement is valid."
+        break
+      else
+        puts "This movement is not valid, please try again."
+      end
     end
+    
     move_gamepiece(player.starting_location, player.ending_location, @board)
 
     if assess_endofround_checkmate(player.color, @board)
@@ -257,13 +262,14 @@ class CurrentGame
       simulated_board = Marshal.load(Marshal.dump(@board))
       move_gamepiece(king_coordinates, possible_end, simulated_board)
       if verify_check(color, simulated_board) == true
+        is_king_in_checkmate = true
         impossible_movements.push(possible_end)
       end
     end
     all_movements = all_movements - impossible_movements
 
-    if all_movements.empty?
-      is_king_in_checkmate = true
+    unless all_movements.empty?
+      is_king_in_checkmate = false
     end 
     is_king_in_checkmate
   end

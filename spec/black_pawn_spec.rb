@@ -6,7 +6,7 @@ require 'current_game'
 
 describe BlackPawn do
 
-  describe '#movements' do
+  describe '#all_possible_movements' do
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:black_pawn) {described_class.new('black')}
 
@@ -16,7 +16,7 @@ describe BlackPawn do
 
         board[1][0] = BlackPawn.new('black')
 
-        possible_movements = black_pawn.movements(board, [1,0])
+        possible_movements = black_pawn.all_possible_movements(board, [1,0])
         
         expect(possible_movements).to eq([[2, 0], [3, 0]])
 
@@ -26,7 +26,7 @@ describe BlackPawn do
 
         board[2][0] = BlackPawn.new('black')
 
-        possible_movements = black_pawn.movements(board, [2,0])
+        possible_movements = black_pawn.all_possible_movements(board, [2,0])
         
         expect(possible_movements).to eq([[3, 0]])
 
@@ -37,7 +37,7 @@ describe BlackPawn do
         board[1][0] = BlackPawn.new('black')
         board[2][0] = BlackPawn.new('black')
 
-        possible_movements = black_pawn.movements(board, [1,0])
+        possible_movements = black_pawn.all_possible_movements(board, [1,0])
         
         expect(possible_movements).to eq([])
 
@@ -45,7 +45,7 @@ describe BlackPawn do
     end
   end
 
-  describe '#attacks' do
+  describe '#all_possible_attacks' do
     let(:board){Array.new(8) { Array.new(8, " ") } }
     subject(:black_pawn) {described_class.new('black')}
 
@@ -57,7 +57,7 @@ describe BlackPawn do
         board[2][2] = Rook.new('white')
         board[2][0] = Rook.new('white')
 
-        possible_attacks = black_pawn.attacks(board, [1,1])
+        possible_attacks = black_pawn.all_possible_attacks(board, [1,1])
         
         expect(possible_attacks).to eq([[2, 0], [2, 2]])
       end
@@ -68,7 +68,7 @@ describe BlackPawn do
         board[2][2] = Rook.new('black')
         board[2][0] = Rook.new('white')
 
-        possible_attacks = black_pawn.attacks(board, [1,1])
+        possible_attacks = black_pawn.all_possible_attacks(board, [1,1])
         
         expect(possible_attacks).to eq([[2, 0]])
       end
@@ -81,7 +81,7 @@ describe BlackPawn do
         board[5][0] = WhitePawn.new('white')
         black_pawn.can_en_passant_column = 2
 
-        possible_attacks = black_pawn.attacks(board, [4,1])
+        possible_attacks = black_pawn.all_possible_attacks(board, [4,1])
         
         expect(possible_attacks).to eq([[5, 0], [5,2]])
       end

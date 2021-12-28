@@ -14,7 +14,7 @@ class BlackPawn < Piece
     symbol
   end
 
-  def movements(board, pawn_location)
+  def all_possible_movements(board, pawn_location)
     pawn_row = pawn_location[0]
     pawn_column = pawn_location[1]
     possible_row = pawn_row + 1
@@ -37,7 +37,7 @@ class BlackPawn < Piece
     possible_moves
   end
 
-  def attacks(board, pawn_location)
+  def all_possible_attacks(board, pawn_location)
     pawn_row = pawn_location[0]
     pawn_column = pawn_location[1]
     possible_row = pawn_row + 1
