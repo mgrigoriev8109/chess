@@ -87,7 +87,7 @@ class CurrentGame
     end
   end
 
-  def verify_enpassant_by_black_pawn(starting_location, ending_location, board)
+  def verify_enpassant_by_black_pawn(ending_location, board)
     white_pawn_column = ending_location[1]
     black_pawn_row = ending_location[0]
     black_pawn_columns = [(white_pawn_column - 1), (white_pawn_column + 1)]

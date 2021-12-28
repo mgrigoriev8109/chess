@@ -418,4 +418,38 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#verify_enpassant_by_black_pawn' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When verifying if a Black Pawn can perform En Passant attack on White Pawn' do
+
+      it "returns the Black Pawn's @can_en_passant_column to be the adjacent White Pawn's column when En Passant possible" do
+        
+        current_game.board[6][7] = WhitePawn.new('black')
+        current_game.board[4][6] = BlackPawn.new('white')
+        black_pawn = current_game.board[4][6]
+        white_pawn_ending_location = [4,7]
+
+        current_game.verify_enpassant_by_black_pawn(white_pawn_ending_location, current_game.board)
+
+
+        expect(black_pawn.can_en_passant_column).to eq(7)
+      end
+
+      it "returns the Black Pawn's @can_en_passant_column to be nil when White Pawn not adjescent, and En Passant not possible" do
+        
+        current_game.board[6][7] = WhitePawn.new('black')
+        current_game.board[4][0] = BlackPawn.new('white')
+        black_pawn = current_game.board[4][0]
+        white_pawn_ending_location = [4,7]
+
+        current_game.verify_enpassant_by_black_pawn(white_pawn_ending_location, current_game.board)
+
+
+        expect(black_pawn.can_en_passant_column).to eq(nil)
+      end
+    end
+  end
 end
