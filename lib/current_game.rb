@@ -61,14 +61,14 @@ class CurrentGame
   end
 
   def assess_endofround_enpassant(starting_coordinates, ending_coordinates, board)
-    starting_piece = get_piece(starting_location)
+    starting_piece = get_piece(starting_coordinates)
     starting_row = starting_coordinates[0]
     ending_row = ending_coordinates[0]
 
     if starting_piece.is_a?(WhitePawn) && starting_row == 6 && ending_row == 4 
-      verify_enpassant_by_black_pawn(ending_location, board)
+      verify_enpassant_by_black_pawn(ending_coordinates, board)
     elsif starting_piece.is_a?(BlackPawn) && starting_row == 1 && ending_row == 3
-      verify_enpassant_by_white_pawn(ending_location, board)
+      verify_enpassant_by_white_pawn(ending_coordinates, board)
     end
 
   end
