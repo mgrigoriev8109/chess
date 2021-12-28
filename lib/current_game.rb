@@ -6,7 +6,7 @@ require_relative 'bishop'
 require_relative 'queen'
 require_relative 'white_pawn'
 require_relative 'black_pawn'
-require 'create_pieces'
+require_relative 'create_pieces'
 
 class CurrentGame
   include CreatePieces
@@ -21,7 +21,6 @@ class CurrentGame
     puts "Welcome to a CLI game of Chess!"
     puts "Two players will take turns playing against each other until one player achieves Checkmate"
     puts "The white player will be taking the first turn."
-    puts "What are the names of the two players playing this game?"
   end
 
   def populate_gameboard
@@ -49,9 +48,9 @@ class CurrentGame
     end
     move_gamepiece(player.starting_location, player.ending_location, @board)
 
-    if assess_endofround_checkmate(player.color)
+    if assess_endofround_checkmate(player.color, @board)
       puts "Looks like #{player.name} has won and put the opposing player into Checkmate!"
-    elsif assess_endofround_check(player.color)
+    elsif assess_endofround_check(player.color, @board)
       puts "Looks like #{player.name} has put the opposing player into Check!"
     end
 

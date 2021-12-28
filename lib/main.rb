@@ -3,18 +3,18 @@ require_relative 'current_game'
 current_game = CurrentGame.new
 current_game.introduction
 current_game.populate_gameboard
+puts "What is the name of the White Player?"
 white_player = current_game.create_player("white")
+puts "What is the name of the Black Player?"
 black_player = current_game.create_player("black")
 current_game.display
 
-until current_game.assess_endofround_checkmate(black_player) do 
+until current_game.assess_endofround_checkmate('black', current_game.board) do 
   current_game.play_turn(white_player)
-  break if current_game.assess_endofround_checkmate(white_player)
+  break if current_game.assess_endofround_checkmate('white', current_game.board)
   current_game.play_turn(black_player)
 end
 
-#write tests for CurrentGame's #verify_enpassant_by_white_pawn and #...by_black_pawn
-#write tests for CurrentGame's #assess_endofround_enpassant
 #play a game from beginning to end to make sure nothing is clearly broken
 #add any possible code needed to play game properly 
 #write code for Pawn promotion

@@ -1,6 +1,6 @@
 require_relative 'piece'
-require 'bishop_rook_movements'
-require 'bishop_rook_attacks'
+require_relative 'bishop_rook_movements'
+require_relative 'bishop_rook_attacks'
 
 class Bishop < Piece
   include BishopRookMovements
