@@ -14,11 +14,25 @@ describe King do
 
       it "starting at [1,1] returns an array of[[1, 2], [1, 0], [0, 1], [2, 1], [2, 0], [2, 2], [0, 0], [0, 2]]" do
         
-        board[1][1] = King.new('white')
+        board[6][1] = King.new('white')
 
-        possible_movements = king.all_possible_movements(board, [1,1])
+        possible_movements = king.all_possible_movements(board, [6,1])
 
         expect(possible_movements).to eq([[1, 2], [1, 0], [0, 1], [2, 1], [2, 0], [2, 2], [0, 0], [0, 2]])
+      end
+
+      it "starting at [7,4] returns an array of[[6,4]]" do
+            
+        board[6][2] = Knight.new('black')
+        board[6][3] = Rook.new('white')
+        board[7][3] = Rook.new('white')
+        board[7][5] = Rook.new('white')
+        board[6][5] = Rook.new('white')
+        board[7][4] = King.new('white')
+
+        possible_movements = king.all_possible_movements(board, [7,4])
+
+        expect(possible_movements).to eq([[6,4]])
       end
 
     end

@@ -499,4 +499,25 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#verify_checkmate' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When checking if the attacking Black player can perform Checkmate on a White King piece' do
+
+      it "returns true when Black has a Rook [0,2] adjescent to a White King [0,0]" do
+        
+        current_game.populate_gameboard
+        current_game.board[6][2] = Knight.new('black')
+        current_game.move_gamepiece([6,4],[5,4],current_game.board)
+        current_game.show_display
+
+
+        is_checkmate_occurring = current_game.verify_checkmate('white', current_game.board)
+        
+        expect(is_checkmate_occurring).to be false
+      end
+    end
+  end
 end
