@@ -30,13 +30,13 @@ describe Knight do
         expect(possible_movement).to eq([])
       end
 
-      it "from [0,7] returns an array [] due to no possible movements" do
+      it "from [7,1] returns an array [5,2] due to no possible movements" do
 
-        board[0][7] = Knight.new('white')
+        board[7][1] = Knight.new('white')
 
-        possible_movement = knight.movements_up_right(board, [0,7])
+        possible_movement = knight.movements_up_right(board, [7,1])
         
-        expect(possible_movement).to eq([])
+        expect(possible_movement).to eq([[5,2]])
       end
     end
   end
