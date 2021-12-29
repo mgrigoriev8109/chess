@@ -51,7 +51,7 @@ describe Player do
 
         coordinate_notation = player.starting_location
 
-        expect(coordinate_notation).to eq([1,5])
+        expect(coordinate_notation).to eq([5,1])
       end
 
       it 'returns coordinate notation [3,6] for the input algebraic notation location G2A8' do
@@ -74,7 +74,7 @@ describe Player do
 
         coordinate_notation = player.ending_location
 
-        expect(coordinate_notation).to eq([2,0])
+        expect(coordinate_notation).to eq([0,2])
       end
 
       it 'returns coordinate notation [7,7] for the input algebraic notation location A8H1' do
@@ -90,7 +90,7 @@ describe Player do
 
         coordinate_notation = player.ending_location
 
-        expect(coordinate_notation).to eq([3,6])
+        expect(coordinate_notation).to eq([6,3])
       end
     end
   end

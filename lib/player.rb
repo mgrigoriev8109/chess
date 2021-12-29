@@ -22,14 +22,14 @@ class Player
   end
 
   def starting_location
-    starting_row = letter_to_numbers(@alg_notation[0])
-    starting_column = 8 - @alg_notation[1].to_i
+    starting_column = letter_to_numbers(@alg_notation[0])
+    starting_row = 8 - @alg_notation[1].to_i
     player_starting_location = [starting_row, starting_column]
   end
 
   def ending_location
-    ending_row = letter_to_numbers(@alg_notation[2])
-    ending_column = 8 - @alg_notation[3].to_i
+    ending_column = letter_to_numbers(@alg_notation[2])
+    ending_row = 8 - @alg_notation[3].to_i
     player_ending_location = [ending_row, ending_column]
   end
 

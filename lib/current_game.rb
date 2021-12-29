@@ -49,6 +49,9 @@ class CurrentGame
     show_display
     puts "#{player.name} it is now your turn."
     while player.get_input_array
+      p player.movement
+      p player.color
+      p verify_movement(player.movement, player.color)
       if verify_movement(player.movement, player.color)
         puts "This movement is valid."
         break

@@ -41,6 +41,17 @@ describe CurrentGame do
         
         expect(is_movement_legal).to be false
       end
+
+      it "returns true with movement [6,0,4,0] moving White Pawn from start up two spaces" do
+        
+        current_game.board[6][0] = WhitePawn.new('white')
+        movement = [6,0,4,0]
+        color = 'white'
+
+        is_movement_legal = current_game.verify_movement(movement, color)
+        
+        expect(is_movement_legal).to be true
+      end
     end
   end
 
