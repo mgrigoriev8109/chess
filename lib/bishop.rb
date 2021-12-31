@@ -14,9 +14,9 @@ class Bishop < Piece
 
   def symbol
     if @color == 'white'
-      symbol = "♜"
+      symbol = "♝"
     elsif @color == 'black'
-      symbol = "♖"
+      symbol = "♗"
     end
     symbol
   end

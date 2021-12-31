@@ -15,13 +15,15 @@ until current_game.assess_endofround_checkmate('black', current_game.board) do
   current_game.play_turn(black_player)
 end
 
-#play a game from beginning to end to make sure nothing is clearly broken
-#add any possible code needed to play game properly 
-#write code for Pawn promotion
-#test Pawn promotion
-#write code of King Castling
-#test King Castling
+#write tests for and fix King Movement Up
+#write tests for and fix King Movement Up Right
+#write additional test for Rook Movement Up from [7,4]
+#write additional test for Bishop Movement Up Right from [7,0]
 
+#write test for Pawn promotion, and then write code to pass test
+#write test of King Castling, and then write code to pass test
+
+#refactor #play_turn to have assessment of check/checkmate, enpassant, promotion, and castling each in their own methods
 #stick check and checkmate into module
 #stick en passant into module
 #stick promotion into module
