@@ -49,9 +49,6 @@ class CurrentGame
     show_display
     puts "#{player.name} it is now your turn."
     while player.get_input_array
-      p player.movement
-      p player.color
-      p verify_movement(player.movement, player.color)
       if verify_movement(player.movement, player.color)
         puts "This movement is valid."
         break
@@ -62,16 +59,35 @@ class CurrentGame
     
     move_gamepiece(player.starting_location, player.ending_location, @board)
 
+    assess_check_checkmate(player.color, @board)
+    assess_endofround_enpassant(player.starting_location, player.ending_location, @board)
+    assess_pawn_promotion(@board)
+
+  end
+
+  def assess_pawn_promotion(board)
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        if row_index == 0 && cell.is_a?(WhitePawn)
+          board[column_index][row_index] = Queen.new('white')
+          puts 'A White Pawn has been promoted to a White Queen'
+        elsif row_index == 7 && cell.is_a?(BlackPawn)
+          board[column_index][row_index] = Queen.new('black')
+          puts 'A Black Pawn has been promoted to a Black Queen'
+        end
+      end
+    end
+  end
+
+  def assess_check_checkmate(color, board)
     if assess_endofround_checkmate(player.color, @board)
       puts "Looks like #{player.name} has won and put the opposing player into Checkmate!"
     elsif assess_endofround_check(player.color, @board)
       puts "Looks like #{player.name} has put the opposing player into Check!"
     end
 
-    assess_endofround_enpassant(player.starting_location, player.ending_location, @board)
-      
   end
-
+  
   def assess_endofround_enpassant(starting_coordinates, ending_coordinates, board)
     starting_piece = get_piece(starting_coordinates)
     starting_row = starting_coordinates[0]

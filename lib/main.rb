@@ -15,12 +15,6 @@ until current_game.assess_endofround_checkmate('black', current_game.board) do
   current_game.play_turn(black_player)
 end
 
-#write tests for and fix King Movement Up
-#write tests for and fix King Movement Up Right
-#write additional test for Rook Movement Up from [7,4]
-#write additional test for Bishop Movement Up Right from [7,0]
-
-#write test for Pawn promotion, and then write code to pass test
 #write test of King Castling, and then write code to pass test
 
 #refactor #play_turn to have assessment of check/checkmate, enpassant, promotion, and castling each in their own methods

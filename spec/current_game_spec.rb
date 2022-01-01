@@ -232,6 +232,34 @@ describe CurrentGame do
     end
   end
 
+  describe '#assess_pawn_promotion' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When checking if any Pawns on the board can be promoted to Queens' do
+
+      it "returns true when White moves a pawn to row 0, promoting it to a Queen" do
+        
+        current_game.board[1][0] = WhitePawn.new('white')
+        current_game.move_gamepiece([1,0], [0,0], current_game.board)
+
+        current_game.assess_pawn_promotion(current_game.board)
+        
+        expect(current_game.board[0][0]).to be_a Queen
+      end
+
+      it "returns true when Black moves a pawn to row 7, promoting it to a Queen]" do
+        
+        current_game.board[6][7] = BlackPawn.new('black')
+        current_game.move_gamepiece([6,7], [7,7], current_game.board)
+
+        current_game.assess_pawn_promotion(current_game.board)
+        
+        expect(current_game.board[7][7]).to be_a Queen
+      end
+    end
+  end
+
   describe '#verify_check' do
 
     subject(:current_game) {described_class.new}
@@ -511,8 +539,6 @@ describe CurrentGame do
         current_game.populate_gameboard
         current_game.board[6][2] = Knight.new('black')
         current_game.move_gamepiece([6,4],[5,4],current_game.board)
-        current_game.show_display
-
 
         is_checkmate_occurring = current_game.verify_checkmate('white', current_game.board)
         
