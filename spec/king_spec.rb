@@ -12,13 +12,13 @@ describe King do
 
     context 'A king searching for possible movements' do
 
-      it "starting at [1,1] returns an array of[[1, 2], [1, 0], [0, 1], [2, 1], [2, 0], [2, 2], [0, 0], [0, 2]]" do
+      it "starting at [6,1] returns an array of[[6, 2], [6, 0], [5, 1], [7, 1], [7, 0], [7, 2], [5, 0], [5, 2]]" do
         
         board[6][1] = King.new('white')
 
         possible_movements = king.all_possible_movements(board, [6,1])
 
-        expect(possible_movements).to eq([[1, 2], [1, 0], [0, 1], [2, 1], [2, 0], [2, 2], [0, 0], [0, 2]])
+        expect(possible_movements).to eq([[6, 2], [6, 0], [5, 1], [7, 1], [7, 0], [7, 2], [5, 0], [5, 2]])
       end
 
       it "starting at [7,4] returns an array of[[6,4]]" do
@@ -430,6 +430,25 @@ describe King do
         possible_attacks = king.all_possible_attacks(board, [1,1])
 
         expect(possible_attacks).to eq([[1, 0], [2, 0], [0, 2]])
+      end
+    end
+  end
+
+  describe '#movements_up' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:king) {described_class.new('white')}
+
+    context 'A White King looking for all possible movements up' do
+
+      it "returns an array of  when moving from [7,4]" do
+
+        board[7][4] = King.new('white')
+
+        possible_attacks = king.movements_up(board, [7,4])
+        
+        expect(possible_attacks).to eq([[6, 4], [5, 4], [4, 4], [3, 4], [2, 4], [1, 4], [0, 4]])
+
       end
     end
   end

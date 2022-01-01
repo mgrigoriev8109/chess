@@ -193,7 +193,7 @@ module BishopRookMovements
       if index > starting_row && value.is_a?(Piece)
         break
       elsif index > starting_row
-        index = index - 7
+        index = 7 - index
         possible_moves.push([index, starting_column])
       end
     end
