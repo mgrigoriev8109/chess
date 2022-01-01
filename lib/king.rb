@@ -28,7 +28,7 @@ class King < Piece
     movements_array.push(movements_down_left(board, piece_location)[0])
     movements_array.push(movements_down_right(board, piece_location)[0])
     movements_array.push(movements_up_left(board, piece_location)[0])
-    movements_array.push(movements_up_right(board, piece_location)[0])
+    movements_array.push(movements_up_right(board, piece_location)[-1])
     movements_array.delete(nil)
     movements_array
   end
