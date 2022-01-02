@@ -5,9 +5,12 @@ class King < Piece
   include BishopRookMovements
 
   attr_reader :color
+  attr_accessor :can_move_castling, :has_moved
 
   def initialize(color)
     @color = color
+    @castling_coordinates = false
+    @has_moved = false
   end
 
   def symbol
@@ -21,6 +24,9 @@ class King < Piece
 
   def all_possible_movements(board, piece_location)
     movements_array = Array.new
+    if @castling_coordinates
+      movements_array.push(@castling_coordinates)
+    end
     movements_array.push(movements_right(board, piece_location)[0]) 
     movements_array.push(movements_left(board, piece_location)[0])
     movements_array.push(movements_up(board, piece_location)[0])
@@ -170,4 +176,6 @@ class King < Piece
 
     possible_attack
   end
+
+
 end
