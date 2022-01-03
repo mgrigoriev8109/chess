@@ -1,6 +1,6 @@
 module Castling
   def assess_castling(color, starting_location, board)
-    move_castling_rook(color, board)
+    move_castling_rook(color,starting_location, ending_location, board)
     can_next_player_castle(color, board)
     assess_has_king_moved(starting_location, board)
     assess_has_rook_moved(starting_location, board)
@@ -30,63 +30,77 @@ module Castling
     move_gamepiece(rook_start, rook_end, board)
   end
 
+  def assess_has_king_moved(starting_location, board)
+    piece_being_moved = get_piece(starting_location)
+    if piece_being_moved.is_a?(King)
+      piece_being_moved.has_moved = true
+    end
+  end
+
+  def assess_has_rook_moved(starting_location, board)
+    piece_being_moved = get_piece(starting_location)
+    if piece_being_moved.is_a?(Rook)
+      piece_being_moved.has_moved = true
+    end
+  end
+  
   def can_next_player_castle(color, board)
     next_player_color = opposite_player_color(color)
     king_start = get_king_location(next_player_color, board)
     castling_row = king_start[0]
-    if player_can_castle_left(next_player_color, board)
+    if player_can_castle(next_player_color, board, 'left')
       king_ending_coordinates = [castling_row, 2]
       king = get_piece(king_start)
       king.can_castling_coordinates = king_ending_coordinates
-    elsif player_can_castle_right(next_player_color, board)
+    elsif player_can_castle(next_player_color, board, 'right')
       king_ending_coordinates = [castling_row, 6]
       king = get_piece(king_start)
       king.can_castling_coordinates = king_ending_coordinates
     end
   end
 
-  def player_can_castle_left(color, board)
+  def player_can_castle(color, board, direction)
     king_location = get_king_location(color, board)
     king_piece = get_piece(king_location)
-    rook_location = [king_location[0], 0]
+    rook_location = [king_location[0], get_rook_column(direction)]
     rook_piece = get_piece(rook_location)
-    king_can_castle_left = true
+    king_can_castle = true
+
     if king_piece.has_moved 
-      king_can_castle_left = false
+      king_can_castle = false
     elsif rook_piece.has_moved
-      king_can_castle_left = false
-    elsif pieces_between_king_rook(color, board)
-      king_can_castle_left = false
-    elsif king_ends_in_check(color, board, 'left')
-      king_can_castle_left = false
+      king_can_castle = false
+    elsif pieces_between_king_rook(king_location, rook_location, board)
+      king_can_castle = false
+    elsif king_ends_in_check(color, board, direction)
+      king_can_castle = false
     end
-    king_can_castle_left
+    king_can_castle
   end
 
-  def player_can_castle_right(color, board)
-    king_location = get_king_location(color, board)
-    king_piece = get_piece(king_location)
-    rook_location = [king_location[0], 7]
-    rook_piece = get_piece(rook_location)
-    king_can_castle_right = true
-    if king_piece.has_moved 
-      king_can_castle_right = false
-    elsif rook_piece.has_moved
-      king_can_castle_right = false
-    elsif pieces_between_king_rook(color, board)
-      king_can_castle_right = false
-    elsif king_ends_in_check(color, board, 'right')
-      king_can_castle_right = false
+  def get_rook_column(direction)
+    rook_column = 0
+    if direction == 'left'
+      rook_column = 0
+    elsif direction == 'right'
+      rook_column = 7
     end
-    king_can_castle_right
-    #if king has not moved during game, rook has not moved during game
-    #if there are no pieces between king and rook
-    #if king is not in check
-    #if king will not be in check on any of the other two squares
+    rook_column
   end
 
   def pieces_between_king_rook(king_location, rook_location, board)
-
+    castling_row = king_location[0]
+    starting_column = [king_location[1], rook_location[1]].max
+    ending_column = [king_location[1], rook_location[1]].min
+    pieces_between = false
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        if row_index == castling_row && column_index > starting_column && column_index < ending_column && cell != ' '
+          pieces_between = true
+        end
+      end
+    end
+    pieces_between
   end
 
   def king_ends_in_check(color, board, direction)
@@ -117,17 +131,4 @@ module Castling
     possible_check_movements
   end
 
-  def assess_has_king_moved(starting_location, board)
-    piece_being_moved = get_piece(starting_location)
-    if piece_being_moved.is_a?(King)
-      piece_being_moved.has_moved = true
-    end
-  end
-
-  def assess_has_rook_moved(starting_location, board)
-    piece_being_moved = get_piece(starting_location)
-    if piece_being_moved.is_a?(Rook)
-      piece_being_moved.has_moved = true
-    end
-  end
 end
