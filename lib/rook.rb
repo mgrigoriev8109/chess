@@ -7,9 +7,11 @@ class Rook < Piece
   include BishopRookAttacks
 
   attr_reader :color
+  attr_accessor :has_moved
 
   def initialize(color)
     @color = color
+    @has_moved = false
   end
 
   def symbol

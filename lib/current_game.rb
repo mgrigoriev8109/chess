@@ -8,9 +8,11 @@ require_relative 'queen'
 require_relative 'white_pawn'
 require_relative 'black_pawn'
 require_relative 'create_pieces'
+require_relative 'castling'
 
 class CurrentGame
   include CreatePieces
+  include Castling
   attr_reader :board, :display
 
   def initialize
@@ -62,9 +64,7 @@ class CurrentGame
     assess_check_checkmate(player.color, @board)
     assess_endofround_enpassant(player.starting_location, player.ending_location, @board)
     assess_pawn_promotion(@board)
-    assess_castling_execution(player.color, @board)
-    assess_castling_possibility(player.color, @board)
-    assess_has_king_moved(player.starting_location, @board)
+    assess_castling(player.color, player.starting_location, @board)
   end
 
   def assess_pawn_promotion(board)
@@ -110,59 +110,6 @@ class CurrentGame
     end
   end
 
-  def assess_castling_possibility(color, board)
-    other_player_color = opposite_player_color(color)
-    king_start = get_king_location(other_player_color, board)
-    castling_row = king_start[0]
-    if verify_castling_left(other_player_color, board)
-      king_end = [castling_row, 2]
-      castling_king = get_piece(king_start)
-      castling_king.can_castling_coordinates = king_end
-    elsif verify_castling_right(other_player_color, board)
-      king_end = [castling_row, 6]
-      castling_king = get_piece(king_start)
-      castling_king.can_castling_coordinates = king_end
-    end
-  end
-
-  def verify_castling_left(color, board)
-    #if king has not moved during game, rook has not moved during game
-    #if there are no pieces between king and rook
-    #if king is not in check
-    #if king will not be in check on any of the other two squares
-  end
-
-  def verify_castling_right(color, board)
-    #if king has not moved during game, rook has not moved during game
-    #if there are no pieces between king and rook
-    #if king is not in check
-    #if king will not be in check on any of the other two squares
-  end
-
-  def assess_castling_execution(color, starting_location, ending_location, board)
-    if get_piece(starting_location).is_a?(King) && starting_location[1] == 4 && ending_location[1] == 2
-      move_castling_rook_left(color, board)
-    elsif get_piece(starting_location).is_a?(King) && starting_location[1] == 4 && ending_location[1] == 6
-      move_castling_rook_right(color, board)
-    end
-  end
-
-  def move_castling_rook_left(color, board)
-    king_start = get_king_location(color, board)
-    castling_row = king_start[0]
-    rook_start = [castling_row, 0]
-    rook_end = [castling_row, 3]
-    move_gamepiece(rook_start, rook_end, board)
-  end
-
-  def move_castling_rook_right(color, board)
-    king_start = get_king_location(color, board)
-    castling_row = king_start[0]
-    rook_start = [castling_row, 7]
-    rook_end = [castling_row, 5]
-    move_gamepiece(rook_start, rook_end, board)
-  end
-  
   def verify_enpassant_by_white_pawn(ending_location, board)
     black_pawn_column = ending_location[1]
     white_pawn_row = ending_location[0]
