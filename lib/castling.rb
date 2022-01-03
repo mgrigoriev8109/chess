@@ -57,7 +57,7 @@ module Castling
       king_can_castle_left = false
     elsif pieces_between_king_rook(color, board)
       king_can_castle_left = false
-    elsif king_ends_in_check(color, board)
+    elsif king_ends_in_check(color, board, 'left')
       king_can_castle_left = false
     end
     king_can_castle_left
@@ -75,7 +75,7 @@ module Castling
       king_can_castle_right = false
     elsif pieces_between_king_rook(color, board)
       king_can_castle_right = false
-    elsif king_ends_in_check(color, board)
+    elsif king_ends_in_check(color, board, 'right')
       king_can_castle_right = false
     end
     king_can_castle_right
@@ -85,14 +85,38 @@ module Castling
     #if king will not be in check on any of the other two squares
   end
 
-  def pieces_between_king_rook(color, board)
+  def pieces_between_king_rook(king_location, rook_location, board)
 
   end
 
-  def king_ends_in_check(color, board)
-
+  def king_ends_in_check(color, board, direction)
+    all_movements = possible_check_movements(king_location)
+    is_king_in_check = false
+    all_movements.each do |possible_end|
+      simulated_board = Marshal.load(Marshal.dump(@board))
+      move_gamepiece(king_location, possible_end, simulated_board)
+      if verify_check(color, simulated_board) == true
+        is_king_in_check = true
+      end
+    end
+    is_king_in_check
   end
-  
+
+  def possible_check_movements(king_location)
+    possible_check_movements = Array.new
+    first_left_location = [king_location[0],king_location[1] - 1]
+    second_left_location = [king_location[0],king_location[1] - 2]
+    first_right_location = [king_location[0],king_location[1] + 1]
+    second_right_location = [king_location[0],king_location[1] + 2]
+
+    if direction == 'left'
+      possible_check_movements.push(first_left_location, second_left_location)
+    elsif direction == 'right'
+      possible_check_movements.push(first_right_location, second_right_location)
+    end
+    possible_check_movements
+  end
+
   def assess_has_king_moved(starting_location, board)
     piece_being_moved = get_piece(starting_location)
     if piece_being_moved.is_a?(King)
