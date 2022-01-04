@@ -106,4 +106,26 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#destroy_defending_pawn' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'After an EnPassant movement the opposing pawn is destroyed' do
+
+      it "returns ' ' in the BlackPawn's [3,0] after WhitePawn attacks onto [2,0] through EnPassant"  do
+        
+        current_game.board[1][0] = BlackPawn.new('black')
+        current_game.move_gamepiece([1,0],[3,0],current_game.board)
+        current_game.board[3][1] = WhitePawn.new('white')
+        white_pawn_start = [3,1]
+        white_pawn_end = [2,0]
+
+        current_game.move_gamepiece(white_pawn_start, white_pawn_end, current_game.board)
+        current_game.destroy_defending_pawn(white_pawn_start, white_pawn_end, current_game.board)
+
+        expect(current_game.board[3][0]).to eq(' ')
+      end
+    end
+  end
 end
