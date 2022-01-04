@@ -1,9 +1,22 @@
 module Castling
-  def assess_castling(color, starting_location, board)
-    move_castling_rook(color,starting_location, ending_location, board)
-    can_next_player_castle(color, board)
-    assess_has_king_moved(starting_location, board)
-    assess_has_rook_moved(starting_location, board)
+
+  def have_rooks_or_kings_moved(starting_location, board)
+    piece_being_moved = get_piece(starting_location)
+    if piece_being_moved.is_a?(King)
+      piece_being_moved.has_moved = true
+    elsif piece_being_moved.is_a?(Rook)
+      piece_being_moved.has_moved = true
+    end
+  end
+  
+  def possible_castling(starting_location, ending_location)
+    is_castling_possible = false
+    if get_piece(starting_location).is_a?(King) && starting_location[1] == 4 && ending_location[1] == 2
+      is_castling_possible = true
+    elsif get_piece(starting_location).is_a?(King) && starting_location[1] == 4 && ending_location[1] == 6
+      is_castling_possible = true
+    end
+    is_castling_possible
   end
 
   def move_castling_rook(color, starting_location, ending_location, board)
@@ -28,20 +41,6 @@ module Castling
     rook_start = [castling_row, 7]
     rook_end = [castling_row, 5]
     move_gamepiece(rook_start, rook_end, board)
-  end
-
-  def assess_has_king_moved(starting_location, board)
-    piece_being_moved = get_piece(starting_location)
-    if piece_being_moved.is_a?(King)
-      piece_being_moved.has_moved = true
-    end
-  end
-
-  def assess_has_rook_moved(starting_location, board)
-    piece_being_moved = get_piece(starting_location)
-    if piece_being_moved.is_a?(Rook)
-      piece_being_moved.has_moved = true
-    end
   end
   
   def can_next_player_castle(color, board)
