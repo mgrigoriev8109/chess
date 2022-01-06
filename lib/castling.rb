@@ -71,7 +71,7 @@ module Castling
       king_can_castle = false
     elsif pieces_between_king_rook(king_location, rook_location, board)
       king_can_castle = false
-    elsif king_ends_in_check(color, board, direction)
+    elsif is_king_landing_in_check(color, board, direction)
       king_can_castle = false
     end
     king_can_castle
@@ -102,17 +102,18 @@ module Castling
     pieces_between
   end
 
-  def king_ends_in_check(color, board, direction)
+  def is_king_landing_in_check(king_location, board, direction)
     all_movements = king_also_lands_on(king_location, direction)
-    is_king_in_check = false
+    king_color = get_piece(king_location).color
+    king_in_check = false
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(@board))
       move_gamepiece(king_location, possible_end, simulated_board)
-      if verify_check(color, simulated_board) == true
-        is_king_in_check = true
+      if verify_check(king_color, simulated_board) == true
+        king_in_check = true
       end
     end
-    is_king_in_check
+    king_in_check
   end
 
   def king_also_lands_on(king_location, direction)

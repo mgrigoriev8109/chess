@@ -56,13 +56,53 @@ describe CurrentGame do
       end
 
       it "returns [[7,5],[7,6]] going right from [7,4]" do
-        current_game.board[7][4] = King.new('black')
+        current_game.board[7][4] = King.new('white')
         king_location = [7,4]
         castling_direction = 'right'
 
         movements = current_game.king_also_lands_on(king_location, castling_direction)
         
         expect(movements).to eq([[7,5],[7,6]])
+      end
+    end
+  end
+
+  describe '#is_king_landing_in_check' do
+
+    subject(:current_game) {described_class.new}
+    context 'when looking to see if a king lands in check on any location on the way to castling end destination' do
+
+      it "returns false because no other white pieces are on the board" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[1][3] = Rook.new('black')
+        king_location = [0,4]
+        castling_direction = 'left'
+
+        lands_in_check = current_game.is_king_landing_in_check(king_location, current_game.board, castling_direction)
+        
+        expect(lands_in_check).to be false
+      end
+
+      it "returns true because a Rook puts king in check when trying to castle left" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[1][2] = Rook.new('white')
+        king_location = [0,4]
+        castling_direction = 'left'
+
+        lands_in_check = current_game.is_king_landing_in_check(king_location, current_game.board, castling_direction)
+        
+        expect(lands_in_check).to be true
+      end
+
+      it "returns false because a Rook is on the right while king trying to castle left" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[1][5] = Rook.new('white')
+        king_location = [0,4]
+        castling_direction = 'left'
+
+        lands_in_check = current_game.is_king_landing_in_check(king_location, current_game.board, castling_direction)
+        
+        expect(lands_in_check).to be false
       end
     end
   end
