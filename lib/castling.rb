@@ -103,7 +103,7 @@ module Castling
   end
 
   def king_ends_in_check(color, board, direction)
-    all_movements = possible_check_movements(king_location)
+    all_movements = king_also_lands_on(king_location, direction)
     is_king_in_check = false
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(@board))
@@ -115,19 +115,19 @@ module Castling
     is_king_in_check
   end
 
-  def possible_check_movements(king_location)
-    possible_check_movements = Array.new
+  def king_also_lands_on(king_location, direction)
+    king_also_lands_on = Array.new
     first_left_location = [king_location[0],king_location[1] - 1]
     second_left_location = [king_location[0],king_location[1] - 2]
     first_right_location = [king_location[0],king_location[1] + 1]
     second_right_location = [king_location[0],king_location[1] + 2]
 
     if direction == 'left'
-      possible_check_movements.push(first_left_location, second_left_location)
+      king_also_lands_on.push(first_left_location, second_left_location)
     elsif direction == 'right'
-      possible_check_movements.push(first_right_location, second_right_location)
+      king_also_lands_on.push(first_right_location, second_right_location)
     end
-    possible_check_movements
+    king_also_lands_on
   end
 
 end

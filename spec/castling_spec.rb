@@ -39,4 +39,31 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#king_also_lands_on' do
+
+    subject(:current_game) {described_class.new}
+    context 'when looking for the two coordinates a king passes through while castling in a given direction' do
+
+      it "returns [[0,3],[0,2]] going left from [0,4]" do
+        current_game.board[0][4] = King.new('black')
+        king_location = [0,4]
+        castling_direction = 'left'
+
+        movements = current_game.king_also_lands_on(king_location, castling_direction)
+        
+        expect(movements).to eq([[0,3],[0,2]])
+      end
+
+      it "returns [[7,5],[7,6]] going right from [7,4]" do
+        current_game.board[7][4] = King.new('black')
+        king_location = [7,4]
+        castling_direction = 'right'
+
+        movements = current_game.king_also_lands_on(king_location, castling_direction)
+        
+        expect(movements).to eq([[7,5],[7,6]])
+      end
+    end
+  end
 end
