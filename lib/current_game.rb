@@ -79,6 +79,25 @@ class CurrentGame
     can_next_player_enpassant(player.starting_location, player.ending_location, @board)
   end
 
+  def get_piece(coordinates)
+    row = coordinates[0]
+    column = coordinates[1]
+    starting_piece = @board[row][column]
+    starting_piece
+  end
+
+  def move_gamepiece(starting_location, ending_location, board)
+    starting_row = starting_location[0]
+    starting_column = starting_location[1]
+
+    ending_row = ending_location[0]
+    ending_column = ending_location[1]
+
+    board[ending_row][ending_column] = @board[starting_row][starting_column]
+
+    board[starting_row][starting_column] = ' '
+  end
+  
   def assess_pawn_promotion(board)
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|

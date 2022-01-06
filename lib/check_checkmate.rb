@@ -57,25 +57,6 @@ module CheckCheckmate
     can_piece_move_or_attack
   end
 
-  def get_piece(coordinates)
-    row = coordinates[0]
-    column = coordinates[1]
-    starting_piece = @board[row][column]
-    starting_piece
-  end
-
-  def move_gamepiece(starting_location, ending_location, board)
-    starting_row = starting_location[0]
-    starting_column = starting_location[1]
-
-    ending_row = ending_location[0]
-    ending_column = ending_location[1]
-
-    board[ending_row][ending_column] = @board[starting_row][starting_column]
-
-    board[starting_row][starting_column] = ' '
-  end
-
   def verify_check(color, board)
     is_defending_king_in_check = false
     all_possible_attacks = get_all_attacks_against(color, board)
