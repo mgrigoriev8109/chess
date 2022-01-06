@@ -89,8 +89,8 @@ module Castling
 
   def pieces_between_king_rook(king_location, rook_location, board)
     castling_row = king_location[0]
-    starting_column = [king_location[1], rook_location[1]].max
-    ending_column = [king_location[1], rook_location[1]].min
+    starting_column = [king_location[1], rook_location[1]].min
+    ending_column = [king_location[1], rook_location[1]].max
     pieces_between = false
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|

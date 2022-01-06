@@ -106,4 +106,58 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#pieces_between_king_rook' do
+
+    subject(:current_game) {described_class.new}
+    context 'when looking to see if a there are any pieces between the King and Rook attempting to castle' do
+
+      it "returns false because no other pieces inbetween the Black King and Rook" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[0][0] = Rook.new('black')
+        current_game.board[0][5] = Rook.new('black')
+        king_location = [0,4]
+        rook_location = [0,0]
+
+        are_pieces_between = current_game.pieces_between_king_rook(king_location, rook_location, current_game.board)
+        
+        expect(are_pieces_between).to be false
+      end
+
+      it "returns true because there is another Rook inbetween the Black King and Rook" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[0][0] = Rook.new('black')
+        current_game.board[0][2] = Rook.new('black')
+        king_location = [0,4]
+        rook_location = [0,0]
+
+        are_pieces_between = current_game.pieces_between_king_rook(king_location, rook_location, current_game.board)
+        
+        expect(are_pieces_between).to be true
+      end
+
+      it "returns true because there is another Rook inbetween the White King and Rook" do
+        current_game.board[7][4] = King.new('white')
+        current_game.board[7][7] = Rook.new('white')
+        current_game.board[7][6] = Rook.new('white')
+        king_location = [7,4]
+        rook_location = [7,7]
+
+        are_pieces_between = current_game.pieces_between_king_rook(king_location, rook_location, current_game.board)
+        
+        expect(are_pieces_between).to be true
+      end
+
+      it "returns false because there are no pieces between the White King and Rook" do
+        current_game.board[7][4] = King.new('white')
+        current_game.board[7][7] = Rook.new('white')
+        king_location = [7,4]
+        rook_location = [7,7]
+
+        are_pieces_between = current_game.pieces_between_king_rook(king_location, rook_location, current_game.board)
+        
+        expect(are_pieces_between).to be false
+      end
+    end
+  end
 end
