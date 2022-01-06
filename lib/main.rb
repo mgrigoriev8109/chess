@@ -15,11 +15,6 @@ until current_game.assess_endofround_checkmate('black', current_game.board) do
   current_game.play_turn(black_player)
 end
 
-#write tests for Castling's #possible_castling
-#write tests for Castling's #possible_check_movements
-#write tests for Castling's #king_ends_in_check
-#write tests for Castling's #pieces_between_king_rook
-#write tests for Castling's #player_can_castle
 #write tests for Castling's #can_next_player_castle
 #write tests for Castling's #move_castling_rook_right
 #write tests for Castling's #move_castling_rook_left

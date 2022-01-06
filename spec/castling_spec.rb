@@ -160,4 +160,81 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#verify_castling_conditions' do
+
+    subject(:current_game) {described_class.new}
+    context 'when verifying the four conditions necessary to be able to castle' do
+
+      it "returns true because Black King and Rook haven't moved, no pieces inbetween to the left, and king doesn't land in check" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[0][0] = Rook.new('black')
+
+        are_condtions_verified = current_game.verify_castling_conditions('black', current_game.board, 'left')
+        
+        expect(are_condtions_verified).to be true
+      end
+
+      it "returns false because Black King has moved" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[0][0] = Rook.new('black')
+        king_start = [0,4]
+        king_end = [0,3]
+
+        current_game.move_gamepiece(king_start, king_end, current_game.board)
+        current_game.have_rooks_or_kings_moved(king_end, current_game.board)
+        are_condtions_verified = current_game.verify_castling_conditions('black', current_game.board, 'left')
+        
+        expect(are_condtions_verified).to be false
+      end
+
+
+      it "returns false because Black Rook has moved" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[0][0] = Rook.new('black')
+        rook_start = [0,0]
+        rook_end = [0,3]
+
+        current_game.move_gamepiece(rook_start, rook_end, current_game.board)
+        current_game.have_rooks_or_kings_moved(rook_end, current_game.board)
+        are_condtions_verified = current_game.verify_castling_conditions('black', current_game.board, 'left')
+        
+        expect(are_condtions_verified).to be false
+      end
+
+      it "returns false because Black Rook has moved and is back to its original position" do
+        current_game.board[0][4] = King.new('black')
+        current_game.board[0][0] = Rook.new('black')
+        rook_start = [0,0]
+        rook_end = [0,3]
+
+        current_game.move_gamepiece(rook_start, rook_end, current_game.board)
+        current_game.have_rooks_or_kings_moved(rook_end, current_game.board)
+        current_game.move_gamepiece([0,3], [0,0], current_game.board)
+        are_condtions_verified = current_game.verify_castling_conditions('black', current_game.board, 'left')
+        
+        expect(are_condtions_verified).to be false
+      end
+
+      it "returns false because there is a piece inbetween the White King and Rook" do
+        current_game.board[7][4] = King.new('white')
+        current_game.board[7][7] = Rook.new('white')
+        current_game.board[7][6] = Rook.new('white')
+
+        are_condtions_verified = current_game.verify_castling_conditions('white', current_game.board, 'right')
+        
+        expect(are_condtions_verified).to be false
+      end
+
+      it "returns false because the White King can land in a check while moving into Castling" do
+        current_game.board[7][4] = King.new('white')
+        current_game.board[7][7] = Rook.new('white')
+        current_game.board[6][6] = Rook.new('black')
+
+        are_condtions_verified = current_game.verify_castling_conditions('white', current_game.board, 'right')
+        
+        expect(are_condtions_verified).to be false
+      end
+    end
+  end
 end

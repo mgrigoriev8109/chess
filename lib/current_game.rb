@@ -74,7 +74,7 @@ class CurrentGame
     assess_pawn_promotion(@board)
 
     assess_check_checkmate(player.color, @board)
-    have_rooks_or_kings_moved(player.starting_location, @board)
+    have_rooks_or_kings_moved(player.ending_location, @board)
     can_next_player_castle(player.color, player.starting_location, @board)
     can_next_player_enpassant(player.starting_location, player.ending_location, @board)
   end
@@ -97,7 +97,7 @@ class CurrentGame
 
     board[starting_row][starting_column] = ' '
   end
-  
+
   def assess_pawn_promotion(board)
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|

@@ -1,7 +1,7 @@
 module Castling
 
-  def have_rooks_or_kings_moved(starting_location, board)
-    piece_being_moved = get_piece(starting_location)
+  def have_rooks_or_kings_moved(ending_location, board)
+    piece_being_moved = get_piece(ending_location)
     if piece_being_moved.is_a?(King)
       piece_being_moved.has_moved = true
     elsif piece_being_moved.is_a?(Rook)
@@ -47,18 +47,18 @@ module Castling
     next_player_color = opposite_player_color(color)
     king_start = get_king_location(next_player_color, board)
     castling_row = king_start[0]
-    if player_can_castle(next_player_color, board, 'left')
+    if verify_castling_conditions(next_player_color, board, 'left')
       king_ending_coordinates = [castling_row, 2]
       king = get_piece(king_start)
       king.can_castling_coordinates = king_ending_coordinates
-    elsif player_can_castle(next_player_color, board, 'right')
+    elsif verify_castling_conditions(next_player_color, board, 'right')
       king_ending_coordinates = [castling_row, 6]
       king = get_piece(king_start)
       king.can_castling_coordinates = king_ending_coordinates
     end
   end
 
-  def player_can_castle(color, board, direction)
+  def verify_castling_conditions(color, board, direction)
     king_location = get_king_location(color, board)
     king_piece = get_piece(king_location)
     rook_location = [king_location[0], get_rook_column(direction)]
@@ -67,14 +67,24 @@ module Castling
 
     if king_piece.has_moved 
       king_can_castle = false
-    elsif rook_piece.has_moved
+    elsif rook_has_moved(rook_piece)
       king_can_castle = false
     elsif pieces_between_king_rook(king_location, rook_location, board)
       king_can_castle = false
-    elsif is_king_landing_in_check(color, board, direction)
+    elsif is_king_landing_in_check(king_location, board, direction)
       king_can_castle = false
     end
     king_can_castle
+  end
+
+  def rook_has_moved(piece_tested)
+    has_rook_moved = true
+    if piece_tested.is_a?(Rook) && piece_tested.has_moved
+      has_rook_moved = true
+    elsif  piece_tested.is_a?(Rook)
+      has_rook_moved = false
+    end
+    has_rook_moved
   end
 
   def get_rook_column(direction)
