@@ -61,7 +61,7 @@ class CurrentGame
         destroy_defending_pawn(player.starting_location, player.ending_location, board)
       elsif possible_castling(player.starting_location, player.ending_location) && verify_movement(player.movement, player.color)
         puts "This is a valid Castling movement."
-        move_castling_rook(color,starting_location, ending_location, board)
+        move_castling_rook(color, player.starting_location, player.ending_location, board)
       elsif verify_movement(player.movement, player.color)
         puts "This movement is valid."
         break
@@ -96,6 +96,16 @@ class CurrentGame
     board[ending_row][ending_column] = @board[starting_row][starting_column]
 
     board[starting_row][starting_column] = ' '
+  end
+
+  def opposite_player_color(current_player_color)
+    opposite_color = ''
+    if current_player_color == 'white'
+      opposite_color = 'black'
+    elsif current_player_color =='black'
+      opposite_color = 'white'
+    end
+    opposite_color
   end
 
   def assess_pawn_promotion(board)

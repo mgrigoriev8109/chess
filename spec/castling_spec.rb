@@ -237,4 +237,76 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#can_next_player_castle' do
+
+    subject(:current_game) {described_class.new}
+    context 'when looking whether or not the next player can castle during their turn' do
+
+      it "returns false because the next player is White, and pieces are in the way both directions" do
+        current_game.populate_gameboard
+        current_player_color = 'black'
+        white_king = current_game.board[7][4]
+
+        current_game.can_next_player_castle(current_player_color, current_game.board)
+        
+        expect(white_king.castling_coordinates).to be false
+      end
+
+      it "returns true because the next player is White, and has room to castle to the right" do
+        current_game.populate_gameboard
+        current_game.board[7][5] = ' '
+        current_game.board[7][6] = ' '
+        current_player_color = 'black'
+        white_king = current_game.board[7][4]
+        
+        current_game.can_next_player_castle(current_player_color, current_game.board)
+        
+        expect(white_king.castling_coordinates).to eq([7,6])
+      end
+
+      it "returns true because the next player is Black, and has room to castle to the right" do
+        current_game.populate_gameboard
+        current_game.board[0][3] = ' '
+        current_game.board[0][2] = ' '
+        current_game.board[0][1] = ' '
+        current_player_color = 'white'
+        black_king = current_game.board[0][4]
+        
+        current_game.can_next_player_castle(current_player_color, current_game.board)
+        
+        expect(black_king.castling_coordinates).to eq([0,2])
+      end
+
+      it "returns false because the next player is White, and has room to castle to the right but moved through check" do
+        current_game.populate_gameboard
+        current_game.board[7][5] = ' '
+        current_game.board[7][6] = ' '
+        current_game.board[6][6] = Rook.new('black')
+        current_player_color = 'black'
+        white_king = current_game.board[7][4]
+        
+        current_game.can_next_player_castle(current_player_color, current_game.board)
+        
+        expect(white_king.castling_coordinates).to be false
+      end
+    end
+  end
+
+  describe '#move_castling_rook' do
+
+    subject(:current_game) {described_class.new}
+    context 'when looking whether or not the next player can castle during their turn' do
+
+      it "returns false because the next player is White, and pieces are in the way both directions" do
+        current_game.populate_gameboard
+        current_player_color = 'black'
+        white_king = current_game.board[7][4]
+
+        current_game.move_castling_rook(current_player_color, current_game.board)
+        
+        expect(white_king.castling_coordinates).to be false
+      end
+    end
+  end
 end

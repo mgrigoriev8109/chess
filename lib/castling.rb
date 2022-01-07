@@ -50,11 +50,11 @@ module Castling
     if verify_castling_conditions(next_player_color, board, 'left')
       king_ending_coordinates = [castling_row, 2]
       king = get_piece(king_start)
-      king.can_castling_coordinates = king_ending_coordinates
+      king.castling_coordinates = king_ending_coordinates
     elsif verify_castling_conditions(next_player_color, board, 'right')
       king_ending_coordinates = [castling_row, 6]
       king = get_piece(king_start)
-      king.can_castling_coordinates = king_ending_coordinates
+      king.castling_coordinates = king_ending_coordinates
     end
   end
 

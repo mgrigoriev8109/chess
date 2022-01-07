@@ -5,7 +5,7 @@ class King < Piece
   include BishopRookMovements
 
   attr_reader :color
-  attr_accessor :can_move_castling, :has_moved
+  attr_accessor :castling_coordinates, :has_moved
 
   def initialize(color)
     @color = color

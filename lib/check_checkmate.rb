@@ -118,16 +118,6 @@ module CheckCheckmate
     is_other_player_in_check
   end
 
-  def opposite_player_color(current_player_color)
-    opposite_color = ''
-    if current_player_color == 'white'
-      opposite_color = 'black'
-    elsif current_player_color =='black'
-      opposite_color = 'white'
-    end
-    opposite_color
-  end
-
   def verify_checkmate(color, board)
     king_coordinates = get_king_location(color, board)
     starting_piece = get_piece(king_coordinates)
