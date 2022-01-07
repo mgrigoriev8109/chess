@@ -296,16 +296,30 @@ describe CurrentGame do
   describe '#move_castling_rook' do
 
     subject(:current_game) {described_class.new}
-    context 'when looking whether or not the next player can castle during their turn' do
+    context 'after successfully moving a king using castling' do
 
-      it "returns false because the next player is White, and pieces are in the way both directions" do
+      it "returns a Rook in the Rook's desired end location [0,3], matching up with the Black King's castling direction of left" do
         current_game.populate_gameboard
         current_player_color = 'black'
-        white_king = current_game.board[7][4]
+        king_start = [0,4]
+        king_end = [0,2]
+        rook_after_castling = [0,3]
 
-        current_game.move_castling_rook(current_player_color, current_game.board)
+        current_game.move_castling_rook(current_player_color, king_start, king_end, current_game.board)
         
-        expect(white_king.castling_coordinates).to be false
+        expect(current_game.get_piece(rook_after_castling)).to be_a(Rook)
+      end
+
+      it "returns a Rook in the Rook's desired end location [7,5], matching up with the White King's castling direction of right" do
+        current_game.populate_gameboard
+        current_player_color = 'white'
+        king_start = [7,4]
+        king_end = [7,6]
+        rook_after_castling = [7,5]
+
+        current_game.move_castling_rook(current_player_color, king_start, king_end, current_game.board)
+        
+        expect(current_game.get_piece(rook_after_castling)).to be_a(Rook)
       end
     end
   end
