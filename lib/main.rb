@@ -10,12 +10,23 @@ black_player = current_game.create_player("black")
 current_game.display
 
 until current_game.assess_endofround_checkmate('black', current_game.board) do 
-  current_game.play_turn(white_player)
+
+  if white_player.is_a?(Player)
+    current_game.human_turn(white_player)
+  else
+    current_game.computer_turn(white_player)
+  end
+
   break if current_game.assess_endofround_checkmate('white', current_game.board)
-  current_game.play_turn(black_player)
+
+  if black_player.is_a?(Player)
+    current_game.human_turn(black_player)
+  else
+    current_game.computer_turn(black_player)
+  end
 end
 
-#implement simple computer AI that randomly generated movements
+#implement simple computer AI that randomly generated movements based off of possible movements
 
 #review 3 git lessons linked in MD file
 #write rough draft for advanced git lessons outline point 1)

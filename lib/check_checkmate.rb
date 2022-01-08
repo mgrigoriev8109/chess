@@ -1,10 +1,10 @@
 module CheckCheckmate
 
   def assess_check_checkmate(color, board)
-    if assess_endofround_checkmate(player.color, @board)
-      puts "Looks like #{player.name} has won and put the opposing player into Checkmate!"
-    elsif assess_endofround_check(player.color, @board)
-      puts "Looks like #{player.name} has put the opposing player into Check!"
+    if assess_endofround_checkmate(color, @board)
+      puts "Looks like #{color} has won and put the opposing player into Checkmate!"
+    elsif assess_endofround_check(color, @board)
+      puts "Looks like #{color} has put the opposing player into Check!"
     end
 
   end

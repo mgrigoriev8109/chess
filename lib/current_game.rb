@@ -11,6 +11,7 @@ require_relative 'create_pieces'
 require_relative 'castling'
 require_relative 'enpassant'
 require_relative 'check_checkmate'
+require_relative 'computer'
 
 class CurrentGame
   include CreatePieces
@@ -40,11 +41,7 @@ class CurrentGame
 
   def create_player(color)
     player_name = gets.chomp
-    if player_name == 'Computer'
-      player = Computer.new(color, player_name)
-    else 
-      player = Player.new(color, player_name)
-    end
+    player = Player.new(color, player_name)
     player
   end
 
@@ -54,7 +51,11 @@ class CurrentGame
     display.show
   end 
 
-  def play_turn(player)
+  def computer_turn(player)
+    #first use a method to find 
+  end
+
+  def human_turn(player)
     show_display
     puts "#{player.name} it is now your turn."
     while player.get_input_array
@@ -72,7 +73,7 @@ class CurrentGame
 
     assess_check_checkmate(player.color, @board)
     have_rooks_or_kings_moved(player.ending_location, @board)
-    can_next_player_castle(player.color, player.starting_location, @board)
+    can_next_player_castle(player.color, @board)
     can_next_player_enpassant(player.starting_location, player.ending_location, @board)
   end
 
