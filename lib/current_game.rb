@@ -27,8 +27,6 @@ class CurrentGame
 
   def introduction
     puts "Welcome to a CLI game of Chess!"
-    puts "Two players will take turns playing against each other until one player achieves Checkmate"
-    puts "The white player will be taking the first turn."
   end
 
   def populate_gameboard
@@ -42,7 +40,11 @@ class CurrentGame
 
   def create_player(color)
     player_name = gets.chomp
-    player = Player.new(color, player_name)
+    if player_name == 'Computer'
+      player = Computer.new(color, player_name)
+    else 
+      player = Player.new(color, player_name)
+    end
     player
   end
 
@@ -57,16 +59,11 @@ class CurrentGame
     puts "#{player.name} it is now your turn."
     while player.get_input_array
       if possible_enpassant(player.starting_location) && verify_movement(player.movement, player.color)
-        puts "This is a valid En Passant attack."
         destroy_defending_pawn(player.starting_location, player.ending_location, board)
       elsif possible_castling(player.starting_location, player.ending_location) && verify_movement(player.movement, player.color)
-        puts "This is a valid Castling movement."
         move_castling_rook(color, player.starting_location, player.ending_location, board)
       elsif verify_movement(player.movement, player.color)
-        puts "This movement is valid."
         break
-      else
-        puts "This movement is not valid, please try again."
       end
     end
     
