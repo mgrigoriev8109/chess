@@ -26,30 +26,25 @@ until current_game.assess_endofround_checkmate('black', current_game.board) do
   end
 end
 
-#computer_move if piece found with #all_possible_movements not empty
-
 #review 3 git lessons linked in MD file
 #write rough draft for advanced git lessons outline point 1)
 
-#computer_attack if piece found with #all_possible_attacks not empty
-#test computer_turn to verify that it prioritizes the attacks
+#test computer_turn to verify that it performs random movement if nothing else possible
+#test computer_turn to verify that it performs an attack if possible
 
 #write rough draft for advanced git lessons outline point 2)
 
-#computer_check if piece found that can perform check
 #test computer_check to verify that it prioritizes the check movement
+#test computer_checkmate to verify that it prioritizes the checkmate movement
 
 #write rough draft for advanced git lessons outline point 3)
 
-#computer_checkmate if piece found that can perform checkmate
-#test computer_checkmate to verify that it prioritizes the checkmate movement
+#hunt for bugs, have AI play against each other, test castling and en passant in-game. 
 
 #write rough draft for advanced git lessons outline point 4)
 #assess timeline, if it's already January 20th, then write rough draft for point 5) next
 
 #if it's earlier than 20th, then before point 5)
-#hunt for bugs, have AI play against each other, test castling and en passant in-game. 
-
 #implement save/load
 
 #revise rough draft into final draft and create pull request
