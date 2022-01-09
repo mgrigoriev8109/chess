@@ -52,7 +52,51 @@ class CurrentGame
   end 
 
   def computer_turn(player)
-    #first use a method to find 
+    #if checkmate is possible in one of the next possible moves or attacks
+      #move_gamepiece(possible_start, possible_end, @board)
+    #elsif check is possible in one of the next possible moves or attacks
+      #move_gamepiece(possible_start, possible_end, @board)
+    #elsif possible_color_attacks not empty
+      #perform move_gamepiece using an attack of all the possible attacks
+    #else
+      #computer_movement = find_computer_movement(player.color, @board)
+    #end
+
+    #then run basically the same as what's in human_turn, but without get_input_array
+  end
+
+  def find_computer_attack(color, board)
+    attack = false
+    board.each_with_index do |row, row_index|
+      break if attack
+      row.each_with_index do |cell, column_index|
+        break if attack
+        current_coordinates = [row_index, column_index]
+        if cell != ' ' && cell.color == color && cell.all_possible_attacks(current_coordinates, board).any?
+          ending_coordinates = all_possible_attacks[0]
+          attack.push(*current_coordinates)
+          attack.push(*ending_coordinates)
+        end
+      end
+    end
+    attack
+  end
+
+  def find_computer_movement(color, board)
+    movement = false
+    board.each_with_index do |row, row_index|
+      break if movement
+      row.each_with_index do |cell, column_index|
+        break if movement
+        current_coordinates = [row_index, column_index]
+        if cell != ' ' && cell.color == color && cell.all_possible_movements.any?
+          ending_coordinates = all_possible_movements[0]
+          movement.push(*starting_coordinates)
+          movement.push(*ending_coordinates)
+        end
+      end
+    end
+    movement
   end
 
   def human_turn(player)
@@ -60,9 +104,9 @@ class CurrentGame
     puts "#{player.name} it is now your turn."
     while player.get_input_array
       if possible_enpassant(player.starting_location) && verify_movement(player.movement, player.color)
-        destroy_defending_pawn(player.starting_location, player.ending_location, board)
+        destroy_defending_pawn(player.starting_location, player.ending_location, @board)
       elsif possible_castling(player.starting_location, player.ending_location) && verify_movement(player.movement, player.color)
-        move_castling_rook(color, player.starting_location, player.ending_location, board)
+        move_castling_rook(color, player.starting_location, player.ending_location, @board)
       elsif verify_movement(player.movement, player.color)
         break
       end
