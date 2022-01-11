@@ -60,11 +60,11 @@ describe CurrentGame do
         current_game.board[3][1] = Rook.new("black")
         current_game.board[4][0] = King.new("white")
         computer_color = 'black'
-        
+
         found_check = current_game.find_computer_check(computer_color, current_game.board)
         check_movement_ending = [found_check[2], found_check[3]]
 
-        expect(check_movement_ending).to eq([3,0])
+        expect(check_movement_ending).to eq([4,1])
       end
     end
   end

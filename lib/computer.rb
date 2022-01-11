@@ -52,7 +52,7 @@ module Computer
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         current_coordinates = [row_index, column_index]
-        if cell != ' ' && cell.color == color && move_results_in_check(color, current_coordinates, board)
+        if cell.is_a?(Piece) && cell.color == color && move_results_in_check(color, current_coordinates, board)
           possible_computer_movement = []
           ending_coordinates = move_results_in_check(color, current_coordinates, board)
           possible_computer_movement.push(*current_coordinates)
@@ -73,8 +73,7 @@ module Computer
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(starting_coordinates, possible_end, simulated_board)
-      if verify_check(color, simulated_board) == true
-        p possible_end
+      if verify_check(opposite_player_color(color), simulated_board)
         move_resulting_in_check = possible_end
       end
     end
