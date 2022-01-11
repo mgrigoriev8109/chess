@@ -55,7 +55,7 @@ describe CurrentGame do
     subject(:current_game) {described_class.new}
     context 'When determining a possible check-resulting move by a Computer' do
 
-      it "returns [3,0] as the movement a Rook can make from [3,1] to put a king into checks" do
+      it "returns [4,1] as the movement a Rook can make from [3,1] to put a king into checks" do
 
         current_game.board[3][1] = Rook.new("black")
         current_game.board[4][0] = King.new("white")
@@ -65,6 +65,45 @@ describe CurrentGame do
         check_movement_ending = [found_check[2], found_check[3]]
 
         expect(check_movement_ending).to eq([4,1])
+      end
+    end
+  end
+
+  describe '#find_computer_checkmate' do
+
+    subject(:current_game) {described_class.new}
+    context 'When determining a possible checkmate-resulting move by a Computer' do
+
+      it "returns [4,5] as the movement a Rook can make from [3,5] to put a king into checkmates" do
+
+        current_game.board[3][2] = Rook.new("black")
+        current_game.board[3][5] = Rook.new("black")
+        current_game.board[5][5] = Rook.new("black")
+        current_game.board[4][0] = King.new("white")
+        computer_color = 'black'
+
+        found_checkmate = current_game.find_computer_checkmate(computer_color, current_game.board)
+        checkmate_movement_ending = [found_checkmate[2], found_checkmate[3]]
+
+        expect(checkmate_movement_ending).to eq([4,5])
+      end
+    end
+  end
+
+  describe '#determine_computer_movement' do
+
+    subject(:current_game) {described_class.new}
+    context 'When determining a possible checkmate-resulting move by a Computer' do
+
+      it "returns [4,5] as the movement a Rook can make from [3,5] to put a king into checkmates" do
+
+        current_game.populate_gameboard
+        computer_color = 'black'
+
+        found_checkmate = current_game.determine_computer_movement(computer_color, current_game.board)
+        checkmate_movement_ending = [found_checkmate[2], found_checkmate[3]]
+
+        expect(checkmate_movement_ending).to eq([4,5])
       end
     end
   end

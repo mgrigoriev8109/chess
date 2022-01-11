@@ -11,18 +11,18 @@ current_game.display
 
 until current_game.assess_endofround_checkmate('black', current_game.board) do 
 
-  if white_player.is_a?(Player)
-    current_game.human_turn(white_player)
-  else
+  if white_player.name == 'Computer'
     current_game.computer_turn(white_player)
+  else
+    current_game.human_turn(white_player)
   end
 
   break if current_game.assess_endofround_checkmate('white', current_game.board)
 
-  if black_player.is_a?(Player)
-    current_game.human_turn(black_player)
-  else
+  if black_player.name == 'Computer'
     current_game.computer_turn(black_player)
+  else
+    current_game.human_turn(black_player)
   end
 end
 

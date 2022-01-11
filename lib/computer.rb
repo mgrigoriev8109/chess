@@ -12,22 +12,23 @@ module Computer
       computer_movement = find_computer_move(color, board)
     end
     computer_movement
+    p computer_movement
   end
 
   def find_computer_checkmate(color, board)
-    checkmate = false
+    possible_computer_movement = []
     board.each_with_index do |row, row_index|
-      break if checkmate
       row.each_with_index do |cell, column_index|
-        break if checkmate
         current_coordinates = [row_index, column_index]
-        if cell != ' ' && cell.color == color && move_results_in_checkmate(color, current_coordinates, board)
-          checkmate.push(*current_coordinates)
-          checkmate.push(cell.move_results_in_checkmate(color, current_coordinates, board))
+        if cell.is_a?(Piece) && cell.color == color && move_results_in_checkmate(color, current_coordinates, board)
+          possible_computer_movement = []
+          ending_coordinates = move_results_in_checkmate(color, current_coordinates, board)
+          possible_computer_movement.push(*current_coordinates)
+          possible_computer_movement.push(*ending_coordinates)
         end
       end
     end
-    checkmate
+    possible_computer_movement
   end
 
   def move_results_in_checkmate(color, starting_coordinates, board)
@@ -40,7 +41,7 @@ module Computer
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(starting_coordinates, possible_end, simulated_board)
-      if verify_checkmate(color, simulated_board) == true
+      if verify_checkmate(opposite_player_color(color), simulated_board)
         move_resulting_in_checkmate = possible_end
       end
     end

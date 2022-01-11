@@ -108,24 +108,24 @@ module CheckCheckmate
   def verify_checkmate(color, board)
     king_coordinates = get_king_location(color, board)
     starting_piece = get_piece(king_coordinates)
-    all_movements = Array.new
+    king_movements = Array.new
     impossible_movements = Array.new
     is_king_in_checkmate = false
 
-    all_movements.push(*starting_piece.all_possible_movements(@board, king_coordinates))
-    all_movements.push(*starting_piece.all_possible_attacks(@board, king_coordinates))
+    king_movements.push(*starting_piece.all_possible_movements(@board, king_coordinates))
+    king_movements.push(*starting_piece.all_possible_attacks(@board, king_coordinates))
 
-    all_movements.each do |possible_end|
-      simulated_board = Marshal.load(Marshal.dump(@board))
+    king_movements.each do |possible_end|
+      simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(king_coordinates, possible_end, simulated_board)
       if verify_check(color, simulated_board) == true
         is_king_in_checkmate = true
         impossible_movements.push(possible_end)
       end
     end
-    all_movements = all_movements - impossible_movements
+    king_movements = king_movements - impossible_movements
 
-    unless all_movements.empty?
+    unless king_movements.empty?
       is_king_in_checkmate = false
     end 
     is_king_in_checkmate
