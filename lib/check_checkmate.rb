@@ -99,10 +99,18 @@ module CheckCheckmate
   end
 
   def assess_endofround_checkmate(current_player_color, board)
-    is_other_player_in_check = false
+    is_other_player_in_checkmate = false
     other_player_color = opposite_player_color(current_player_color)
-    is_other_player_in_check = verify_checkmate(other_player_color, board)
-    is_other_player_in_check
+    
+    all_possible_attacks = get_all_attacks_against(other_player_color, board)
+    defending_king_location = get_king_location(other_player_color, board)
+
+    if all_possible_attacks.include?(defending_king_location)
+      is_defending_king_in_check = true
+    end
+
+    is_other_player_in_checkmate = verify_checkmate(other_player_color, board)
+    is_other_player_in_checkmate
   end
 
   def verify_checkmate(color, board)
@@ -128,6 +136,7 @@ module CheckCheckmate
     unless king_movements.empty?
       is_king_in_checkmate = false
     end 
+    p is_king_in_checkmate
     is_king_in_checkmate
   end
 end

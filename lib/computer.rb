@@ -1,9 +1,9 @@
-require 'pry'
+#require 'pry'
 module Computer
 
   def determine_computer_movement(color, board)
     computer_movement = Array.new
-    binding.pry
+    #binding.pry
     if find_computer_checkmate(color, board).any?
       computer_movement = find_computer_checkmate(color, board)
     elsif find_computer_check(color, board).any?
@@ -43,7 +43,9 @@ module Computer
       simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(starting_coordinates, possible_end, simulated_board)
       if verify_checkmate(opposite_player_color(color), simulated_board)
+
         move_resulting_in_checkmate = possible_end
+        p [starting_coordinates, move_resulting_in_checkmate]
       end
     end
     move_resulting_in_checkmate
