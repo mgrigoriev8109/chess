@@ -5,7 +5,6 @@ require 'player'
 require 'rook'
 require 'king'
 require 'bishop'
-
 describe CurrentGame do
 
   describe '#find_computer_move' do
@@ -93,17 +92,20 @@ describe CurrentGame do
   describe '#determine_computer_movement' do
 
     subject(:current_game) {described_class.new}
-    context 'When determining a possible checkmate-resulting move by a Computer' do
+    context 'When determining which movement a Computer will prioritize' do
 
-      it "returns [4,5] as the movement a Rook can make from [3,5] to put a king into checkmates" do
+      it "returns [0,3,4,7] as the Queen's checkmate movement by Black of a Fool's Blunder" do
 
         current_game.populate_gameboard
-        computer_color = 'black'
+        current_game.move_gamepiece([6,5],[5,5],current_game.board)
+        current_game.move_gamepiece([1,4],[2,4],current_game.board)
+        current_game.move_gamepiece([6,6],[4,6],current_game.board)
+        current_game.show_display
+        current_computer_color = 'black'
 
-        found_checkmate = current_game.determine_computer_movement(computer_color, current_game.board)
-        checkmate_movement_ending = [found_checkmate[2], found_checkmate[3]]
+        fools_blunder_checkmate = current_game.determine_computer_movement(current_computer_color, current_game.board)
 
-        expect(checkmate_movement_ending).to eq([4,5])
+        expect(fools_blunder_checkmate).to eq([0,3,4,7])
       end
     end
   end

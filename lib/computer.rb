@@ -1,7 +1,9 @@
+require 'pry'
 module Computer
 
   def determine_computer_movement(color, board)
     computer_movement = Array.new
+    binding.pry
     if find_computer_checkmate(color, board).any?
       computer_movement = find_computer_checkmate(color, board)
     elsif find_computer_check(color, board).any?
@@ -12,7 +14,6 @@ module Computer
       computer_movement = find_computer_move(color, board)
     end
     computer_movement
-    p computer_movement
   end
 
   def find_computer_checkmate(color, board)
