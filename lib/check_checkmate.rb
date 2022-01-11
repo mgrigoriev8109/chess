@@ -83,19 +83,6 @@ module CheckCheckmate
     all_attacks
   end
 
-  def get_king_location(color, board)
-    king_location = []
-
-    board.each_with_index do |row, row_index|
-      row.each_with_index do |cell, column_index|
-        if cell.is_a?(King) && cell.color == color
-          king_location = [row_index, column_index]
-        end
-      end
-    end
-    king_location
-  end
-
   def assess_endofround_check(current_player_color, board)
     is_other_player_in_check = false
     current_player_color

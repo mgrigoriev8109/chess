@@ -106,6 +106,19 @@ class CurrentGame
     starting_piece
   end
 
+  def get_king_location(color, board)
+    king_location = []
+
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        if cell.is_a?(King) && cell.color == color
+          king_location = [row_index, column_index]
+        end
+      end
+    end
+    king_location
+  end
+
   def move_gamepiece(starting_location, ending_location, board)
     starting_row = starting_location[0]
     starting_column = starting_location[1]
