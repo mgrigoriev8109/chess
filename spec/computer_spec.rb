@@ -115,7 +115,7 @@ describe CurrentGame do
         current_computer_color = 'white'
 
         computer_movement_array = current_game.determine_computer_movement(current_computer_color, current_game.board)
-        p computer_movement_array
+
 
         expect(computer_movement_array.count).to eq(4)
       end
