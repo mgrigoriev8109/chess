@@ -38,6 +38,7 @@ class CurrentGame
     create_starting_queens
     create_starting_knights
     create_starting_pawns
+    show_display
   end
 
   def create_player(color)
@@ -53,32 +54,34 @@ class CurrentGame
   end 
 
   def computer_turn(player)
-    show_display
-    puts "#{player.color} Computer it is now your turn."
+    puts "#Computer color #{player.color} it is now your turn."
+    starting_location = []
+    ending_location = []
+    color = player.color
     loop do 
-      computer_movement = determine_computer_movement(player.color, @board)
+      computer_movement = determine_computer_movement(color, @board)
       starting_location = [computer_movement[0], computer_movement[1]]
       ending_location = [computer_movement[2], computer_movement[3]]
       if possible_enpassant(starting_location) && verify_movement(computer_movement, color)
         destroy_defending_pawn(starting_location, ending_location, @board)
-      elsif possible_castling(starting_location, ending_location) && verify_movement(computer_movement, player.color)
+      elsif possible_castling(starting_location, ending_location) && verify_movement(computer_movement, color)
         move_castling_rook(color, starting_location, ending_location, @board)
-      elsif verify_movement(computer_movement, player.color)
+      elsif verify_movement(computer_movement, color)
         break
       end
     end
     
-    move_gamepiece(player.starting_location, player.ending_location, @board)
+    move_gamepiece(starting_location, ending_location, @board)
     assess_pawn_promotion(@board)
 
-    assess_check_checkmate(player.color, @board)
-    have_rooks_or_kings_moved(player.ending_location, @board)
-    can_next_player_castle(player.color, @board)
-    can_next_player_enpassant(player.starting_location, player.ending_location, @board)
+    assess_check_checkmate(color, @board)
+    have_rooks_or_kings_moved(ending_location, @board)
+    can_next_player_castle(color, @board)
+    can_next_player_enpassant(starting_location, ending_location, @board)
+    show_display
   end
 
   def human_turn(player)
-    show_display
     puts "#{player.name} it is now your turn."
     while player.get_input_array
       if possible_enpassant(player.starting_location) && verify_movement(player.movement, player.color)
@@ -97,6 +100,7 @@ class CurrentGame
     have_rooks_or_kings_moved(player.ending_location, @board)
     can_next_player_castle(player.color, @board)
     can_next_player_enpassant(player.starting_location, player.ending_location, @board)
+    show_display
   end
 
   def get_piece(coordinates)
