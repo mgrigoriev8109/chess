@@ -26,16 +26,10 @@ until current_game.assess_endofround_checkmate('black', current_game.board) do
   end
 end
 
-#review 3 git lessons linked in MD file
-#write rough draft for advanced git lessons outline point 1)
-
 #test computer_turn to verify that it performs random movement if nothing else possible
-#test computer_turn to verify that it performs an attack if possible
 
 #write rough draft for advanced git lessons outline point 2)
 
-#test computer_check to verify that it prioritizes the check movement
-#test computer_checkmate to verify that it prioritizes the checkmate movement
 
 #write rough draft for advanced git lessons outline point 3)
 
