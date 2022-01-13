@@ -42,10 +42,8 @@ module Computer
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(starting_coordinates, possible_end, simulated_board)
-      if verify_checkmate(opposite_player_color(color), simulated_board)
-
+      if assess_endofround_checkmate(color, simulated_board)
         move_resulting_in_checkmate = possible_end
-        p [starting_coordinates, move_resulting_in_checkmate]
       end
     end
     move_resulting_in_checkmate
