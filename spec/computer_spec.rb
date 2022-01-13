@@ -107,6 +107,18 @@ describe CurrentGame do
 
         expect(fools_blunder_checkmate).to eq([0,3,4,7])
       end
+
+      it "returns a four digit long array for the computer movement" do
+
+        current_game.populate_gameboard
+        current_game.show_display
+        current_computer_color = 'white'
+
+        computer_movement_array = current_game.determine_computer_movement(current_computer_color, current_game.board)
+        p computer_movement_array
+
+        expect(computer_movement_array.count).to eq(4)
+      end
     end
   end
 end

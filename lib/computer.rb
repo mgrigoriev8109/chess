@@ -54,7 +54,7 @@ module Computer
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         current_coordinates = [row_index, column_index]
-        if cell.is_a?(Piece) && cell.color == color && move_results_in_check(color, current_coordinates, board)
+        if cell.is_a?(Piece) && cell.color == color && move_results_in_check(color, current_coordinates, board).any?
           possible_computer_movement = []
           ending_coordinates = move_results_in_check(color, current_coordinates, board)
           possible_computer_movement.push(*current_coordinates)

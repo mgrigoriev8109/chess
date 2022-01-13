@@ -57,7 +57,6 @@ class CurrentGame
     puts "#{player.color} Computer it is now your turn."
     loop do 
       computer_movement = determine_computer_movement(player.color, @board)
-      p computer_movement
       starting_location = [computer_movement[0], computer_movement[1]]
       ending_location = [computer_movement[2], computer_movement[3]]
       if possible_enpassant(starting_location) && verify_movement(computer_movement, color)
