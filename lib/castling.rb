@@ -55,6 +55,9 @@ module Castling
       king_ending_coordinates = [castling_row, 6]
       king = get_piece(king_start)
       king.castling_coordinates = king_ending_coordinates
+    else 
+      king = get_piece(king_start)
+      king.castling_coordinates = false
     end
   end
 
