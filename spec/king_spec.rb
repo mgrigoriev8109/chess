@@ -2,6 +2,7 @@
 require 'king'
 require 'current_game'
 require 'player'
+require 'pry'
 
 describe King do
 
@@ -353,6 +354,17 @@ describe King do
         possible_attacks = king.attacks_up_left(board, [2,3])
         
         expect(possible_attacks).to eq([[1,2]])
+
+      end
+
+      it "returns an array of [1,2] when attacking from [2][3] and seeing a Black King at [0][1] and [1][2]" do
+
+        board[4][7] = King.new('white')
+        board[0][3] = King.new('black')
+        
+        possible_attacks = king.attacks_up_left(board, [4,7])
+        
+        expect(possible_attacks).to eq([[]])
 
       end
     end

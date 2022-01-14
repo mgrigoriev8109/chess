@@ -47,6 +47,10 @@ module Computer
         move_resulting_in_checkmate = possible_end
       end
     end
+    
+    if starting_piece.is_a?(King)
+      move_resulting_in_checkmate = false
+    end
     move_resulting_in_checkmate
   end
 
