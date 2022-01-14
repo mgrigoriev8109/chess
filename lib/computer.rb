@@ -13,6 +13,7 @@ module Computer
     elsif
       computer_movement = find_computer_move(color, board)
     end
+    p computer_movement
     computer_movement
   end
 
@@ -106,17 +107,20 @@ module Computer
 
   def find_computer_move(color, board)
     possible_computer_movement = []
+    all_piece_locations = []
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         current_coordinates = [row_index, column_index]
         if cell.is_a?(Piece) && cell.color == color && cell.all_possible_movements(board, current_coordinates).any?
-          possible_computer_movement = []
-          ending_coordinates = cell.all_possible_movements(board, current_coordinates).sample
-          possible_computer_movement.push(*current_coordinates)
-          possible_computer_movement.push(*ending_coordinates)
+          all_piece_locations.push(current_coordinates)
         end
       end
     end
+    piece_location = all_piece_locations.sample
+    piece = get_piece(piece_location)
+    piece_end_location = piece.all_possible_movements(board, piece_location).sample
+    possible_computer_movement.push(*piece_location)
+    possible_computer_movement.push(*piece_end_location)
     possible_computer_movement
   end
 

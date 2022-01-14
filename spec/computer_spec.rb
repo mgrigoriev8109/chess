@@ -100,7 +100,6 @@ describe CurrentGame do
         current_game.move_gamepiece([6,5],[5,5],current_game.board)
         current_game.move_gamepiece([1,4],[2,4],current_game.board)
         current_game.move_gamepiece([6,6],[4,6],current_game.board)
-        current_game.show_display
         current_computer_color = 'black'
 
         fools_blunder_checkmate = current_game.determine_computer_movement(current_computer_color, current_game.board)
@@ -111,7 +110,6 @@ describe CurrentGame do
       it "returns a four digit long array for the computer movement" do
 
         current_game.populate_gameboard
-        current_game.show_display
         current_computer_color = 'white'
 
         computer_movement_array = current_game.determine_computer_movement(current_computer_color, current_game.board)
