@@ -1,14 +1,5 @@
 module CheckCheckmate
 
-  def assess_check_checkmate(color, board)
-    if assess_endofround_checkmate(color, @board)
-      puts "Looks like #{color} has won and put the opposing color into Checkmate!"
-    elsif assess_endofround_check(color, @board)
-      puts "Looks like #{color} has put the opposing color into Check!"
-    end
-
-  end
-
   def verify_movement(movement, color)
     is_movement_verified = false
     starting_coordinates = [movement[0], movement[1]]
@@ -98,25 +89,67 @@ module CheckCheckmate
     is_other_player_in_check
   end
 
+  def assess_endofgame(color, board)
+    is_game_over = false
+    if assess_endofround_checkmate(color, board) 
+      puts "Looks like #{color} has won and put the opposing color into Checkmate!"
+      is_game_over = true
+    elsif assess_endofround_check(color, board)
+      puts "Looks like #{color} has put the opposing color into Check!"
+    elsif assess_endofround_stalemate(color, board)
+      puts "Looks like the game is over because #{color} has put the opposing color into Stalemate!"
+      is_game_over = true
+    end
+    is_game_over
+  end
+
   def assess_endofround_checkmate(current_player_color, board)
     is_other_player_in_checkmate = false
     other_player_color = opposite_player_color(current_player_color)
     all_possible_attacks = get_all_attacks_against(other_player_color, board)
     defending_king_location = get_king_location(other_player_color, board)
 
-    if all_possible_attacks.include?(defending_king_location) && verify_checkmate(other_player_color, board)
+    if all_possible_attacks.include?(defending_king_location) && can_king_move(other_player_color, board)
       is_other_player_in_checkmate = true
     end
 
     is_other_player_in_checkmate
   end
 
-  def verify_checkmate(color, board)
+  def assess_endofround_stalemate(current_player_color, board)
+    can_other_player_move = false
+    is_other_player_in_stalemate = true
+    board.each_with_index do |row, row_index|
+      break if can_other_player_move
+
+      row.each_with_index do |cell, column_index|
+        break if can_other_player_move
+
+        current_coordinates = [row_index, column_index]
+        if cell.is_a?(Piece) && cell.color != color && can_player_move(current_coordinates, cell)
+          can_other_player_move = true
+        end
+      end
+    end
+    if can_other_player_move
+      is_other_player_in_stalemate = false
+    end
+    is_other_player_in_stalemate
+  end
+
+  def can_player_move(coordinates, cell)
+    all_possible_moves = []
+    all_possible_moves.push(*cell.all_possible_attacks(board, [row_index, column_index]))
+    all_possible_moves.push(*cell.all_possible_movements(board, [row_index, column_index]))
+    all_possible_moves.select! { |possible_end| verify_end(current_coordinates, possible_end) }
+  end
+
+  def can_king_move(color, board)
     king_coordinates = get_king_location(color, board)
     starting_piece = get_piece(king_coordinates)
     king_movements = Array.new
     impossible_movements = Array.new
-    is_king_in_checkmate = false
+    is_king_unable_to_move = false
 
     king_movements.push(*starting_piece.all_possible_movements(@board, king_coordinates))
     king_movements.push(*starting_piece.all_possible_attacks(@board, king_coordinates))
@@ -125,14 +158,14 @@ module CheckCheckmate
       simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(king_coordinates, possible_end, simulated_board)
       if verify_check(color, simulated_board) == true
-        is_king_in_checkmate = true
+        is_king_unable_to_move = true
         impossible_movements.push(possible_end)
       end
     end
     king_movements = king_movements - impossible_movements
     unless king_movements.empty?
-      is_king_in_checkmate = false
+      is_king_unable_to_move = false
     end 
-    is_king_in_checkmate
+    is_king_unable_to_move
   end
 end

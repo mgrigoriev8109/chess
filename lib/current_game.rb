@@ -95,7 +95,6 @@ class CurrentGame
     move_gamepiece(player.starting_location, player.ending_location, @board)
     assess_pawn_promotion(@board)
 
-    assess_check_checkmate(player.color, @board)
     have_rooks_or_kings_moved(player.ending_location, @board)
     can_next_player_castle(player.color, @board)
     can_next_player_enpassant(player.starting_location, player.ending_location, @board)

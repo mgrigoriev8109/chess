@@ -13,7 +13,7 @@ require_relative 'player'
   black_player = Player.new('black', 'Computer')
   current_game.show_display
 
-  until current_game.assess_endofround_checkmate('black', current_game.board) do 
+  until current_game.assess_endofgame('black', current_game.board) do 
 
     if white_player.name == 'Computer'
       current_game.computer_turn(white_player)
@@ -21,7 +21,7 @@ require_relative 'player'
       current_game.human_turn(white_player)
     end
 
-    break if current_game.assess_endofround_checkmate('white', current_game.board)
+    break if current_game.assess_endofgame('white', current_game.board)
 
     if black_player.name == 'Computer'
       current_game.computer_turn(black_player)
