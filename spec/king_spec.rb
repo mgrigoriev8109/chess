@@ -356,17 +356,6 @@ describe King do
         expect(possible_attacks).to eq([[1,2]])
 
       end
-
-      it "returns an array of [1,2] when attacking from [2][3] and seeing a Black King at [0][1] and [1][2]" do
-
-        board[4][7] = King.new('white')
-        board[0][3] = King.new('black')
-        
-        possible_attacks = king.attacks_up_left(board, [4,7])
-        
-        expect(possible_attacks).to eq([[]])
-
-      end
     end
   end
 
@@ -460,6 +449,27 @@ describe King do
         possible_attacks = king.movements_up(board, [7,4])
         
         expect(possible_attacks).to eq([[6, 4], [5, 4], [4, 4], [3, 4], [2, 4], [1, 4], [0, 4]])
+
+      end
+    end
+  end
+
+
+  describe '#movements_up_left' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:king) {described_class.new('white')}
+
+    context 'A White King looking for all possible movements up left' do
+
+      it "returns an array of [3,6] when King can't attack King far away" do
+
+        board[4][7] = King.new('white')
+        board[0][3] = King.new('black')
+        
+        possible_movements = king.movements_up_left(board, [4,7])
+        
+        expect(possible_movements).to eq([3,6])
 
       end
     end
