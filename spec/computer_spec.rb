@@ -53,7 +53,7 @@ describe CurrentGame do
         current_game.board[3][6] = Knight.new("white")
         current_game.board[7][2] = Bishop.new("white")
         computer_color = 'black'
-        
+
         found_attack = current_game.find_computer_attack(computer_color, current_game.board)
 
         expect(found_attack).to eq([])
@@ -76,6 +76,17 @@ describe CurrentGame do
         check_movement_ending = [found_check[2], found_check[3]]
 
         expect(check_movement_ending).to eq([4,1])
+      end
+
+      it "returns [] as the movement a Black King can make from [3,1] to put a White King into checks" do
+
+        current_game.board[3][1] = King.new("black")
+        current_game.board[5][2] = King.new("white")
+        computer_color = 'black'
+
+        found_check = current_game.find_computer_check(computer_color, current_game.board)
+
+        expect(found_check).to eq([])
       end
     end
   end
