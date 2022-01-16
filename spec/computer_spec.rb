@@ -46,6 +46,18 @@ describe CurrentGame do
 
         expect(possible_rook_attacks).to include(ending_coordinates)
       end
+
+      it "returns [] when a King attempts to make an attack ending in Check" do
+
+        current_game.board[2][6] = King.new("black")
+        current_game.board[3][6] = Knight.new("white")
+        current_game.board[7][2] = Bishop.new("white")
+        computer_color = 'black'
+        
+        found_attack = current_game.find_computer_attack(computer_color, current_game.board)
+
+        expect(found_attack).to eq([])
+      end
     end
   end
 

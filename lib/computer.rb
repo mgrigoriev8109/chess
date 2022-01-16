@@ -106,7 +106,12 @@ module Computer
         end
       end
     end
-    possible_computer_movement
+
+    if possible_computer_movement.any? && verify_movement(possible_computer_movement, color)
+      possible_computer_movement
+    else
+      possible_computer_movement = []
+    end
   end
 
   def find_computer_move(color, board)
