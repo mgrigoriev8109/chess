@@ -59,7 +59,7 @@ module Computer
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         current_coordinates = [row_index, column_index]
-        if cell.is_a?(Piece) && cell.color == color && move_results_in_check(color, current_coordinates, board).any?
+        if cell.is_a?(Piece) && cell.color == color && move_results_in_check(color, current_coordinates, board)
           possible_computer_movement = []
           ending_coordinates = move_results_in_check(color, current_coordinates, board)
           possible_computer_movement.push(*current_coordinates)
@@ -77,7 +77,7 @@ module Computer
     starting_piece = get_piece(starting_coordinates)
     all_movements.push(*starting_piece.all_possible_movements(board, starting_coordinates))
     all_movements.push(*starting_piece.all_possible_attacks(board, starting_coordinates))
-    move_resulting_in_check = []
+    move_resulting_in_check = false
 
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(board))
@@ -88,7 +88,7 @@ module Computer
     end
 
     if starting_piece.is_a?(King)
-      move_results_in_check = []
+      move_results_in_check = false
     end
     move_resulting_in_check
   end
