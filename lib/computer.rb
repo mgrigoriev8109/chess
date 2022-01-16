@@ -64,7 +64,6 @@ module Computer
           ending_coordinates = move_results_in_check(color, current_coordinates, board)
           possible_computer_movement.push(*current_coordinates)
           possible_computer_movement.push(*ending_coordinates)
-          
         end
       end
     end
@@ -88,7 +87,7 @@ module Computer
     end
 
     if starting_piece.is_a?(King)
-      move_results_in_check = false
+      move_resulting_in_check = false
     end
     move_resulting_in_check
   end
