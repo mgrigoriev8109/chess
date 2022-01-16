@@ -467,7 +467,7 @@ describe King do
         board[4][7] = King.new('white')
         board[0][3] = King.new('black')
         
-        possible_movements = king.movements_up_left(board, [4,7])
+        possible_movements = king.movements_up_left(board, [4,7]).last
         
         expect(possible_movements).to eq([3,6])
 

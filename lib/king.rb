@@ -27,14 +27,14 @@ class King < Piece
     if @castling_coordinates
       movements_array.push(@castling_coordinates)
     end
-    movements_array.push(movements_right(board, piece_location)[0]) 
-    movements_array.push(movements_left(board, piece_location)[0])
-    movements_array.push(movements_up(board, piece_location)[0])
-    movements_array.push(movements_down(board, piece_location)[0])
-    movements_array.push(movements_down_left(board, piece_location)[0])
-    movements_array.push(movements_down_right(board, piece_location)[0])
-    movements_array.push(movements_up_left(board, piece_location)[0])
-    movements_array.push(movements_up_right(board, piece_location)[-1])
+    movements_array.push(movements_right(board, piece_location).first) 
+    movements_array.push(movements_left(board, piece_location).first)
+    movements_array.push(movements_up(board, piece_location).first)
+    movements_array.push(movements_down(board, piece_location).first)
+    movements_array.push(movements_down_left(board, piece_location).first)
+    movements_array.push(movements_down_right(board, piece_location).first)
+    movements_array.push(movements_up_left(board, piece_location).last)
+    movements_array.push(movements_up_right(board, piece_location).last)
     movements_array.delete(nil)
     movements_array
   end
