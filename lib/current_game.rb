@@ -38,7 +38,6 @@ class CurrentGame
     create_starting_queens
     create_starting_knights
     create_starting_pawns
-    show_display
   end
 
   def create_player(color)

@@ -11,7 +11,7 @@ require_relative 'player'
   #black_player = current_game.create_player("black")
   white_player = Player.new('white', 'Computer')
   black_player = Player.new('black', 'Computer')
-  current_game.display
+  current_game.show_display
 
   until current_game.assess_endofround_checkmate('black', current_game.board) do 
 
