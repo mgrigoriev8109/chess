@@ -1,31 +1,35 @@
 require_relative 'current_game'
+require_relative 'player'
 
-current_game = CurrentGame.new
-current_game.introduction
-current_game.populate_gameboard
-puts "What will be the name of the White Player? If this player is to be a computer, type the name Computer"
-white_player = current_game.create_player("white")
-puts "What will be the name of the Black Player? If this player is to be a computer, type the name Computer"
-black_player = current_game.create_player("black")
-current_game.display
+10.times do
+  current_game = CurrentGame.new
+  current_game.introduction
+  current_game.populate_gameboard
+  puts "What will be the name of the White Player? If this player is to be a computer, type the name Computer"
+  #white_player = current_game.create_player("white")
+  puts "What will be the name of the Black Player? If this player is to be a computer, type the name Computer"
+  #black_player = current_game.create_player("black")
+  white_player = Player.new('white', 'Computer')
+  black_player = Player.new('black', 'Computer')
+  current_game.display
 
-until current_game.assess_endofround_checkmate('black', current_game.board) do 
+  until current_game.assess_endofround_checkmate('black', current_game.board) do 
 
-  if white_player.name == 'Computer'
-    current_game.computer_turn(white_player)
-  else
-    current_game.human_turn(white_player)
-  end
+    if white_player.name == 'Computer'
+      current_game.computer_turn(white_player)
+    else
+      current_game.human_turn(white_player)
+    end
 
-  break if current_game.assess_endofround_checkmate('white', current_game.board)
+    break if current_game.assess_endofround_checkmate('white', current_game.board)
 
-  if black_player.name == 'Computer'
-    current_game.computer_turn(black_player)
-  else
-    current_game.human_turn(black_player)
+    if black_player.name == 'Computer'
+      current_game.computer_turn(black_player)
+    else
+      current_game.human_turn(black_player)
+    end
   end
 end
-
 #test computer_turn to verify that it performs random movement if nothing else possible
 
 #write rough draft for advanced git lessons outline point 2)
