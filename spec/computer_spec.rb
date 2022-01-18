@@ -102,8 +102,7 @@ describe CurrentGame do
         current_game.board[3][5] = Rook.new("black")
         current_game.board[5][5] = Rook.new("black")
         current_game.board[4][0] = King.new("white")
-        current_game.show_display
-        
+
         computer_color = 'black'
 
         found_checkmate = current_game.find_computer_checkmate(computer_color, current_game.board)
