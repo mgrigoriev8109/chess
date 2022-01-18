@@ -1,11 +1,11 @@
 module CheckCheckmate
 
-  def verify_movement(movement, color)
+  def verify_movement(movement, color, board)
     is_movement_verified = false
     starting_coordinates = [movement[0], movement[1]]
     ending_coordinates = [movement[2], movement[3]]
     is_movement_verified = verify_start(starting_coordinates, color)
-    is_movement_verified = verify_end(starting_coordinates, ending_coordinates)
+    is_movement_verified = verify_end(starting_coordinates, ending_coordinates, board)
     is_movement_verified
   end
 
@@ -24,18 +24,18 @@ module CheckCheckmate
     is_location_verified
   end
 
-  def verify_end(starting_coordinates, ending_coordinates)
+  def verify_end(starting_coordinates, ending_coordinates, board)
     starting_piece = get_piece(starting_coordinates)
     color = starting_piece.color
     all_movements = Array.new
     impossible_movements = Array.new
     can_piece_move_or_attack = false
 
-    all_movements.push(*starting_piece.all_possible_movements(@board, starting_coordinates))
-    all_movements.push(*starting_piece.all_possible_attacks(@board, starting_coordinates))
+    all_movements.push(*starting_piece.all_possible_movements(board, starting_coordinates))
+    all_movements.push(*starting_piece.all_possible_attacks(board, starting_coordinates))
 
     all_movements.each do |possible_end|
-      simulated_board = Marshal.load(Marshal.dump(@board))
+      simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(starting_coordinates, possible_end, simulated_board)
       if verify_check(color, simulated_board) == true
         impossible_movements.push(possible_end)
@@ -150,7 +150,7 @@ module CheckCheckmate
     piece = get_piece(start_coordinates)
     all_possible_moves.push(*piece.all_possible_attacks(board, start_coordinates))
     all_possible_moves.push(*piece.all_possible_movements(board, start_coordinates))
-    all_possible_moves.select! { |possible_end| verify_end(start_coordinates, possible_end) }
+    all_possible_moves.select! { |possible_end| verify_end(start_coordinates, possible_end, board) }
     all_possible_moves
   end
 end

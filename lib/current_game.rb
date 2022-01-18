@@ -61,11 +61,11 @@ class CurrentGame
       computer_movement = determine_computer_movement(color, @board)
       starting_location = [computer_movement[0], computer_movement[1]]
       ending_location = [computer_movement[2], computer_movement[3]]
-      if possible_enpassant(starting_location) && verify_movement(computer_movement, color)
+      if possible_enpassant(starting_location) && verify_movement(computer_movement, color, @board)
         destroy_defending_pawn(starting_location, ending_location, @board)
-      elsif possible_castling(starting_location, ending_location) && verify_movement(computer_movement, color)
+      elsif possible_castling(starting_location, ending_location) && verify_movement(computer_movement, color, @board)
         move_castling_rook(color, starting_location, ending_location, @board)
-      elsif verify_movement(computer_movement, color)
+      elsif verify_movement(computer_movement, color, @board)
         break
       end
     end
@@ -82,11 +82,11 @@ class CurrentGame
   def human_turn(player)
     puts "#{player.name} it is now your turn."
     while player.get_input_array
-      if possible_enpassant(player.starting_location) && verify_movement(player.movement, player.color)
+      if possible_enpassant(player.starting_location) && verify_movement(player.movement, player.color, @board)
         destroy_defending_pawn(player.starting_location, player.ending_location, @board)
-      elsif possible_castling(player.starting_location, player.ending_location) && verify_movement(player.movement, player.color)
+      elsif possible_castling(player.starting_location, player.ending_location) && verify_movement(player.movement, player.color, @board)
         move_castling_rook(color, player.starting_location, player.ending_location, @board)
-      elsif verify_movement(player.movement, player.color)
+      elsif verify_movement(player.movement, player.color, @board)
         break
       end
     end

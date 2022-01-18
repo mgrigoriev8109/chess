@@ -39,18 +39,9 @@ module Computer
     all_movements.push(*starting_piece.all_possible_movements(board, starting_coordinates))
     all_movements.push(*starting_piece.all_possible_attacks(board, starting_coordinates))
     move_resulting_in_checkmate = false
-    p all_movements
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(starting_coordinates, possible_end, simulated_board)
-      p color
-      p possible_end
-      p simulated_board[3][2]
-      p simulated_board[4][5]
-      p simulated_board[5][5]
-      p simulated_board[4][0]
-      p assess_endofround_checkmate(color, simulated_board)
-      p find_king_escape('white', simulated_board)
       if assess_endofround_checkmate(color, simulated_board)
         move_resulting_in_checkmate = possible_end
       end
@@ -114,7 +105,7 @@ module Computer
       end
     end
 
-    if possible_computer_movement.any? && verify_movement(possible_computer_movement, color)
+    if possible_computer_movement.any? && verify_movement(possible_computer_movement, color, board)
       possible_computer_movement
     else
       possible_computer_movement = []

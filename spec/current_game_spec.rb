@@ -37,7 +37,7 @@ describe CurrentGame do
         movement = [1,0,1,1]
         color = 'black'
 
-        is_movement_legal = current_game.verify_movement(movement, color)
+        is_movement_legal = current_game.verify_movement(movement, color, current_game.board)
         
         expect(is_movement_legal).to be false
       end
@@ -48,7 +48,7 @@ describe CurrentGame do
         movement = [6,0,4,0]
         color = 'white'
 
-        is_movement_legal = current_game.verify_movement(movement, color)
+        is_movement_legal = current_game.verify_movement(movement, color, current_game.board)
         
         expect(is_movement_legal).to be true
       end
@@ -122,7 +122,7 @@ describe CurrentGame do
         start_coord = [0,0]
         end_coord = [1,0]
 
-        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord)
+        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord, current_game.board)
         
         expect(is_ending_coordinate_legal).to be false
       end
@@ -134,7 +134,7 @@ describe CurrentGame do
         start_coord = [0,0]
         end_coord = [1,0]
 
-        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord)
+        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord, current_game.board)
         
         expect(is_ending_coordinate_legal).to be true
       end
@@ -147,7 +147,7 @@ describe CurrentGame do
         start_coord = [1,0]
         end_coord = [1,1]
 
-        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord)
+        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord, current_game.board)
         
         expect(is_ending_coordinate_legal).to be false
       end
@@ -161,7 +161,7 @@ describe CurrentGame do
         start_coord = [1,0]
         end_coord = [1,4]
 
-        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord)
+        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord, current_game.board)
         
         expect(is_ending_coordinate_legal).to be false
       end
@@ -174,7 +174,7 @@ describe CurrentGame do
         start_coord = [1,1]
         end_coord = [1,0]
 
-        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord)
+        is_ending_coordinate_legal = current_game.verify_end(start_coord, end_coord, current_game.board)
         
         expect(is_ending_coordinate_legal).to be true
       end
