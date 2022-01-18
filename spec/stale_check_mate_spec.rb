@@ -162,4 +162,22 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#can_piece_move' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When looking to see if a piece can move anywhere' do
+
+      it "returns false because a black rook is blocked off and can't move anywhere" do
+        
+        current_game.populate_gameboard
+        black_rook_coordinates = [0,0]
+
+        can_this_piece_move = current_game.can_piece_move(current_game.board, black_rook_coordinates)
+        
+        expect(can_this_piece_move.any?).to be false
+      end
+    end
+  end
 end

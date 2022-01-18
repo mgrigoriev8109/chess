@@ -127,7 +127,7 @@ module CheckCheckmate
         break if can_other_player_move
 
         current_coordinates = [row_index, column_index]
-        if cell.is_a?(Piece) && cell.color != color && can_player_move(current_coordinates, cell)
+        if cell.is_a?(Piece) && cell.color != color && can_piece_move(board, current_coordinates).any?
           can_other_player_move = true
         end
       end
@@ -138,11 +138,13 @@ module CheckCheckmate
     is_other_player_in_stalemate
   end
 
-  def can_player_move(start_coordinates, cell)
+  def can_piece_move(board, start_coordinates)
     all_possible_moves = []
-    all_possible_moves.push(*cell.all_possible_attacks(board, start_coordinates))
-    all_possible_moves.push(*cell.all_possible_movements(board, start_coordinates))
+    piece = get_piece(start_coordinates)
+    all_possible_moves.push(*piece.all_possible_attacks(board, start_coordinates))
+    all_possible_moves.push(*piece.all_possible_movements(board, start_coordinates))
     all_possible_moves.select! { |possible_end| verify_end(start_coordinates, possible_end) }
+    all_possible_moves
   end
 
   def can_king_move(color, board)
