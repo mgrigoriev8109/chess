@@ -124,25 +124,20 @@ describe CurrentGame do
         expect(is_opponent_in_checkmate).to be false
       end
     end
-  end
 
-  describe '#can_king_move' do
-
-    subject(:current_game) {described_class.new}
-
-    context 'When checking if the attacking Black player can perform Checkmate on a White King piece' do
-
-      it "returns true when Black has a Rook [0,2] adjescent to a White King [0,0]" do
+    it "returns false when two White Rooks placing Black King in Check but black Rook can save King" do
         
-        current_game.populate_gameboard
-        current_game.board[6][2] = Knight.new('black')
-        current_game.move_gamepiece([6,4],[5,4],current_game.board)
+      current_game.board[0][2] = Rook.new('white')
+      current_game.board[1][2] = Rook.new('white')
+      current_game.board[0][0] = King.new('black')
+      current_game.board[0][3] = Rook.new('black')
+      current_player_color = 'white'
 
-        is_checkmate_occurring = current_game.can_king_move('white', current_game.board)
-        
-        expect(is_checkmate_occurring).to be false
-      end
+      is_opponent_in_checkmate = current_game.assess_endofround_checkmate(current_player_color, current_game.board)
+      
+      expect(is_opponent_in_checkmate).to be false
     end
+
   end
 
   describe '#assess_endofround_stalemate' do
