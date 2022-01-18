@@ -5,7 +5,7 @@ module CheckCheckmate
     starting_coordinates = [movement[0], movement[1]]
     ending_coordinates = [movement[2], movement[3]]
     is_movement_verified = verify_start(starting_coordinates, color)
-    is_movement_verified = verify_end(starting_coordinates, ending_coordinates, color)
+    is_movement_verified = verify_end(starting_coordinates, ending_coordinates)
     is_movement_verified
   end
 
@@ -24,8 +24,9 @@ module CheckCheckmate
     is_location_verified
   end
 
-  def verify_end(starting_coordinates, ending_coordinates, color)
+  def verify_end(starting_coordinates, ending_coordinates)
     starting_piece = get_piece(starting_coordinates)
+    color = starting_piece.color
     all_movements = Array.new
     impossible_movements = Array.new
     can_piece_move_or_attack = false
@@ -116,7 +117,7 @@ module CheckCheckmate
     is_other_player_in_checkmate
   end
 
-  def assess_endofround_stalemate(current_player_color, board)
+  def assess_endofround_stalemate(color, board)
     can_other_player_move = false
     is_other_player_in_stalemate = true
     board.each_with_index do |row, row_index|
@@ -137,11 +138,11 @@ module CheckCheckmate
     is_other_player_in_stalemate
   end
 
-  def can_player_move(coordinates, cell)
+  def can_player_move(start_coordinates, cell)
     all_possible_moves = []
-    all_possible_moves.push(*cell.all_possible_attacks(board, [row_index, column_index]))
-    all_possible_moves.push(*cell.all_possible_movements(board, [row_index, column_index]))
-    all_possible_moves.select! { |possible_end| verify_end(current_coordinates, possible_end) }
+    all_possible_moves.push(*cell.all_possible_attacks(board, start_coordinates))
+    all_possible_moves.push(*cell.all_possible_movements(board, start_coordinates))
+    all_possible_moves.select! { |possible_end| verify_end(start_coordinates, possible_end) }
   end
 
   def can_king_move(color, board)

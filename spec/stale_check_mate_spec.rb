@@ -144,4 +144,22 @@ describe CurrentGame do
       end
     end
   end
+
+  describe '#assess_endofround_stalemate' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When checking if the next player to have a turn will be in a Stalemate' do
+
+      it "returns false when game is just beginning" do
+        
+        current_game.populate_gameboard
+        current_player_color = 'white'
+
+        next_player_in_stalemate = current_game.assess_endofround_stalemate(current_player_color, current_game.board)
+        
+        expect(next_player_in_stalemate).to be false
+      end
+    end
+  end
 end
