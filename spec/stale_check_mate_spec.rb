@@ -160,6 +160,18 @@ describe CurrentGame do
         
         expect(next_player_in_stalemate).to be false
       end
+
+      it "returns true when it's White's turn, and White Rooks are placed so that Black King is in Stalemate" do
+        
+        current_game.board[0][0] = King.new('black')
+        current_game.board[1][2] = Rook.new('white')
+        current_game.board[2][1] = Rook.new('white')
+        current_player_color = 'white'
+
+        next_player_in_stalemate = current_game.assess_endofround_stalemate(current_player_color, current_game.board)
+        
+        expect(next_player_in_stalemate).to be true
+      end
     end
   end
 
@@ -177,7 +189,18 @@ describe CurrentGame do
         can_this_piece_move = current_game.can_piece_move(current_game.board, black_rook_coordinates)
         
         expect(can_this_piece_move.any?).to be false
+      end 
+
+      it "returns true because a black pawn can move in the beginning of the game" do
+        
+        current_game.populate_gameboard
+        black_pawn_coordinates = [1,0]
+
+        can_this_piece_move = current_game.can_piece_move(current_game.board, black_pawn_coordinates)
+        
+        expect(can_this_piece_move.any?).to be true
       end
+
     end
   end
 end
