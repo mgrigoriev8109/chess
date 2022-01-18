@@ -102,13 +102,33 @@ describe CurrentGame do
         current_game.board[3][5] = Rook.new("black")
         current_game.board[5][5] = Rook.new("black")
         current_game.board[4][0] = King.new("white")
-
         computer_color = 'black'
 
         found_checkmate = current_game.find_computer_checkmate(computer_color, current_game.board)
         checkmate_movement_ending = [found_checkmate[2], found_checkmate[3]]
 
         expect(checkmate_movement_ending).to eq([4,5])
+      end
+    end
+  end
+
+  describe '#move_results_in_checkmate' do
+
+    subject(:current_game) {described_class.new}
+    context 'When determining a possible checkmate-resulting move by a Computer' do
+
+      it "returns [4,5] as the movement a Rook can make from [3,5] to put a king into checkmates" do
+
+        current_game.board[3][2] = Rook.new("black")
+        current_game.board[3][5] = Rook.new("black")
+        current_game.board[5][5] = Rook.new("black")
+        current_game.board[4][0] = King.new("white")
+        computer_color = 'black'
+        starting_coordinates = [3,5]
+
+        checkmate_move = current_game.move_results_in_checkmate(computer_color, starting_coordinates, current_game.board)
+
+        expect(checkmate_move).to eq([4,5])
       end
     end
   end

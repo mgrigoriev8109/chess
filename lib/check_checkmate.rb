@@ -109,9 +109,12 @@ module CheckCheckmate
     next_player_color = opposite_player_color(current_color)
     enemy_attacks = get_all_attacks_against(next_player_color, board)
     defending_king_location = get_king_location(next_player_color, board)
-
-    if enemy_attacks.include?(defending_king_location) && can_next_player_move(current_color, board) == false
+    if enemy_attacks.include?(defending_king_location)
       is_next_player_in_checkmate = true
+    end
+
+    if can_next_player_move(current_color, board)
+      is_next_player_in_checkmate = false
     end
 
     is_next_player_in_checkmate

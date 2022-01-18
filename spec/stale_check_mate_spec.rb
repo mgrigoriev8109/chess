@@ -141,10 +141,10 @@ describe CurrentGame do
     it "returns true when white King can't move because of three black rooks" do
         
       current_game.board[3][2] = Rook.new("black")
-      current_game.board[3][5] = Rook.new("black")
+      current_game.board[4][5] = Rook.new("black")
       current_game.board[5][5] = Rook.new("black")
       current_game.board[4][0] = King.new("white")
-      current_player_color = 'white'
+      current_player_color = 'black'
 
       is_opponent_in_checkmate = current_game.assess_endofround_checkmate(current_player_color, current_game.board)
       
