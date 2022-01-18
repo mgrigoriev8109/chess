@@ -1,52 +1,33 @@
 require_relative 'current_game'
 require_relative 'player'
 
-10.times do
   current_game = CurrentGame.new
   current_game.introduction
   current_game.populate_gameboard
   puts "What will be the name of the White Player? If this player is to be a computer, type the name Computer"
-  #white_player = current_game.create_player("white")
+  white_player = current_game.create_player("white")
   puts "What will be the name of the Black Player? If this player is to be a computer, type the name Computer"
-  #black_player = current_game.create_player("black")
-  white_player = Player.new('white', 'Computer')
-  black_player = Player.new('black', 'Computer')
+  black_player = current_game.create_player("black")
   current_game.show_display
 
-  until current_game.assess_endofgame('black', current_game.board) do 
+until current_game.assess_endofgame('black', current_game.board) do 
 
-    if white_player.name == 'Computer'
-      current_game.computer_turn(white_player)
-    else
-      current_game.human_turn(white_player)
-    end
+  if white_player.name == 'Computer'
+    current_game.computer_turn(white_player)
+  else
+    current_game.human_turn(white_player)
+  end
 
-    break if current_game.assess_endofgame('white', current_game.board)
+  break if current_game.assess_endofgame('white', current_game.board)
 
-    if black_player.name == 'Computer'
-      current_game.computer_turn(black_player)
-    else
-      current_game.human_turn(black_player)
-    end
+  if black_player.name == 'Computer'
+    current_game.computer_turn(black_player)
+  else
+    current_game.human_turn(black_player)
   end
 end
-#test computer_turn to verify that it performs random movement if nothing else possible
 
-#write rough draft for advanced git lessons outline point 2)
-
-
-#write rough draft for advanced git lessons outline point 3)
-
-#hunt for bugs, have AI play against each other, test castling and en passant in-game. 
-
-#write rough draft for advanced git lessons outline point 4)
-#assess timeline, if it's already January 20th, then write rough draft for point 5) next
-
-#if it's earlier than 20th, then before point 5)
 #implement save/load
-
-#revise rough draft into final draft and create pull request
-
 #style chess properly
 #go back through POODR and think about possible ways of refactoring to make it more OOP
 #include gif and update README with finished project, features, bugs, reflections
