@@ -48,7 +48,6 @@ class BlackPawn < Piece
       board_row.each_with_index do |value, column_index| 
         if possible_row == row_index && @can_en_passant_column == column_index
           possible_attacks.push([row_index, @can_en_passant_column])
-          @can_en_passant_column = nil
         elsif possible_row == row_index && possible_columns.include?(column_index) && value.is_a?(Piece) && value.color != @color
           possible_attacks.push([row_index, column_index])
         end

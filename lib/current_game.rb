@@ -63,6 +63,7 @@ class CurrentGame
       ending_location = [computer_movement[2], computer_movement[3]]
       if possible_enpassant(starting_location) && verify_movement(computer_movement, color, @board)
         destroy_defending_pawn(starting_location, ending_location, @board)
+        get_piece(starting_location).can_en_passant_column = nil
       elsif possible_castling(starting_location, ending_location) && verify_movement(computer_movement, color, @board)
         move_castling_rook(color, starting_location, ending_location, @board)
       elsif verify_movement(computer_movement, color, @board)
@@ -70,20 +71,24 @@ class CurrentGame
       end
     end
     
+    can_next_player_enpassant(starting_location, ending_location, @board)
     move_gamepiece(starting_location, ending_location, @board)
     assess_pawn_promotion(@board)
 
     have_rooks_or_kings_moved(ending_location, @board)
     can_next_player_castle(color, @board)
-    can_next_player_enpassant(starting_location, ending_location, @board)
     show_display
   end
 
   def human_turn(player)
     puts "#{player.name} it is now your turn."
     while player.get_input_array
+      p player.starting_location
+      p possible_enpassant(player.starting_location)
+      p verify_movement(player.movement, player.color, @board)
       if possible_enpassant(player.starting_location) && verify_movement(player.movement, player.color, @board)
         destroy_defending_pawn(player.starting_location, player.ending_location, @board)
+        get_piece(player.starting_location).can_en_passant_column = nil
       elsif possible_castling(player.starting_location, player.ending_location) && verify_movement(player.movement, player.color, @board)
         move_castling_rook(player.color, player.starting_location, player.ending_location, @board)
       elsif verify_movement(player.movement, player.color, @board)
@@ -91,12 +96,12 @@ class CurrentGame
       end
     end
     
+    can_next_player_enpassant(player.starting_location, player.ending_location, @board)
     move_gamepiece(player.starting_location, player.ending_location, @board)
     assess_pawn_promotion(@board)
 
     have_rooks_or_kings_moved(player.ending_location, @board)
     can_next_player_castle(player.color, @board)
-    can_next_player_enpassant(player.starting_location, player.ending_location, @board)
     show_display
   end
 

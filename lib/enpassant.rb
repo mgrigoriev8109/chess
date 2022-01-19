@@ -2,6 +2,7 @@ module EnPassant
 
   def possible_enpassant(starting_location)
     attacking_piece = get_piece(starting_location)
+    p attacking_piece
     enpassant_attack_can_occur = false
     if attacking_piece.is_a?(WhitePawn) && attacking_piece.can_en_passant_column
       enpassant_attack_can_occur = true
@@ -29,7 +30,6 @@ module EnPassant
     elsif starting_piece.is_a?(BlackPawn) && starting_row == 1 && ending_row == 3
       verify_enpassant_by_white_pawn(ending_coordinates, board)
     end
-
   end
 
   def verify_enpassant_by_white_pawn(ending_location, board)
@@ -41,9 +41,11 @@ module EnPassant
       row.each_with_index do |cell, column_index|
         if white_pawn_row == 3 && white_pawn_columns.include?(column_index) && cell.is_a?(WhitePawn)
           cell.can_en_passant_column = black_pawn_column
+          puts "The next player can perform an En Passant attack."
         end
       end
     end
+
   end
 
   def verify_enpassant_by_black_pawn(ending_location, board)
@@ -55,6 +57,7 @@ module EnPassant
       row.each_with_index do |cell, column_index|
         if black_pawn_row == 4 && black_pawn_columns.include?(column_index) && cell.is_a?(BlackPawn)
           cell.can_en_passant_column = white_pawn_column
+          puts "The next player can perform an En Passant attack."
         end
       end
     end

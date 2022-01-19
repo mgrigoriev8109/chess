@@ -1,6 +1,5 @@
 #spec/enpassant_spec.rb
 require 'current_game'
-require 'pry'
 
 describe CurrentGame do
 
@@ -109,7 +108,7 @@ describe CurrentGame do
       it "returns the Black Pawn's @can_en_passant_column to be the adjacent White Pawn's column when En Passant possible" do
         
         current_game.populate_gameboard
-
+        current_game.board[4][6] = BlackPawn.new('black')
         black_pawn = current_game.board[4][6]
         starting = [6,7]
         ending = [4,7]
@@ -158,9 +157,9 @@ describe CurrentGame do
         black_end = [3,5]
         attacking_pawn_location = [3,6]
 
+        current_game.can_next_player_enpassant(black_start, black_end, current_game.board)
         current_game.move_gamepiece(black_start, black_end, current_game.board)
         is_enpassant_possible = current_game.possible_enpassant(attacking_pawn_location)
-        binding.pry
 
         expect(is_enpassant_possible).to be true
       end
