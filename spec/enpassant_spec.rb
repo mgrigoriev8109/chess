@@ -1,5 +1,6 @@
 #spec/enpassant_spec.rb
 require 'current_game'
+require 'pry'
 
 describe CurrentGame do
 
@@ -91,18 +92,32 @@ describe CurrentGame do
         expect(black_pawn.can_en_passant_column).to eq(7)
       end
 
-      it "returns the Black Pawn's @can_en_passant_column to be nil when White Pawn only moves 1 space and En Passant not possible" do
+      it "returns black pawn column 5 when en passant possible" do
         
-        current_game.board[5][7] = WhitePawn.new('white')
-        current_game.board[4][6] = BlackPawn.new('black')
+        current_game.board[3][6] = WhitePawn.new('white')
+        current_game.board[1][5] = BlackPawn.new('black')
+        attacking_pawn = current_game.board[3][6]
+        starting = [1,5]
+        ending = [3,5]
+
+        current_game.can_next_player_enpassant(starting, ending, current_game.board)
+
+
+        expect(attacking_pawn.can_en_passant_column).to eq(5)
+      end
+
+      it "returns the Black Pawn's @can_en_passant_column to be the adjacent White Pawn's column when En Passant possible" do
+        
+        current_game.populate_gameboard
+
         black_pawn = current_game.board[4][6]
-        starting = [5,7]
+        starting = [6,7]
         ending = [4,7]
 
         current_game.can_next_player_enpassant(starting, ending, current_game.board)
 
 
-        expect(black_pawn.can_en_passant_column).to eq(nil)
+        expect(black_pawn.can_en_passant_column).to eq(7)
       end
     end
   end
@@ -125,6 +140,29 @@ describe CurrentGame do
         current_game.destroy_defending_pawn(white_pawn_start, white_pawn_end, current_game.board)
 
         expect(current_game.board[3][0]).to eq(' ')
+      end
+    end
+  end
+
+  describe '#possible_enpassant' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When checking if enpassant is possible' do
+
+      it "returns ' ' in the BlackPawn's [3,0] after WhitePawn attacks onto [2,0] through EnPassant"  do
+        
+        current_game.populate_gameboard
+        current_game.board[3][6] = WhitePawn.new('white')
+        black_start = [1,5]
+        black_end = [3,5]
+        attacking_pawn_location = [3,6]
+
+        current_game.move_gamepiece(black_start, black_end, current_game.board)
+        is_enpassant_possible = current_game.possible_enpassant(attacking_pawn_location)
+        binding.pry
+
+        expect(is_enpassant_possible).to be true
       end
     end
   end

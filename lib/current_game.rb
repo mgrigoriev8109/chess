@@ -85,7 +85,7 @@ class CurrentGame
       if possible_enpassant(player.starting_location) && verify_movement(player.movement, player.color, @board)
         destroy_defending_pawn(player.starting_location, player.ending_location, @board)
       elsif possible_castling(player.starting_location, player.ending_location) && verify_movement(player.movement, player.color, @board)
-        move_castling_rook(color, player.starting_location, player.ending_location, @board)
+        move_castling_rook(player.color, player.starting_location, player.ending_location, @board)
       elsif verify_movement(player.movement, player.color, @board)
         break
       end
