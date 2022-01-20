@@ -143,7 +143,7 @@ describe CurrentGame do
     end
   end
 
-  describe '#possible_enpassant' do
+  describe '#player_performing_enpassant' do
 
     subject(:current_game) {described_class.new}
 
@@ -159,7 +159,7 @@ describe CurrentGame do
 
         current_game.can_next_player_enpassant(black_start, black_end, current_game.board)
         current_game.move_gamepiece(black_start, black_end, current_game.board)
-        is_enpassant_possible = current_game.possible_enpassant(attacking_pawn_location)
+        is_enpassant_possible = current_game.player_performing_enpassant(attacking_pawn_location)
 
         expect(is_enpassant_possible).to be true
       end

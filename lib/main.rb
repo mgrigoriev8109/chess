@@ -13,6 +13,7 @@ require_relative 'player'
 until current_game.assess_endofgame('black', current_game.board) do 
   movement = []
 
+  puts "#{white_player.color} it is now your turn."
   if white_player.name == 'Computer'
     movement = current_game.determine_computer_movement(white_player.color, current_game.board
   else
@@ -22,6 +23,7 @@ until current_game.assess_endofgame('black', current_game.board) do
 
   break if current_game.assess_endofgame('white', current_game.board)
 
+  puts "#{black_player.color} it is now your turn."
   if black_player.name == 'Computer'
     movement = current_game.determine_computer_movement(black_player.color, current_game.board)
   else

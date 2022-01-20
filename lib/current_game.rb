@@ -27,10 +27,6 @@ class CurrentGame
     @simulation_board = Array.new
   end 
 
-  def introduction
-    puts "Welcome to a CLI game of Chess!"
-  end
-
   def populate_gameboard
     create_starting_rooks
     create_starting_bishops
@@ -52,57 +48,33 @@ class CurrentGame
     display.show
   end 
 
-  def computer_turn(player)
-    puts "#Computer color #{player.color} it is now your turn."
-    starting_location = []
-    ending_location = []
-    color = player.color
-    loop do 
-      computer_movement = determine_computer_movement(color, @board)
-      starting_location = [computer_movement[0], computer_movement[1]]
-      ending_location = [computer_movement[2], computer_movement[3]]
-      if possible_enpassant(starting_location) && verify_movement(computer_movement, color, @board)
-        destroy_defending_pawn(starting_location, ending_location, @board)
-        get_piece(starting_location).can_en_passant_column = nil
-      elsif possible_castling(starting_location, ending_location) && verify_movement(computer_movement, color, @board)
-        move_castling_rook(color, starting_location, ending_location, @board)
-      elsif verify_movement(computer_movement, color, @board)
-        break
-      end
+  def play_turn(movement)
+    start_location = [movement[0], movement[1]]
+    end_location = [movement[2], movement[3]]
+    color = get_piece(start_location).color
+
+    if player_performing_enpassant(start_location)
+      destroy_defending_pawn(start_location, end_location, @board)
+    elsif possible_castling(start_location, end_location)
+      move_castling_rook(color, start_location, end_location, @board)
     end
     
-    can_next_player_enpassant(starting_location, ending_location, @board)
-    move_gamepiece(starting_location, ending_location, @board)
-    assess_pawn_promotion(@board)
-
-    have_rooks_or_kings_moved(ending_location, @board)
+    move_gamepiece(start_location, end_location, @board)
+    promote_eligible_pawns(@board)
+    have_rooks_or_kings_moved(end_location, @board)
     can_next_player_castle(color, @board)
+    can_next_player_enpassant(start_location, end_location, @board)
     show_display
   end
 
-  def human_turn(player)
-    puts "#{player.name} it is now your turn."
-    while player.get_input_array
-      p player.starting_location
-      p possible_enpassant(player.starting_location)
-      p verify_movement(player.movement, player.color, @board)
-      if possible_enpassant(player.starting_location) && verify_movement(player.movement, player.color, @board)
-        destroy_defending_pawn(player.starting_location, player.ending_location, @board)
-        get_piece(player.starting_location).can_en_passant_column = nil
-      elsif possible_castling(player.starting_location, player.ending_location) && verify_movement(player.movement, player.color, @board)
-        move_castling_rook(player.color, player.starting_location, player.ending_location, @board)
-      elsif verify_movement(player.movement, player.color, @board)
-        break
-      end
-    end
-    
-    can_next_player_enpassant(player.starting_location, player.ending_location, @board)
-    move_gamepiece(player.starting_location, player.ending_location, @board)
-    assess_pawn_promotion(@board)
+  #Let's think about how the turn should play out. 
+  #First before anything happens the movement will be verified
 
-    have_rooks_or_kings_moved(player.ending_location, @board)
-    can_next_player_castle(player.color, @board)
-    show_display
+  def get_input(player)
+    while player.get_input_array
+      break if verify_movement(player.movement, player.color, @board)
+    end
+    player.movement
   end
 
   def get_piece(coordinates)
@@ -147,7 +119,7 @@ class CurrentGame
     opposite_color
   end
 
-  def assess_pawn_promotion(board)
+  def promote_eligible_pawns(board)
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         if row_index == 0 && cell.is_a?(WhitePawn)
