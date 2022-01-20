@@ -15,7 +15,7 @@ until current_game.assess_endofgame('black', current_game.board) do
 
   puts "#{white_player.color} it is now your turn."
   if white_player.name == 'Computer'
-    movement = current_game.determine_computer_movement(white_player.color, current_game.board
+    movement = current_game.determine_computer_movement(white_player.color, current_game.board)
   else
     movement = current_game.get_input(white_player)
   end

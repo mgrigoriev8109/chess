@@ -67,9 +67,6 @@ class CurrentGame
     show_display
   end
 
-  #Let's think about how the turn should play out. 
-  #First before anything happens the movement will be verified
-
   def get_input(player)
     while player.get_input_array
       break if verify_movement(player.movement, player.color, @board)

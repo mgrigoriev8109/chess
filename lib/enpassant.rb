@@ -9,10 +9,11 @@ module EnPassant
 
     if attack_piece.is_a?(WhitePawn) && defend_piece.is_a?(BlackPawn) && attack_piece.can_en_passant_column
       enpassant_attack_occurring = true
+      attack_piece.can_en_passant_column = nil
     elsif attack_piece.is_a?(BlackPawn) && defend_piece.is_a?(WhitePawn) && attack_piece.can_en_passant_column
       enpassant_attack_occurring = true
+      attack_piece.can_en_passant_column = nil
     end
-    attack_piece.can_en_passant_column = nil
     enpassant_attack_occurring
   end
 

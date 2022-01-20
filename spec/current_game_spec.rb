@@ -300,4 +300,22 @@ describe CurrentGame do
     end
   end
 
+  describe '#play_turn' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When testing if consecutive turns yield proper functionality' do
+
+      it "Performs a successful En Passant attack" do
+        
+        current_game.populate_gameboard
+        movement = [0,0,0,0]
+        verify_movement(movement, 'white', current_game.board)
+
+        enpassant_end_location = current_game.get_king_location('black', current_game.board)
+        
+        expect(enpassant_end_location).to eq([0,0])
+      end
+    end
+  end
 end
