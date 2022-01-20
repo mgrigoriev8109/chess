@@ -2,9 +2,11 @@ module EnPassant
 
   def player_performing_enpassant(start_location, end_location)
     attack_piece = get_piece(start_location)
-    defend_piece = get_piece(end_location)
-    p attack_piece
+    defending_pawn_row = start_location[0]
+    defending_pawn_column = end_location[1]
+    defend_piece = get_piece([defending_pawn_row, defending_pawn_column])
     enpassant_attack_occurring = false
+
     if attack_piece.is_a?(WhitePawn) && defend_piece.is_a?(BlackPawn) && attack_piece.can_en_passant_column
       enpassant_attack_occurring = true
     elsif attack_piece.is_a?(BlackPawn) && defend_piece.is_a?(WhitePawn) && attack_piece.can_en_passant_column

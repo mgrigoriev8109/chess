@@ -232,7 +232,7 @@ describe CurrentGame do
     end
   end
 
-  describe '#assess_pawn_promotion' do
+  describe '#promote_eligible_pawns' do
 
     subject(:current_game) {described_class.new}
 
@@ -243,7 +243,7 @@ describe CurrentGame do
         current_game.board[1][0] = WhitePawn.new('white')
         current_game.move_gamepiece([1,0], [0,0], current_game.board)
 
-        current_game.assess_pawn_promotion(current_game.board)
+        current_game.promote_eligible_pawns(current_game.board)
         
         expect(current_game.board[0][0]).to be_a Queen
       end
@@ -253,7 +253,7 @@ describe CurrentGame do
         current_game.board[6][7] = BlackPawn.new('black')
         current_game.move_gamepiece([6,7], [7,7], current_game.board)
 
-        current_game.assess_pawn_promotion(current_game.board)
+        current_game.promote_eligible_pawns(current_game.board)
         
         expect(current_game.board[7][7]).to be_a Queen
       end

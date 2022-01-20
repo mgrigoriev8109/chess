@@ -3,7 +3,7 @@ require 'current_game'
 
 describe CurrentGame do
 
-  describe '#possible_castling' do
+  describe '#player_performing_castling' do
 
     subject(:current_game) {described_class.new}
     context 'when a player asks the CurrentGame if a castling from starting to ending location possible' do
@@ -13,7 +13,7 @@ describe CurrentGame do
         king_start = [0,4]
         king_castling_end = [0,2]
 
-        can_king_move_castling = current_game.possible_castling(king_start, king_castling_end)
+        can_king_move_castling = current_game.player_performing_castling(king_start, king_castling_end)
         
         expect(can_king_move_castling).to be true
       end
@@ -23,7 +23,7 @@ describe CurrentGame do
         king_start = [7,4]
         king_castling_end = [7,6]
 
-        can_king_move_castling = current_game.possible_castling(king_start, king_castling_end)
+        can_king_move_castling = current_game.player_performing_castling(king_start, king_castling_end)
         
         expect(can_king_move_castling).to be true
       end
@@ -33,7 +33,7 @@ describe CurrentGame do
         king_start = [7,4]
         king_castling_end = [7,5]
 
-        can_king_move_castling = current_game.possible_castling(king_start, king_castling_end)
+        can_king_move_castling = current_game.player_performing_castling(king_start, king_castling_end)
         
         expect(can_king_move_castling).to be false
       end

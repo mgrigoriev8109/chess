@@ -156,10 +156,11 @@ describe CurrentGame do
         black_start = [1,5]
         black_end = [3,5]
         attacking_pawn_location = [3,6]
+        end_location = [2,5]
 
         current_game.can_next_player_enpassant(black_start, black_end, current_game.board)
         current_game.move_gamepiece(black_start, black_end, current_game.board)
-        is_enpassant_possible = current_game.player_performing_enpassant(attacking_pawn_location)
+        is_enpassant_possible = current_game.player_performing_enpassant(attacking_pawn_location, end_location)
 
         expect(is_enpassant_possible).to be true
       end

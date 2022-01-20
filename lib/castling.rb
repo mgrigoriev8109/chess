@@ -9,7 +9,7 @@ module Castling
     end
   end
   
-  def possible_castling(starting_location, ending_location)
+  def player_performing_castling(starting_location, ending_location)
     is_castling_possible = false
     if get_piece(starting_location).is_a?(King) && starting_location[1] == 4 && ending_location[1] == 2
       is_castling_possible = true

@@ -53,9 +53,9 @@ class CurrentGame
     end_location = [movement[2], movement[3]]
     color = get_piece(start_location).color
 
-    if player_performing_enpassant(start_location)
+    if player_performing_enpassant(start_location, end_location)
       destroy_defending_pawn(start_location, end_location, @board)
-    elsif possible_castling(start_location, end_location)
+    elsif player_performing_castling(start_location, end_location)
       move_castling_rook(color, start_location, end_location, @board)
     end
     
