@@ -224,9 +224,9 @@ describe CurrentGame do
         current_game.board[6][3] = ' '
         current_game.play_turn([0,3,6,3])
         current_game.show_display
-        next_player_color = 'white'
+        current_player_color = 'black'
 
-        is_game_over = current_game.assess_endofgame(next_player_color, current_game.board)
+        is_game_over = current_game.assess_endofgame(current_player_color, current_game.board)
         
         expect(is_game_over).to be false
       end

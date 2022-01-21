@@ -1,5 +1,19 @@
 module CheckCheckmate
 
+  def assess_endofgame(color, board)
+    is_game_over = false
+    if assess_endofround_checkmate(color, board) 
+      puts "Looks like #{color} has won and put the opposing color into Checkmate!"
+      is_game_over = true
+    elsif assess_endofround_check(color, board)
+      puts "Looks like #{color} has put the opposing color into Check!"
+    elsif assess_endofround_stalemate(color, board)
+      puts "Looks like the game is over because #{color} has put the opposing color into Stalemate!"
+      is_game_over = true
+    end
+    is_game_over
+  end
+  
   def verify_movement(movement, color, board)
     is_movement_verified = false
     starting_coordinates = [movement[0], movement[1]]
@@ -88,20 +102,6 @@ module CheckCheckmate
     end
     
     is_other_player_in_check
-  end
-
-  def assess_endofgame(color, board)
-    is_game_over = false
-    if assess_endofround_checkmate(color, board) 
-      puts "Looks like #{color} has won and put the opposing color into Checkmate!"
-      is_game_over = true
-    elsif assess_endofround_check(color, board)
-      puts "Looks like #{color} has put the opposing color into Check!"
-    elsif assess_endofround_stalemate(color, board)
-      puts "Looks like the game is over because #{color} has put the opposing color into Stalemate!"
-      is_game_over = true
-    end
-    is_game_over
   end
 
   def assess_endofround_checkmate(current_color, board)
