@@ -73,7 +73,7 @@ describe CurrentGame do
         current_game.board[7][1] = ' '
         current_game.board[7][2] = ' '
         current_game.board[7][3] = ' '
-        current_game.show_display
+        current_game.play_turn([1,4,3,4])
         castling_movement = [7,4,7,2]
 
         is_castling_verified = current_game.verify_movement(castling_movement, 'white', current_game.board)
@@ -347,6 +347,21 @@ describe CurrentGame do
         current_game.play_turn(enpassant_movement)
 
         expect(attacking_white_pawn.can_en_passant_column).to eq(nil)
+      end
+
+      it "Returns true that CurrentGame successfully verified the Castling movement" do
+        
+        current_game.populate_gameboard
+        current_game.board[7][1] = ' '
+        current_game.board[7][2] = ' '
+        current_game.board[7][3] = ' '
+        current_game.play_turn([1,4,3,4])
+        castling_movement = [7,4,7,2]
+
+        current_game.play_turn(castling_movement)
+        white_king = current_game.get_piece([7,2])
+
+        expect(white_king).to be_a(King)
       end
     end
   end
