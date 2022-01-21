@@ -208,7 +208,28 @@ describe CurrentGame do
         
         expect(can_this_piece_move.any?).to be true
       end
+    end
+  end
 
+  describe '#assess_endofgame' do
+
+    subject(:current_game) {described_class.new}
+
+    context 'When checking if the game is over' do
+
+      it "returns false if White King in Check but can be saved by a White Attack" do
+        
+        current_game.populate_gameboard
+        current_game.board[1][3] = ' '
+        current_game.board[6][3] = ' '
+        current_game.play_turn([0,3,6,3])
+        current_game.show_display
+        next_player_color = 'white'
+
+        is_game_over = current_game.assess_endofgame(next_player_color, current_game.board)
+        
+        expect(is_game_over).to be false
+      end
     end
   end
 end
