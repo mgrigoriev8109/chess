@@ -52,6 +52,20 @@ describe CurrentGame do
         
         expect(is_movement_legal).to be true
       end
+
+      it "Returns true that CurrentGame successfully verified the En Passant attacking movement" do
+        
+        current_game.populate_gameboard
+        current_game.play_turn([6,0,4,0])
+        current_game.play_turn([1,7,3,7])
+        current_game.play_turn([4,0,3,0])
+        current_game.play_turn([1,1,3,1])
+        enpassant_movement = [3,0,2,1]
+
+        is_enpassant_verified = current_game.verify_movement(enpassant_movement, 'white', current_game.board)
+        
+        expect(is_enpassant_verified).to be true
+      end
     end
   end
 
@@ -306,15 +320,18 @@ describe CurrentGame do
 
     context 'When testing if consecutive turns yield proper functionality' do
 
-      it "Performs a successful En Passant attack" do
+      it "Returns true that CurrentGame successfully verified the En Passant attacking movement" do
         
         current_game.populate_gameboard
-        movement = [0,0,0,0]
-        verify_movement(movement, 'white', current_game.board)
+        current_game.play_turn([6,0,4,0])
+        current_game.play_turn([1,7,3,7])
+        current_game.play_turn([4,0,3,0])
+        current_game.play_turn([1,1,3,1])
+        enpassant_movement = [3,0,2,1]
 
-        enpassant_end_location = current_game.get_king_location('black', current_game.board)
+        is_enpassant_verified = current_game.verify_movement(enpassant_movement, 'white', current_game.board)
         
-        expect(enpassant_end_location).to eq([0,0])
+        expect(is_enpassant_verified).to be true
       end
     end
   end
