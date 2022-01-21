@@ -47,7 +47,6 @@ module EnPassant
       row.each_with_index do |cell, column_index|
         if white_pawn_row == 3 && white_pawn_columns.include?(column_index) && cell.is_a?(WhitePawn)
           cell.can_en_passant_column = black_pawn_column
-          puts "The next player can perform an En Passant attack."
         end
       end
     end
@@ -63,7 +62,6 @@ module EnPassant
       row.each_with_index do |cell, column_index|
         if black_pawn_row == 4 && black_pawn_columns.include?(column_index) && cell.is_a?(BlackPawn)
           cell.can_en_passant_column = white_pawn_column
-          puts "The next player can perform an En Passant attack."
         end
       end
     end

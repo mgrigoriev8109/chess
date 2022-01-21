@@ -79,9 +79,11 @@ describe CurrentGame do
 
       it "returns the Black Pawn's @can_en_passant_column to be the adjacent White Pawn's column when En Passant possible" do
         
+        current_game.populate_gameboard
         current_game.board[6][7] = WhitePawn.new('white')
         current_game.board[4][6] = BlackPawn.new('black')
         black_pawn = current_game.board[4][6]
+        current_game.play_turn([6,7,4,7])
         starting = [6,7]
         ending = [4,7]
 
@@ -93,9 +95,11 @@ describe CurrentGame do
 
       it "returns black pawn column 5 when en passant possible" do
         
+        current_game.populate_gameboard
         current_game.board[3][6] = WhitePawn.new('white')
         current_game.board[1][5] = BlackPawn.new('black')
         attacking_pawn = current_game.board[3][6]
+        current_game.play_turn([1,5,3,5])
         starting = [1,5]
         ending = [3,5]
 
@@ -110,6 +114,7 @@ describe CurrentGame do
         current_game.populate_gameboard
         current_game.board[4][6] = BlackPawn.new('black')
         black_pawn = current_game.board[4][6]
+        current_game.play_turn([6,7,4,7])
         starting = [6,7]
         ending = [4,7]
 
@@ -149,18 +154,16 @@ describe CurrentGame do
 
     context 'When checking if enpassant is possible' do
 
-      it "returns ' ' in the BlackPawn's [3,0] after WhitePawn attacks onto [2,0] through EnPassant"  do
+      it "returns true if WhitePawn makes EnPassant movement [3,6,2,5]"  do
         
         current_game.populate_gameboard
+        current_game.board[1][5] = BlackPawn.new('black')
         current_game.board[3][6] = WhitePawn.new('white')
-        black_start = [1,5]
-        black_end = [3,5]
-        attacking_pawn_location = [3,6]
-        end_location = [2,5]
+        current_game.play_turn([1,5,3,5])
+        pawn_starts = [3,6]
+        pawn_ends = [2,5]
 
-        current_game.can_next_player_enpassant(black_start, black_end, current_game.board)
-        current_game.move_gamepiece(black_start, black_end, current_game.board)
-        is_enpassant_possible = current_game.player_performing_enpassant(attacking_pawn_location, end_location)
+        is_enpassant_possible = current_game.player_performing_enpassant(pawn_starts, pawn_ends)
 
         expect(is_enpassant_possible).to be true
       end
