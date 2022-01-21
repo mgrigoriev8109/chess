@@ -66,6 +66,20 @@ describe CurrentGame do
         
         expect(is_enpassant_verified).to be true
       end
+
+      it "Returns true that CurrentGame successfully verified the Castling movement" do
+        
+        current_game.populate_gameboard
+        current_game.board[7][1] = ' '
+        current_game.board[7][2] = ' '
+        current_game.board[7][3] = ' '
+        current_game.show_display
+        castling_movement = [7,4,7,2]
+
+        is_castling_verified = current_game.verify_movement(castling_movement, 'white', current_game.board)
+        
+        expect(is_castling_verified).to be true
+      end
     end
   end
 
