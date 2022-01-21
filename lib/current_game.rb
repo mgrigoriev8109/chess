@@ -64,7 +64,6 @@ class CurrentGame
     have_rooks_or_kings_moved(end_location, @board)
     can_next_player_castle(color, @board)
     can_next_player_enpassant(start_location, end_location, @board)
-    show_display
   end
 
   def get_input(player)

@@ -20,6 +20,7 @@ until current_game.assess_endofgame('black', current_game.board) do
     movement = current_game.get_input(white_player)
   end
   current_game.play_turn(movement)
+  current_game.show_display
 
   break if current_game.assess_endofgame('white', current_game.board)
 
@@ -30,6 +31,7 @@ until current_game.assess_endofgame('black', current_game.board) do
     movement = current_game.get_input(black_player)
   end
   current_game.play_turn(movement)
+  current_game.show_display
 
 end
 

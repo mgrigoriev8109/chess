@@ -1,3 +1,4 @@
+require 'pry'
 module EnPassant
 
   def player_performing_enpassant(start_location, end_location)
@@ -26,13 +27,13 @@ module EnPassant
 
 
   def can_next_player_enpassant(starting_coordinates, ending_coordinates, board)
-    starting_piece = get_piece(starting_coordinates)
+    piece = get_piece(ending_coordinates)
     starting_row = starting_coordinates[0]
     ending_row = ending_coordinates[0]
 
-    if starting_piece.is_a?(WhitePawn) && starting_row == 6 && ending_row == 4 
+    if piece.is_a?(WhitePawn) && starting_row == 6 && ending_row == 4 
       verify_enpassant_by_black_pawn(ending_coordinates, board)
-    elsif starting_piece.is_a?(BlackPawn) && starting_row == 1 && ending_row == 3
+    elsif piece.is_a?(BlackPawn) && starting_row == 1 && ending_row == 3
       verify_enpassant_by_white_pawn(ending_coordinates, board)
     end
   end

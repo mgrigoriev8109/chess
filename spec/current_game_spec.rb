@@ -320,7 +320,7 @@ describe CurrentGame do
 
     context 'When testing if consecutive turns yield proper functionality' do
 
-      it "Returns true that CurrentGame successfully verified the En Passant attacking movement" do
+      it "Returns successfully performs enpassant attack and resets attacking pawn's @can_enpassant_column to nil" do
         
         current_game.populate_gameboard
         current_game.play_turn([6,0,4,0])
@@ -328,10 +328,11 @@ describe CurrentGame do
         current_game.play_turn([4,0,3,0])
         current_game.play_turn([1,1,3,1])
         enpassant_movement = [3,0,2,1]
+        attacking_white_pawn = current_game.get_piece([3,0])
 
-        is_enpassant_verified = current_game.verify_movement(enpassant_movement, 'white', current_game.board)
-        
-        expect(is_enpassant_verified).to be true
+        current_game.play_turn(enpassant_movement)
+
+        expect(attacking_white_pawn.can_en_passant_column).to eq(nil)
       end
     end
   end
