@@ -373,6 +373,18 @@ describe CurrentGame do
 
         expect(white_pawn.can_en_passant_column).to eq(nil)
       end
+
+      it "Recreates a bug where Computer does movement of [7,4] and can't escape check" do
+        
+        current_game.populate_gameboard
+        current_game.play_turn([6,5,4,5])
+        current_game.play_turn([1,4,3,4])
+        current_game.play_turn([0,3,4,7])
+
+        movement_with_bug = current_game.determine_computer_movement('white', current_game.board)
+
+        expect(movement_with_bug.length).to eq(4)
+      end
     end
   end
 end
