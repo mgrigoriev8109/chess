@@ -381,9 +381,10 @@ describe CurrentGame do
         current_game.play_turn([1,4,3,4])
         current_game.play_turn([0,3,4,7])
 
-        movement_with_bug = current_game.determine_computer_movement('white', current_game.board)
+        movement_escaping_check = current_game.determine_computer_movement('white', current_game.board)
+        current_game.play_turn(movement_escaping_check)
 
-        expect(movement_with_bug.length).to eq(4)
+        expect(movement_escaping_check.length).to eq(4)
       end
     end
   end

@@ -1,4 +1,3 @@
-require 'pry'
 module EnPassant
 
   def player_performing_enpassant(start_location, end_location)

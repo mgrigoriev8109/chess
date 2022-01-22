@@ -223,7 +223,6 @@ describe CurrentGame do
         current_game.board[1][3] = ' '
         current_game.board[6][3] = ' '
         current_game.play_turn([0,3,6,3])
-        current_game.show_display
         current_player_color = 'black'
 
         is_game_over = current_game.assess_endofgame(current_player_color, current_game.board)

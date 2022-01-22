@@ -1,3 +1,4 @@
+require 'pry'
 module Computer
 
   def determine_computer_movement(color, board)
@@ -114,15 +115,7 @@ module Computer
 
   def find_computer_move(color, board)
     possible_computer_movement = []
-    all_piece_locations = []
-    board.each_with_index do |row, row_index|
-      row.each_with_index do |cell, column_index|
-        current_coordinates = [row_index, column_index]
-        if cell.is_a?(Piece) && cell.color == color && cell.all_possible_movements(board, current_coordinates).any?
-          all_piece_locations.push(current_coordinates)
-        end
-      end
-    end
+    all_piece_locations = piece_locations_of_a_player(color, board)
     piece_location = all_piece_locations.sample
     piece = get_piece(piece_location)
     piece_end_location = piece.all_possible_movements(board, piece_location).sample
@@ -132,23 +125,45 @@ module Computer
   end
 
   def find_king_escape(color, board)
+    all_piece_locations = piece_locations_of_a_player(color, board)
+    all_piece_locations.select!{ |location| movements_to_escape_check(color, location).any? }
+  
+    escaping_piece_location = all_piece_locations.sample
+    location_to_escape_check = movements_to_escape_check(color, escaping_piece_location).sample
+    escape_movement = []
+    escape_movement.push(*escaping_piece_location)
+    escape_movement.push(*location_to_escape_check)
+    escape_movement
+  end
+
+  def piece_locations_of_a_player(color, board)
+    all_piece_locations = []
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        current_coordinates = [row_index, column_index]
+        if cell.is_a?(Piece) && cell.color == color && cell.all_possible_movements(board, current_coordinates).any?
+          all_piece_locations.push(current_coordinates)
+        end
+      end
+    end
+    all_piece_locations
+  end
+
+  def movements_to_escape_check(color, location)
     all_movements = []
     impossible_movements = []
-    king_in_check_location = get_king_location(color, board)
-    king_piece = get_piece(king_in_check_location)
-    all_movements.push(*king_piece.all_possible_movements(@board, king_in_check_location))
-    all_movements.push(*king_piece.all_possible_attacks(@board, king_in_check_location))
+    piece = get_piece(location)
+    all_movements.push(*piece.all_possible_movements(@board, location))
+    all_movements.push(*piece.all_possible_attacks(@board, location))
 
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(@board))
-      move_gamepiece(king_in_check_location, possible_end, simulated_board)
+      move_gamepiece(location, possible_end, simulated_board)
       if verify_check(color, simulated_board) == true
         impossible_movements.push(possible_end)
       end
     end
     all_movements = all_movements - impossible_movements
-
-    king_escape_movement = [*king_in_check_location, *all_movements.sample]
-    king_escape_movement
+    all_movements
   end
 end
