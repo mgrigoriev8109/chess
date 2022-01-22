@@ -374,7 +374,7 @@ describe CurrentGame do
         expect(white_pawn.can_en_passant_column).to eq(nil)
       end
 
-      it "Recreates a bug where Computer does movement of [7,4] and can't escape check" do
+      it "Returns a movement length of 4 showing that #determine_computer_movement escapes check properly" do
         
         current_game.populate_gameboard
         current_game.play_turn([6,5,4,5])
@@ -386,6 +386,17 @@ describe CurrentGame do
 
         expect(movement_escaping_check.length).to eq(4)
       end
+
+      it "Recreates a bug where White Computer incorrectly in Checkmate" do
+        current_game.board[4][2] = WhitePawn.new('white')
+        current_game.board[4][1] = Knight.new('black')
+        current_game.board[3][4] = Queen.new('black')
+        current_game.board[5][3] = King.new('white')
+        movement_escaping_check = current_game.determine_computer_movement('white', current_game.board)
+
+        expect(movement_escaping_check.length).to eq(4)
+      end
+
     end
   end
 end

@@ -14,7 +14,6 @@ module Computer
     elsif
       computer_movement = find_computer_move(color, board)
     end
-    p computer_movement
     computer_movement
   end
 
@@ -165,5 +164,6 @@ module Computer
     end
     all_movements = all_movements - impossible_movements
     all_movements
+    binding.pry
   end
 end
