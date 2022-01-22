@@ -32,20 +32,19 @@ module EnPassant
     ending_row = ending_coordinates[0]
 
     if piece.is_a?(WhitePawn) && starting_row == 6 && ending_row == 4 
-      verify_enpassant_by_black_pawn(ending_coordinates, board)
+      are_black_pawns_adjecent(ending_coordinates, board)
     elsif piece.is_a?(BlackPawn) && starting_row == 1 && ending_row == 3
-      verify_enpassant_by_white_pawn(ending_coordinates, board)
+      are_white_pawns_adjecent(ending_coordinates, board)
     end
   end
 
-  def verify_enpassant_by_white_pawn(ending_location, board)
+  def are_white_pawns_adjecent(ending_location, board)
     black_pawn_column = ending_location[1]
-    white_pawn_row = ending_location[0]
     white_pawn_columns = [(black_pawn_column - 1), (black_pawn_column + 1)]
 
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
-        if white_pawn_row == 3 && white_pawn_columns.include?(column_index) && cell.is_a?(WhitePawn)
+        if row_index == 3 && white_pawn_columns.include?(column_index) && cell.is_a?(WhitePawn)
           cell.can_en_passant_column = black_pawn_column
         end
       end
@@ -53,14 +52,13 @@ module EnPassant
 
   end
 
-  def verify_enpassant_by_black_pawn(ending_location, board)
+  def are_black_pawns_adjecent(ending_location, board)
     white_pawn_column = ending_location[1]
-    black_pawn_row = ending_location[0]
     black_pawn_columns = [(white_pawn_column - 1), (white_pawn_column + 1)]
 
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
-        if black_pawn_row == 4 && black_pawn_columns.include?(column_index) && cell.is_a?(BlackPawn)
+        if row_index == 4 && black_pawn_columns.include?(column_index) && cell.is_a?(BlackPawn)
           cell.can_en_passant_column = white_pawn_column
         end
       end

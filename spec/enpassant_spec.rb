@@ -3,7 +3,7 @@ require 'current_game'
 
 describe CurrentGame do
 
-  describe '#verify_enpassant_by_white_pawn' do
+  describe '#are_white_pawns_adjecent' do
 
     subject(:current_game) {described_class.new}
 
@@ -16,7 +16,7 @@ describe CurrentGame do
         white_pawn = current_game.board[3][0]
         black_pawn_ending_location = [3,1]
 
-        current_game.verify_enpassant_by_white_pawn(black_pawn_ending_location, current_game.board)
+        current_game.are_white_pawns_adjecent(black_pawn_ending_location, current_game.board)
 
 
         expect(white_pawn.can_en_passant_column).to eq(1)
@@ -29,7 +29,7 @@ describe CurrentGame do
         white_pawn = current_game.board[3][3]
         black_pawn_ending_location = [3,1]
 
-        current_game.verify_enpassant_by_white_pawn(black_pawn_ending_location, current_game.board)
+        current_game.are_white_pawns_adjecent(black_pawn_ending_location, current_game.board)
 
 
         expect(white_pawn.can_en_passant_column).to eq(nil)
@@ -37,7 +37,7 @@ describe CurrentGame do
     end
   end
 
-  describe '#verify_enpassant_by_black_pawn' do
+  describe '#are_black_pawns_adjecent' do
 
     subject(:current_game) {described_class.new}
 
@@ -50,7 +50,7 @@ describe CurrentGame do
         black_pawn = current_game.board[4][6]
         white_pawn_ending_location = [4,7]
 
-        current_game.verify_enpassant_by_black_pawn(white_pawn_ending_location, current_game.board)
+        current_game.are_black_pawns_adjecent(white_pawn_ending_location, current_game.board)
 
 
         expect(black_pawn.can_en_passant_column).to eq(7)
@@ -63,7 +63,7 @@ describe CurrentGame do
         black_pawn = current_game.board[4][0]
         white_pawn_ending_location = [4,7]
 
-        current_game.verify_enpassant_by_black_pawn(white_pawn_ending_location, current_game.board)
+        current_game.are_black_pawns_adjecent(white_pawn_ending_location, current_game.board)
 
 
         expect(black_pawn.can_en_passant_column).to eq(nil)

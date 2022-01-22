@@ -349,16 +349,6 @@ describe CurrentGame do
         expect(attacking_white_pawn.can_en_passant_column).to eq(nil)
       end
 
-      it "Returns nil as a white pawn's @can_en_passant_column after nothing happens to trigger it" do
-        
-        current_game.populate_gameboard
-        white_pawn = current_game.get_piece([6,4])
-
-        current_game.play_turn([1,1,3,3])
-
-        expect(white_pawn.can_en_passant_column).to eq(nil)
-      end
-
       it "Returns true that CurrentGame successfully verified the Castling movement" do
         
         current_game.populate_gameboard
@@ -372,6 +362,16 @@ describe CurrentGame do
         white_king = current_game.get_piece([7,2])
 
         expect(white_king).to be_a(King)
+      end
+
+      it "Returns nil as a white pawn's @can_en_passant_column after nothing happens to trigger it" do
+        
+        current_game.populate_gameboard
+        white_pawn = current_game.get_piece([6,4])
+
+        current_game.play_turn([1,1,3,3])
+
+        expect(white_pawn.can_en_passant_column).to eq(nil)
       end
     end
   end
