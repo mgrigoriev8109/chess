@@ -123,40 +123,33 @@ module BishopRookAttacks
   end
 
   def attacks_up_left(board, piece_location)
-    ending_row = piece_location[0]
-    ending_column = piece_location[1]
-    possible_attack = Array.new
-    dont_check_further = false
-    column_to_check = ending_column - ending_row
-    row_to_check = 0
+    possible_attack = []
+    diagonal_locations = find_diagonal_locations(piece_location)
 
-    if ending_column < ending_row
-      column_to_check = 0
-      row_to_check = ending_row - ending_column
-    end
-
-    board.each_with_index do |board_row, row_index|
-      if dont_check_further
-        break
-      end
-      
-      board_row.each_with_index do |value, column_index| 
-        if column_to_check == ending_column && row_index >= row_to_check
-          dont_check_further = true
-        elsif column_to_check == column_index && row_index >= row_to_check && value.is_a?(Piece) && value.color != @color
-          possible_attack = Array.new
-          possible_attack.push([row_index, column_index])
-          row_to_check += 1
-          column_to_check += 1
-        elsif column_to_check == column_index && row_index >= row_to_check && value.is_a?(Piece) && value.color == @color
-          possible_attack = Array.new
-          row_to_check += 1
-          column_to_check += 1
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, column_index|
+        current_location = [row_index, column_index]
+        if cell.is_a?(Piece) && cell.color != @color && diagonal_locations.include?(current_location)
+          possible_attack = current_location
+        elsif cell.is_a?(Piece) && cell.color == @color && diagonal_locations.include?(current_location)
+          possible_attack = []
         end
       end
-
     end
     possible_attack
+  end
+
+  def find_diagonal_locations(piece_location)
+    piece_row = piece_location[0]
+    piece_column = piece_location[1]
+    possible_diagonal_locations = []
+
+    until (piece_row == 0) || (piece_column == 0) do
+      piece_row -= 1
+      piece_column -= 1
+      possible_diagonal_locations.push([piece_row, piece_column])
+    end 
+    possible_diagonal_locations
   end
 
   def attacks_down_left(board, piece_location)

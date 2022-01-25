@@ -504,4 +504,21 @@ describe Bishop do
       end
     end
   end
+
+  describe '#find_diagonal_locations' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:bishop) {described_class.new('white')}
+
+    context 'Returns all the possible up-left diagonal locations from a given location on the board' do
+
+      it "[0,0] from [1,1" do
+
+        possible_diagonal = bishop.find_diagonal_locations([1,1])
+
+        expect(possible_diagonal).to eq([[0,0]])
+      end
+    end
+  end
+  
 end
