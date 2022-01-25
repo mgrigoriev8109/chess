@@ -1,4 +1,3 @@
-require 'pry'
 module Computer
 
   def determine_computer_movement(color, board)
@@ -164,6 +163,5 @@ module Computer
     end
     all_movements = all_movements - impossible_movements
     all_movements
-    binding.pry
   end
 end

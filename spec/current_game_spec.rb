@@ -387,14 +387,18 @@ describe CurrentGame do
         expect(movement_escaping_check.length).to eq(4)
       end
 
-      it "Recreates a bug where White Computer incorrectly in Checkmate" do
+      it "Recreates a bug where Black Queen can reach White King through an impossible attack" do
         current_game.board[4][2] = WhitePawn.new('white')
         current_game.board[4][1] = Knight.new('black')
         current_game.board[3][4] = Queen.new('black')
-        current_game.board[5][3] = King.new('white')
-        movement_escaping_check = current_game.determine_computer_movement('white', current_game.board)
+        current_game.board[6][3] = King.new('white')
+        current_game.show_display
+        
+        p current_game.board[3][4].attacks_up_left(current_game.board, [3,4])
 
-        expect(movement_escaping_check.length).to eq(4)
+        queen_attacks = current_game.board[3][4].attacks_up_left(current_game.board, [3,4])
+
+        expect(queen_attacks).to eq([])
       end
 
     end

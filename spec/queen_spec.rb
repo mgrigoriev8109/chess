@@ -1,5 +1,7 @@
 #spec/queen_spec.rb
 require 'queen'
+require 'knight'
+require 'white_pawn'
 require 'current_game'
 
 describe Queen do
@@ -24,6 +26,16 @@ describe Queen do
 
         expect(possible_attacks).to eq([[2, 0], [0, 2], [1, 2], [0, 1], [3, 1]])
       end
+
+      it "returns an array of [] when Queen can't reach enemy King" do
+        
+        board[3][4] = Queen.new('black')
+        board[6][3] = King.new('white')
+
+        possible_attacks = board[3][4].all_possible_attacks(board, [3,4])
+
+        expect(possible_attacks).to eq([])
+      end
     end
   end
 
@@ -44,6 +56,27 @@ describe Queen do
         possible_movements = queen.all_possible_movements(board, [0,0])
 
         expect(possible_movements).to eq([[1, 1], [0, 1], [0, 2], [1, 0], [2, 0]])
+      end
+    end
+  end
+
+  describe '#attacks_up_left' do
+
+    let(:board){Array.new(8) { Array.new(8, " ") } }
+    subject(:queen) {described_class.new('white')}
+
+    context 'A queen starting at [0,0]' do
+
+      it "returns an array of [] when queen can't attack king" do
+        
+        board[4][2] = WhitePawn.new('white')
+        board[4][1] = Knight.new('black')
+        board[3][4] = Queen.new('black')
+        board[6][3] = King.new('white')
+
+        possible_attack = queen.attacks_up_left(board, [3,4])
+
+        expect(possible_attack).to eq([])
       end
     end
   end
