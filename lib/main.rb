@@ -35,12 +35,6 @@ until current_game.assess_endofgame('black', current_game.board) do
 
 end
 
-#refactor #human_turn and #computer_turn to only take movement as argument
-  #-create seperate #get_input function
-
-#create integration tests for #human_turn to make sure En Passant works with multiple #human_turns
-  #-currently En Passant never resets, all Pawns should reset at the end of the turn
-
 #do the same to test to fix Castling
   #-currently White King can't castle left
 
