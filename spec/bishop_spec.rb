@@ -368,7 +368,7 @@ describe Bishop do
 
         possible_attacks = bishop.attacks_up_left(board, [1,1])
         
-        expect(possible_attacks).to eq([[0,0]])
+        expect(possible_attacks).to eq([0,0])
 
       end
 
@@ -379,7 +379,7 @@ describe Bishop do
 
         possible_attacks = bishop.attacks_up_left(board, [2,1])
         
-        expect(possible_attacks).to eq([[1,0]])
+        expect(possible_attacks).to eq([1,0])
 
       end
 
@@ -390,7 +390,7 @@ describe Bishop do
 
         possible_attacks = bishop.attacks_up_left(board, [1,2])
         
-        expect(possible_attacks).to eq([[0,1]])
+        expect(possible_attacks).to eq([0,1])
 
       end
 
@@ -423,7 +423,7 @@ describe Bishop do
 
         possible_attacks = bishop.attacks_up_left(board, [2,3])
         
-        expect(possible_attacks).to eq([[1,2]])
+        expect(possible_attacks).to eq([1,2])
 
       end
     end
@@ -512,11 +512,11 @@ describe Bishop do
 
     context 'Returns all the possible up-left diagonal locations from a given location on the board' do
 
-      it "[0,0] from [1,1" do
+      it "returns [[2, 2], [1, 1], [0, 0]] as possible up left diagonal locations from [3,3]" do
 
-        possible_diagonal = bishop.find_diagonal_locations([1,1])
+        possible_diagonal = bishop.find_diagonal_locations([3,3])
 
-        expect(possible_diagonal).to eq([[0,0]])
+        expect(possible_diagonal).to eq([[2, 2], [1, 1], [0, 0]])
       end
     end
   end

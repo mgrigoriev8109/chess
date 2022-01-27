@@ -78,6 +78,16 @@ describe Queen do
 
         expect(possible_attack).to eq([])
       end
+
+      it "returns an array of [1,1] when queen can attack king" do
+        
+        board[3][3] = Queen.new('black')
+        board[1][1] = King.new('white')
+
+        possible_attack = board[3][3].attacks_up_left(board, [3,3])
+
+        expect(possible_attack).to eq([1,1])
+      end
     end
   end
 end

@@ -1,3 +1,4 @@
+require 'pry'
 module BishopRookAttacks
 
   def attacks_up(board, rook_location)
@@ -125,16 +126,21 @@ module BishopRookAttacks
   def attacks_up_left(board, piece_location)
     possible_attack = []
     diagonal_locations = find_diagonal_locations(piece_location)
+    stop_looking = false
 
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         current_location = [row_index, column_index]
-        if cell.is_a?(Piece) && cell.color != @color && diagonal_locations.include?(current_location)
+        break if stop_looking
+        if current_location == piece_location
+          stop_looking = true
+        elsif cell.is_a?(Piece) && cell.color != @color && diagonal_locations.include?(current_location)
           possible_attack = current_location
         elsif cell.is_a?(Piece) && cell.color == @color && diagonal_locations.include?(current_location)
           possible_attack = []
         end
       end
+      
     end
     possible_attack
   end
