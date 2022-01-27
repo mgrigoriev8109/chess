@@ -135,7 +135,8 @@ module BishopRookAttacks
         if current_location == piece_location
           stop_looking = true
         elsif cell.is_a?(Piece) && cell.color != @color && diagonal_locations.include?(current_location)
-          possible_attack = current_location
+          possible_attack = []
+          possible_attack.push(current_location)
         elsif cell.is_a?(Piece) && cell.color == @color && diagonal_locations.include?(current_location)
           possible_attack = []
         end

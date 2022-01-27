@@ -368,7 +368,7 @@ describe Bishop do
 
         possible_attacks = bishop.attacks_up_left(board, [1,1])
         
-        expect(possible_attacks).to eq([0,0])
+        expect(possible_attacks).to eq([[0,0]])
 
       end
 
@@ -379,7 +379,7 @@ describe Bishop do
 
         possible_attacks = bishop.attacks_up_left(board, [2,1])
         
-        expect(possible_attacks).to eq([1,0])
+        expect(possible_attacks).to eq([[1,0]])
 
       end
 
@@ -390,7 +390,7 @@ describe Bishop do
 
         possible_attacks = bishop.attacks_up_left(board, [1,2])
         
-        expect(possible_attacks).to eq([0,1])
+        expect(possible_attacks).to eq([[0,1]])
 
       end
 
@@ -423,7 +423,7 @@ describe Bishop do
 
         possible_attacks = bishop.attacks_up_left(board, [2,3])
         
-        expect(possible_attacks).to eq([1,2])
+        expect(possible_attacks).to eq([[1,2]])
 
       end
     end

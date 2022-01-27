@@ -86,7 +86,7 @@ describe Queen do
 
         possible_attack = board[3][3].attacks_up_left(board, [3,3])
 
-        expect(possible_attack).to eq([1,1])
+        expect(possible_attack).to eq([[1,1]])
       end
     end
   end

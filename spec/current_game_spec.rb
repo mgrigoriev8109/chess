@@ -391,14 +391,12 @@ describe CurrentGame do
         current_game.board[4][2] = WhitePawn.new('white')
         current_game.board[4][1] = Knight.new('black')
         current_game.board[3][4] = Queen.new('black')
-        current_game.board[6][3] = King.new('white')
+        current_game.board[5][3] = King.new('white')
         current_game.show_display
         
-        p current_game.board[3][4].attacks_up_left(current_game.board, [3,4])
+        movement_escaping_check = current_game.determine_computer_movement('white', current_game.board)
 
-        queen_attacks = current_game.board[3][4].attacks_up_left(current_game.board, [3,4])
-
-        expect(queen_attacks).to eq([])
+        expect(movement_escaping_check.length).to eq(4)
       end
 
     end
