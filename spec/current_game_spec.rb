@@ -399,6 +399,35 @@ describe CurrentGame do
         expect(movement_escaping_check.length).to eq(4)
       end
 
+      it "Integration test to check that White King can castle right" do
+        current_game.populate_gameboard
+        current_game.board[7][5] = ' '
+        current_game.board[7][6] = ' '
+        black_movement = [1,0,3,0]
+        white_castling_movement = [7,4,7,6]
+        
+        current_game.play_turn(black_movement)
+        castling_movement_verified = current_game.verify_movement(white_castling_movement, 'white', current_game.board)
+        current_game.play_turn(white_castling_movement)
+
+        expect(castling_movement_verified).to be true
+      end
+
+      it "Integration test to check that White King can castle left" do
+        current_game.populate_gameboard
+        current_game.board[7][3] = ' '
+        current_game.board[7][2] = ' '
+        current_game.board[7][1] = ' '
+        black_movement = [1,0,3,0]
+        white_castling_movement = [7,4,7,2]
+        
+        current_game.play_turn(black_movement)
+        castling_movement_verified = current_game.verify_movement(white_castling_movement, 'white', current_game.board)
+        current_game.play_turn(white_castling_movement)
+
+        expect(castling_movement_verified).to be true
+      end
+
     end
   end
 end

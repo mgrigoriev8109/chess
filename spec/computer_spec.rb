@@ -161,6 +161,17 @@ describe CurrentGame do
 
         expect(computer_movement_array.count).to eq(4)
       end
+
+      it "Recreate bug where Black can't determine proper movement to escape from Check" do
+        current_game.populate_gameboard
+        current_game.board[1][2] = Knight.new('white')
+        current_game.board[7][1] = ' '
+        current_game.show_display
+
+        black_escaping_movement = current_game.determine_computer_movement('black', current_game.board)
+
+        expect(black_escaping_movement.length).to eq(4)
+      end
     end
   end
 end
