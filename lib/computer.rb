@@ -115,12 +115,13 @@ module Computer
   def find_computer_move(color, board)
     possible_computer_movement = []
     all_piece_locations = piece_locations_of_a_player(color, board)
+    all_piece_locations.select!{ |location| movements_to_escape_check(color, location).any? }
+  
     piece_location = all_piece_locations.sample
     piece = get_piece(piece_location)
     piece_end_location = piece.all_possible_movements(board, piece_location).sample
     possible_computer_movement.push(*piece_location)
     possible_computer_movement.push(*piece_end_location)
-    binding.pry
     possible_computer_movement
   end
 

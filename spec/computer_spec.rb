@@ -26,7 +26,7 @@ describe CurrentGame do
         expect(possible_rook_movements).to include(ending_coordinates)
       end
 
-      it "Recreates a bug where a movement with only 2 digits is returned" do
+      it "Verifies a bug where a movement with only 2 digits is returned no longer occurs" do
         current_game.populate_gameboard
 
         computer_movement_array = current_game.find_computer_move('black', current_game.board)
