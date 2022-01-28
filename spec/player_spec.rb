@@ -108,4 +108,20 @@ describe Player do
       end
     end
   end
+
+  describe '#get_algebraic_notation' do
+
+    subject(:player) {described_class.new('white', 'test_player')}
+    context 'When transforming coordinate notation to algebraic notation' do
+
+      it 'returns A8 to B7 from the movement notation of [0,0,1,1' do
+        movement = [0,0,1,1]
+        alg_notation = "A8B7"
+
+        transformed_notation = player.get_algebraic_notation(movement)
+
+        expect(transformed_notation).to eq(alg_notation)
+      end
+    end
+  end
 end

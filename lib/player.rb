@@ -10,9 +10,6 @@ class Player
   end
 
   def get_input_array
-    puts "Players move pieces across the Chessboard using the notation A1B1"
-    puts "In the example A1B1, A1 will represent where your piece is located on this turn."
-    puts "In the example A1B1, B1 will represent where you want that piece to move."
     puts "Please enter the movement you would like to make:"
     @alg_notation = gets.chomp.split("")
   end
@@ -20,6 +17,17 @@ class Player
   def letter_to_numbers(letter)
     a_to_h_array = ('A'..'H').to_a
     a_to_h_array.index(letter)
+  end
+
+  def get_algebraic_notation(movement)
+    a_to_h_array = ('A'..'H').to_a
+
+    start_letter = a_to_h_array[movement[0]]
+    end_letter = a_to_h_array[movement[2]]
+    start_number = 8 - movement[1]
+    end_number = 8 - movement[3]
+
+    algebraic_notation_string = [start_letter, start_number, end_letter, end_number].join('')
   end
 
   def starting_location
