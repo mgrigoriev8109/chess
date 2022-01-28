@@ -1,3 +1,4 @@
+require 'pry'
 module Computer
 
   def determine_computer_movement(color, board)
@@ -10,7 +11,7 @@ module Computer
       computer_movement = find_computer_check(color, board)
     elsif find_computer_attack(color, board).any?
       computer_movement = find_computer_attack(color, board)
-    elsif
+    else
       computer_movement = find_computer_move(color, board)
     end
     computer_movement
@@ -119,6 +120,7 @@ module Computer
     piece_end_location = piece.all_possible_movements(board, piece_location).sample
     possible_computer_movement.push(*piece_location)
     possible_computer_movement.push(*piece_end_location)
+    binding.pry
     possible_computer_movement
   end
 

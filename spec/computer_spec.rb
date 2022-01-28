@@ -25,6 +25,14 @@ describe CurrentGame do
 
         expect(possible_rook_movements).to include(ending_coordinates)
       end
+
+      it "Recreates a bug where a movement with only 2 digits is returned" do
+        current_game.populate_gameboard
+
+        computer_movement_array = current_game.find_computer_move('black', current_game.board)
+
+        expect(computer_movement_array.count).to eq(4)
+      end
     end
   end
 
@@ -152,13 +160,12 @@ describe CurrentGame do
         expect(fools_blunder_checkmate).to eq([0,3,4,7])
       end
 
-      it "Recreate bug returns a two digit movement at the beginning of a game" do
+      it "Returns a 4 digit movement at the beginning of a game" do
 
         current_game.populate_gameboard
         current_computer_color = 'white'
 
         computer_movement_array = current_game.determine_computer_movement(current_computer_color, current_game.board)
-        binding.pry
 
         expect(computer_movement_array.count).to eq(4)
       end
