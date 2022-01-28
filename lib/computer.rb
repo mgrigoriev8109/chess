@@ -139,7 +139,7 @@ module Computer
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         current_coordinates = [row_index, column_index]
-        if cell.is_a?(Piece) && cell.color == color && cell.all_possible_movements(board, current_coordinates).any?
+        if cell.is_a?(Piece) && cell.color == color
           all_piece_locations.push(current_coordinates)
         end
       end

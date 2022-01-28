@@ -5,6 +5,7 @@ require 'player'
 require 'rook'
 require 'king'
 require 'bishop'
+require 'pry'
 describe CurrentGame do
 
   describe '#find_computer_move' do
@@ -151,18 +152,18 @@ describe CurrentGame do
         expect(fools_blunder_checkmate).to eq([0,3,4,7])
       end
 
-      it "returns a four digit long array for the computer movement" do
+      it "Recreate bug returns a two digit movement at the beginning of a game" do
 
         current_game.populate_gameboard
         current_computer_color = 'white'
 
         computer_movement_array = current_game.determine_computer_movement(current_computer_color, current_game.board)
-
+        binding.pry
 
         expect(computer_movement_array.count).to eq(4)
       end
 
-      it "Recreate bug where Black can't determine proper movement to escape from Check" do
+      it "Fix bug where Black could not determine proper movement to escape from Check" do
         current_game.populate_gameboard
         current_game.board[1][2] = Knight.new('white')
         current_game.board[7][1] = ' '
