@@ -85,7 +85,7 @@ class CurrentGame
     while player.get_input_array
       if player.input == 'save'
         input = 'save'
-        break
+        save_game
       elsif player.verify_input && verify_movement(player.movement, player.color, @board)
         input = player.movement 
         break

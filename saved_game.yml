@@ -1,0 +1,108 @@
+---
+- !ruby/object:CurrentGame
+  board:
+  - - !ruby/object:Rook
+      color: black
+      has_moved: false
+    - !ruby/object:Knight
+      color: black
+    - !ruby/object:Bishop
+      color: black
+    - !ruby/object:Queen
+      color: black
+    - !ruby/object:King
+      color: black
+      castling_coordinates: false
+      has_moved: false
+    - !ruby/object:Bishop
+      color: black
+    - !ruby/object:Knight
+      color: black
+    - !ruby/object:Rook
+      color: black
+      has_moved: false
+  - - !ruby/object:BlackPawn
+      color: black
+    - !ruby/object:BlackPawn
+      color: black
+    - !ruby/object:BlackPawn
+      color: black
+    - !ruby/object:BlackPawn
+      color: black
+    - !ruby/object:BlackPawn
+      color: black
+    - !ruby/object:BlackPawn
+      color: black
+    - !ruby/object:BlackPawn
+      color: black
+    - " "
+  - - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - !ruby/object:WhitePawn
+      color: white
+    - " "
+    - !ruby/object:WhitePawn
+      color: white
+    - " "
+    - " "
+    - " "
+    - " "
+    - !ruby/object:BlackPawn
+      color: black
+  - - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - " "
+    - !ruby/object:WhitePawn
+      color: white
+    - " "
+    - !ruby/object:WhitePawn
+      color: white
+    - !ruby/object:WhitePawn
+      color: white
+    - !ruby/object:WhitePawn
+      color: white
+    - !ruby/object:WhitePawn
+      color: white
+    - !ruby/object:WhitePawn
+      color: white
+  - - !ruby/object:Rook
+      color: white
+      has_moved: false
+    - !ruby/object:Knight
+      color: white
+    - !ruby/object:Bishop
+      color: white
+    - !ruby/object:Queen
+      color: white
+    - !ruby/object:King
+      color: white
+      castling_coordinates: false
+      has_moved: false
+    - !ruby/object:Bishop
+      color: white
+    - !ruby/object:Knight
+      color: white
+    - !ruby/object:Rook
+      color: white
+      has_moved: false
+  simulation_board: []

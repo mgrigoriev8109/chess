@@ -15,12 +15,8 @@ until current_game.assess_endofgame('black', current_game.board) do
   if white_player.name == 'Computer'
     movement = current_game.determine_computer_movement(white_player.color, current_game.board)
     puts "The color #{white_player.color} made the move #{white_player.get_algebraic_notation(movement)}."
-  elsif current_game.get_input(white_player) == 'save'
-    puts 'Saving the game'
+ else
     movement = current_game.get_input(white_player)
-    puts "The color #{white_player.color} made the move #{white_player.alg_notation.join('')}."
-  else
-    movement = white_player.movement
     puts "The color #{white_player.color} made the move #{white_player.alg_notation.join('')}."
   end
 
@@ -33,12 +29,8 @@ until current_game.assess_endofgame('black', current_game.board) do
   if black_player.name == 'Computer'
     movement = current_game.determine_computer_movement(black_player.color, current_game.board)
     puts "The color #{black_player.color} made the move #{black_player.get_algebraic_notation(movement)}."
-  elsif current_game.get_input(black_player) == 'save'
-    puts 'Saving the game'
-    movement = current_game.get_input(black_player)
-    puts "The color #{black_player.color} made the move #{black_player.alg_notation.join('')}."
   else
-    movement = black_player.movement
+    movement = current_game.get_input(black_player)
     puts "The color #{black_player.color} made the move #{black_player.alg_notation.join('')}."
   end
 
