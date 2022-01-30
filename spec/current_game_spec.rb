@@ -428,6 +428,17 @@ describe CurrentGame do
         expect(castling_movement_verified).to be true
       end
 
+      it "Recreate bug of Pawn Promotion turning the wrong piece into a Queen" do
+        current_game.board[6][5] = BlackPawn.new('black')
+        current_game.board[5][7] = King.new('black')
+        current_game.board[4][1] = King.new('white')
+        black_movement = [6,5,7,5]
+        
+        current_game.play_turn(black_movement)
+        current_game.show_display
+
+        expect(current_game.board[7][5]).to be_a(Queen)
+      end
     end
   end
 end
