@@ -12,6 +12,7 @@ require_relative 'castling'
 require_relative 'enpassant'
 require_relative 'check_checkmate'
 require_relative 'computer'
+require_relative 'save_load'
 
 class CurrentGame
   include CreatePieces
@@ -19,6 +20,7 @@ class CurrentGame
   include EnPassant 
   include CheckCheckmate
   include Computer
+  include SaveLoad
 
   attr_reader :board, :display
 
@@ -26,6 +28,17 @@ class CurrentGame
     @board = Array.new(8) { Array.new(8, " ")}
     @simulation_board = Array.new
   end 
+
+  def introduction
+    puts "Welcome to a CLI game of Chess!\n\n"
+    puts "Players move pieces across the Chessboard using the notation A1B1"
+    puts "In the example A1B1, A1 will represent where your piece is located on this turn."
+    puts "In the example A1B1, B1 will represent where you want that piece to move.\n\n"  
+    puts "Would you like to Load a saved game? Enter 'load' if this is the case, otherwise enter any key.\n\n"
+    if gets.chomp == 'load'
+      load_game
+    end
+  end
 
   def populate_gameboard
     create_starting_rooks
@@ -37,6 +50,7 @@ class CurrentGame
   end
 
   def create_player(color)
+    puts "What will be the name of the #{color} Player? If this player is to be a computer, type the name Computer"
     player_name = gets.chomp
     player = Player.new(color, player_name)
     player
@@ -69,12 +83,18 @@ class CurrentGame
   def get_input(player)
     input = []
     while player.get_input_array
-      if verify_movement(player.movement, player.color, @board)
-        input = player.movement 
-        break
-      elsif player.input == 'save'
+      if player.input == 'save'
         input = 'save'
         break
+      elsif player.verify_input && verify_movement(player.movement, player.color, @board)
+        input = player.movement 
+        break
+      else
+        puts "Looks like you entered an invalid input. Enter 'save' or a valid move."
+        puts "Remember that Players move pieces across the Chessboard using the notation A1B1"
+        puts "In the example A1B1, A1 will represent where your piece is located on this turn."
+        puts "In the example A1B1, B1 will represent where you want that piece to move.\n\n"  
+      end
     end
     input
   end

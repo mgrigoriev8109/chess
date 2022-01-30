@@ -124,4 +124,27 @@ describe Player do
       end
     end
   end
+
+  describe '#verify_input' do
+
+    subject(:player) {described_class.new('white', 'test_player')}
+    context 'When transforming coordinate notation to algebraic notation' do
+
+      it "returns true because the input ['A','8','B','5'] is verified as proper chess algebraic notation" do
+        player.alg_notation = ['A','8','B','5']
+
+        input_verified = player.verify_input
+
+        expect(input_verified).to be true
+      end
+
+      it "returns false because the input ['A','9','B','5'] is verified as proper chess algebraic notation" do
+        player.alg_notation = ['A','9','B','5']
+
+        input_verified = player.verify_input
+
+        expect(input_verified).to be false
+      end
+    end
+  end
 end
