@@ -119,10 +119,10 @@ class CurrentGame
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
         if row_index == 0 && cell.is_a?(WhitePawn)
-          board[column_index][row_index] = Queen.new('white')
+          board[row_index][column_index] = Queen.new('white')
           puts 'A White Pawn has been promoted to a White Queen'
         elsif row_index == 7 && cell.is_a?(BlackPawn)
-          board[column_index][row_index] = Queen.new('black')
+          board[row_index][column_index] = Queen.new('black')
           puts 'A Black Pawn has been promoted to a Black Queen'
         end
       end
