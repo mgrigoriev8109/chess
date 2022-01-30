@@ -67,10 +67,16 @@ class CurrentGame
   end
 
   def get_input(player)
+    input = []
     while player.get_input_array
-      break if verify_movement(player.movement, player.color, @board)
+      if verify_movement(player.movement, player.color, @board)
+        input = player.movement 
+        break
+      elsif player.input == 'save'
+        input = 'save'
+        break
     end
-    player.movement
+    input
   end
 
   def get_piece(coordinates)
