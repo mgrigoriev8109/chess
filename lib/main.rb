@@ -1,6 +1,7 @@
 require_relative 'current_game'
 require_relative 'player'
 
+system "figlet 'Chess' -f slant -c"
 current_game = CurrentGame.new
 current_game.populate_gameboard
 current_game.introduction
