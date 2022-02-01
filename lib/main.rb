@@ -4,9 +4,10 @@ require_relative 'player'
 system "figlet 'Chess' -f slant -c"
 current_game = CurrentGame.new
 current_game.populate_gameboard
-current_game.introduction
+current_game.display_introduction
 white_player = current_game.create_player("white")
 black_player = current_game.create_player("black")
+current_game.display_instruction
 current_game.show_display
 
 until current_game.assess_endofgame('black', current_game.board) do 

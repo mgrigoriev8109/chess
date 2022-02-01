@@ -29,15 +29,21 @@ class CurrentGame
     @simulation_board = Array.new
   end 
 
-  def introduction
-    puts "Welcome to a CLI game of Chess!\n\n"
-    puts "Players move pieces across the Chessboard using the notation A1B1"
-    puts "In the example A1B1, A1 will represent where your piece is located on this turn."
-    puts "In the example A1B1, B1 will represent where you want that piece to move.\n\n"  
-    puts "Would you like to Load a saved game? Enter 'load' if this is the case, otherwise enter any key.\n\n"
+  def display_introduction
+    puts "Welcome to a CLI game of Chess!\n\n" 
+    puts "Enter the word 'load' if you would like to load a saved game.\n\n"
+    puts "Otherwise, enter 'play' to play a new game.\n\n"
     if gets.chomp == 'load'
       load_game
     end
+  end
+
+  def display_instruction
+    puts "Players move pieces across the Chessboard using the notation A1B1.\n\n"
+    puts "In the example A1B1:\n\n"
+    puts "A1 will represent where the piece you wish to move is located.\n\n"
+    puts "B1 will represent where you want that piece to move.\n\n" 
+    puts "To find the desired number/letter coordinates, look at the chessboard.\n\n"
   end
 
   def populate_gameboard
@@ -50,7 +56,7 @@ class CurrentGame
   end
 
   def create_player(color)
-    puts "What will be the name of the #{color} Player? If this player is to be a computer, type the name Computer"
+    puts "\nWhat will be the name of the #{color} Player? If this player is to be a computer, type the name Computer\n\n"
     player_name = gets.chomp
     player = Player.new(color, player_name)
     player
