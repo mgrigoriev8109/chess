@@ -1,4 +1,3 @@
-require 'pry'
 module Computer
 
   def determine_computer_movement(color, board)
