@@ -17,7 +17,7 @@ until current_game.assess_endofgame('black', current_game.board) do
   if white_player.name == 'Computer'
     movement = current_game.determine_computer_movement(white_player.color, current_game.board)
     puts "The color #{white_player.color} made the move #{white_player.get_algebraic_notation(movement)}."
- else
+else
     movement = current_game.get_input(white_player)
     puts "The color #{white_player.color} made the move #{white_player.alg_notation.join('')}."
   end
@@ -39,8 +39,3 @@ until current_game.assess_endofgame('black', current_game.board) do
   current_game.play_turn(movement)
   current_game.show_display
 end
-
-#implement save/load
-#style chess properly
-#go back through POODR and think about possible ways of refactoring to make it more OOP
-#include gif and update README with finished project, features, bugs, reflections

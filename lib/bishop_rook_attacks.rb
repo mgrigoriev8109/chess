@@ -1,4 +1,3 @@
-require 'pry'
 module BishopRookAttacks
 
   def attacks_up(board, rook_location)
