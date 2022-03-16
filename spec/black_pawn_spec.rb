@@ -1,7 +1,7 @@
 #spec/black_pawn_spec.rb
-require 'black_pawn'
-require 'white_pawn'
-require 'rook'
+require 'pieces/black_pawn'
+require 'pieces/white_pawn'
+require 'pieces/rook'
 require 'current_game'
 
 describe BlackPawn do

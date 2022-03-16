@@ -2,10 +2,10 @@
 require 'computer'
 require 'current_game'
 require 'player'
-require 'rook'
-require 'king'
-require 'bishop'
-require 'pry'
+require 'pieces/rook'
+require 'pieces/king'
+require 'pieces/bishop'
+
 describe CurrentGame do
 
   describe '#find_computer_move' do

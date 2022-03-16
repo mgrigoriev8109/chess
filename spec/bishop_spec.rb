@@ -1,5 +1,5 @@
 #spec/bishop_spec.rb
-require 'bishop'
+require 'pieces/bishop'
 require 'current_game'
 require 'player'
 

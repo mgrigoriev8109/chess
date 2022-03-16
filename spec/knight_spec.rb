@@ -1,5 +1,5 @@
 #spec/knight_spec.rb
-require 'knight'
+require 'pieces/knight'
 require 'current_game'
 
 describe Knight do

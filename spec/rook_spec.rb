@@ -1,5 +1,5 @@
 #spec/rook_spec.rb
-require 'rook'
+require 'pieces/rook'
 require 'current_game'
 require 'player'
 

@@ -1,9 +1,9 @@
 #spec/current_game_spec.rb
 require 'current_game'
 require 'player'
-require 'rook'
-require 'king'
-require 'bishop'
+require 'pieces/rook'
+require 'pieces/king'
+require 'pieces/bishop'
 
 describe CurrentGame do
 

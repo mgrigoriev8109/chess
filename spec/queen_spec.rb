@@ -1,7 +1,7 @@
 #spec/queen_spec.rb
-require 'queen'
-require 'knight'
-require 'white_pawn'
+require 'pieces/queen'
+require 'pieces/knight'
+require 'pieces/white_pawn'
 require 'current_game'
 
 describe Queen do

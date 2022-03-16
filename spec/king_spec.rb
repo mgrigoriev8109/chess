@@ -1,8 +1,7 @@
 #spec/king_spec.rb
-require 'king'
+require 'pieces/king'
 require 'current_game'
 require 'player'
-require 'pry'
 
 describe King do
 
