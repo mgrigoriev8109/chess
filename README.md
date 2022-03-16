@@ -2,11 +2,17 @@
 
 This is the a Command Line Interface game of Chess I created after finishing the Ruby lessons of [The Odin Project](https://www.theodinproject.com/courses/ruby-programming/lessons/ruby-final-project?ref=lnav).
 
-You can play the game online using [replit](https://replit.com/@mgrig92/chess#.replit)
-
 ## Demo
 
 <img src='chess_sample.gif' alt='computer_check'>
+
+## How to play
+
+You can play the game online using [replit](https://replit.com/@mgrig92/chess#.replit). Replit isn't friendly towards YAML serialization, and breaks the save/load functionality. If you'd like to see how the gave saves and loads - or see the beautiful green of 226 passing RSpec tests - play the game locally.
+
+To play locally, you must have Ruby installed. See [here](https://www.ruby-lang.org/en/downloads/) for more details. Once installed clone this repository, navigate to /lib directory and enter `ruby main.rb` into the terminal to play.
+
+To run the tests you must have rspec installed. More info on rspec can be found [here](http://rspec.info/). To run all tests locate the top level directory and simply type in `rspec`.
 
 ## Features
 
