@@ -1,3 +1,5 @@
+require 'yaml'
+
 module SaveLoad
   def save_game
     File.open('saved_game.yml', 'w+') do |file|
