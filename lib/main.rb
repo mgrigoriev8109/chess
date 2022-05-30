@@ -15,7 +15,7 @@ current_game.show_display
 until current_game.assess_endofgame('black', current_game.board)
   movement = []
 
-  puts "\n\nColor #{white_player.color}, #{white_player.name}, it is now your turn."
+  puts "\n\n- Color #{white_player.color}, #{white_player.name}, it is now your turn."
   if white_player.name.downcase == 'computer'
     movement = current_game.determine_computer_movement(white_player.color, current_game.board)
     puts "The color #{white_player.color} made the move #{white_player.get_algebraic_notation(movement)}.\n\n"
@@ -29,7 +29,7 @@ until current_game.assess_endofgame('black', current_game.board)
 
   break if current_game.assess_endofgame('white', current_game.board)
 
-  puts "\n\nColor #{black_player.color}, #{black_player.name}, it is now your turn."
+  puts "\n\n- Color #{black_player.color}, #{black_player.name}, it is now your turn."
   if black_player.name.downcase == 'computer'
     movement = current_game.determine_computer_movement(black_player.color, current_game.board)
     puts "The color #{black_player.color} made the move #{black_player.get_algebraic_notation(movement)}.\n\n"
