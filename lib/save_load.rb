@@ -11,5 +11,4 @@ module SaveLoad
     yaml = YAML.load_file('saved_game.yml')
     @board = yaml[0].board
   end
-
 end

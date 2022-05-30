@@ -14,17 +14,17 @@ class Knight < Piece
 
   def symbol
     if @color == 'white'
-      symbol = "♞"
+      symbol = '♞'
     elsif @color == 'black'
-      symbol = "♘"
+      symbol = '♘'
     end
     symbol
-  end 
+  end
 
   def find_possible_movement(board, possible_row, possible_column)
-    possible_move = Array.new
+    possible_move = []
     board.each_with_index do |board_row, row_index|
-      board_row.each_with_index do |value, column_index| 
+      board_row.each_with_index do |value, column_index|
         if row_index == possible_row && column_index == possible_column && value == ' '
           possible_move.push([row_index, column_index])
         end
@@ -34,9 +34,9 @@ class Knight < Piece
   end
 
   def find_possible_attack(board, possible_row, possible_column)
-    possible_attack = Array.new
+    possible_attack = []
     board.each_with_index do |board_row, row_index|
-      board_row.each_with_index do |value, column_index| 
+      board_row.each_with_index do |value, column_index|
         if row_index == possible_row && column_index == possible_column && value.is_a?(Piece) && value.color != @color
           possible_attack.push([row_index, column_index])
         end
@@ -46,7 +46,7 @@ class Knight < Piece
   end
 
   def all_possible_movements(board, rook_location)
-    movements_array = Array.new
+    movements_array = []
     movements_array.push(*movements_up_right(board, rook_location))
     movements_array.push(*movements_up_left(board, rook_location))
     movements_array.push(*movements_right_up(board, rook_location))
@@ -60,7 +60,7 @@ class Knight < Piece
   end
 
   def all_possible_attacks(board, rook_location)
-    attacks_array = Array.new
+    attacks_array = []
     attacks_array.push(*attacks_up_right(board, rook_location))
     attacks_array.push(*attacks_up_left(board, rook_location))
     attacks_array.push(*attacks_right_up(board, rook_location))

@@ -1,34 +1,31 @@
 class Display
-
   attr_accessor :gameboard
 
-  def initialize()
-    @gameboard = Array.new(8) { Array.new(8, " ")}
-  end 
+  def initialize
+    @gameboard = Array.new(8) { Array.new(8, ' ') }
+  end
 
   def transform_to_symbol(board)
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
-        unless cell == ' '
-          @gameboard[row_index][column_index] = cell.symbol
-        end
+        @gameboard[row_index][column_index] = cell.symbol unless cell == ' '
       end
     end
   end
 
   def show
-    white_king = "♔"
-    white_queen = "♕"
-    white_rook = "♖"
-    white_bishop = "♗"
-    white_knight = "♘"
-    white_pawn = "♙"
-    black_king = "♚"
-    black_queen = "♛"
-    black_rook = "♜"
-    black_bishop = "♝"
-    black_knight = "♞"
-    black_pawn = "♟︎" 
+    white_king = '♔'
+    white_queen = '♕'
+    white_rook = '♖'
+    white_bishop = '♗'
+    white_knight = '♘'
+    white_pawn = '♙'
+    black_king = '♚'
+    black_queen = '♛'
+    black_rook = '♜'
+    black_bishop = '♝'
+    black_knight = '♞'
+    black_pawn = '♟︎'
     puts <<-HEREDOC
           +---+---+---+---+---+---+---+---+
         8 | #{@gameboard[0][0]} | #{@gameboard[0][1]} | #{@gameboard[0][2]} | #{@gameboard[0][3]} | #{@gameboard[0][4]} | #{@gameboard[0][5]} | #{@gameboard[0][6]} | #{@gameboard[0][7]} |
@@ -50,5 +47,4 @@ class Display
             A   B   C   D   E   F   G   H
     HEREDOC
   end
-
 end

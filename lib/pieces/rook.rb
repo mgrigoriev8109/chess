@@ -16,15 +16,15 @@ class Rook < Piece
 
   def symbol
     if @color == 'white'
-      symbol = "♜"
+      symbol = '♜'
     elsif @color == 'black'
-      symbol = "♖"
+      symbol = '♖'
     end
     symbol
   end
 
   def all_possible_attacks(board, rook_location)
-    attacks_array = Array.new
+    attacks_array = []
     attacks_array.push(*attacks_right(board, rook_location))
     attacks_array.push(*attacks_left(board, rook_location))
     attacks_array.push(*attacks_up(board, rook_location))
@@ -34,7 +34,7 @@ class Rook < Piece
   end
 
   def all_possible_movements(board, rook_location)
-    movements_array = Array.new
+    movements_array = []
     movements_array.push(*movements_right(board, rook_location))
     movements_array.push(*movements_left(board, rook_location))
     movements_array.push(*movements_up(board, rook_location))
@@ -42,5 +42,4 @@ class Rook < Piece
     movements_array.delete([])
     movements_array
   end
-
 end

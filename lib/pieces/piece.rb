@@ -1,3 +1,2 @@
 class Piece
-
 end

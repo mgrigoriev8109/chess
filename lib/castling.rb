@@ -1,6 +1,5 @@
 module Castling
-
-  def have_rooks_or_kings_moved(ending_location, board)
+  def have_rooks_or_kings_moved(ending_location, _board)
     piece_being_moved = get_piece(ending_location)
     if piece_being_moved.is_a?(King)
       piece_being_moved.has_moved = true
@@ -8,7 +7,7 @@ module Castling
       piece_being_moved.has_moved = true
     end
   end
-  
+
   def player_performing_castling(starting_location, ending_location)
     is_castling_possible = false
     if get_piece(starting_location).is_a?(King) && starting_location[1] == 4 && ending_location[1] == 2
@@ -42,7 +41,7 @@ module Castling
     rook_end = [castling_row, 5]
     move_gamepiece(rook_start, rook_end, board)
   end
-  
+
   def can_next_player_castle(color, board)
     next_player_color = opposite_player_color(color)
     king_start = get_king_location(next_player_color, board)
@@ -55,7 +54,7 @@ module Castling
       king_ending_coordinates = [castling_row, 6]
       king = get_piece(king_start)
       king.castling_coordinates = king_ending_coordinates
-    else 
+    else
       king = get_piece(king_start)
       king.castling_coordinates = false
     end
@@ -68,7 +67,7 @@ module Castling
     rook_piece = get_piece(rook_location)
     king_can_castle = true
 
-    if king_piece.has_moved 
+    if king_piece.has_moved
       king_can_castle = false
     elsif rook_has_moved(rook_piece)
       king_can_castle = false
@@ -84,7 +83,7 @@ module Castling
     has_rook_moved = true
     if piece_tested.is_a?(Rook) && piece_tested.has_moved
       has_rook_moved = true
-    elsif  piece_tested.is_a?(Rook)
+    elsif piece_tested.is_a?(Rook)
       has_rook_moved = false
     end
     has_rook_moved
@@ -115,26 +114,24 @@ module Castling
     pieces_between
   end
 
-  def is_king_landing_in_check(king_location, board, direction)
+  def is_king_landing_in_check(king_location, _board, direction)
     all_movements = king_also_lands_on(king_location, direction)
     king_color = get_piece(king_location).color
     king_in_check = false
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(@board))
       move_gamepiece(king_location, possible_end, simulated_board)
-      if verify_check(king_color, simulated_board) == true
-        king_in_check = true
-      end
+      king_in_check = true if verify_check(king_color, simulated_board) == true
     end
     king_in_check
   end
 
   def king_also_lands_on(king_location, direction)
-    king_also_lands_on = Array.new
-    first_left_location = [king_location[0],king_location[1] - 1]
-    second_left_location = [king_location[0],king_location[1] - 2]
-    first_right_location = [king_location[0],king_location[1] + 1]
-    second_right_location = [king_location[0],king_location[1] + 2]
+    king_also_lands_on = []
+    first_left_location = [king_location[0], king_location[1] - 1]
+    second_left_location = [king_location[0], king_location[1] - 2]
+    first_right_location = [king_location[0], king_location[1] + 1]
+    second_right_location = [king_location[0], king_location[1] + 2]
 
     if direction == 'left'
       king_also_lands_on.push(first_left_location, second_left_location)
@@ -143,5 +140,4 @@ module Castling
     end
     king_also_lands_on
   end
-
 end

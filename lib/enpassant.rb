@@ -1,5 +1,4 @@
 module EnPassant
-
   def player_performing_enpassant(start_location, end_location)
     attack_piece = get_piece(start_location)
     defending_pawn_row = start_location[0]
@@ -17,20 +16,18 @@ module EnPassant
     enpassant_attack_occurring
   end
 
-
   def destroy_defending_pawn(starting_location, ending_location, board)
     defending_pawn_row = starting_location[0]
     defending_pawn_column = ending_location[1]
     board[defending_pawn_row][defending_pawn_column] = ' '
   end
 
-
   def can_next_player_enpassant(starting_coordinates, ending_coordinates, board)
     piece = get_piece(ending_coordinates)
     starting_row = starting_coordinates[0]
     ending_row = ending_coordinates[0]
 
-    if piece.is_a?(WhitePawn) && starting_row == 6 && ending_row == 4 
+    if piece.is_a?(WhitePawn) && starting_row == 6 && ending_row == 4
       are_black_pawns_adjecent(ending_coordinates, board)
     elsif piece.is_a?(BlackPawn) && starting_row == 1 && ending_row == 3
       are_white_pawns_adjecent(ending_coordinates, board)
@@ -48,7 +45,6 @@ module EnPassant
         end
       end
     end
-
   end
 
   def are_black_pawns_adjecent(ending_location, board)

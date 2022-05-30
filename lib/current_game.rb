@@ -17,7 +17,7 @@ require_relative 'save_load'
 class CurrentGame
   include CreatePieces
   include Castling
-  include EnPassant 
+  include EnPassant
   include CheckCheckmate
   include Computer
   include SaveLoad
@@ -25,24 +25,22 @@ class CurrentGame
   attr_reader :board, :display
 
   def initialize
-    @board = Array.new(8) { Array.new(8, " ")}
-    @simulation_board = Array.new
-  end 
+    @board = Array.new(8) { Array.new(8, ' ') }
+    @simulation_board = []
+  end
 
   def display_introduction
-    puts "Welcome to a CLI game of Chess!\n\n" 
+    puts "Welcome to a CLI game of Chess!\n\n"
     puts "Enter the word 'load' if you would like to load a saved game.\n\n"
     puts "Otherwise, enter 'play' to play a new game.\n\n"
-    if gets.chomp == 'load'
-      load_game
-    end
+    load_game if gets.chomp == 'load'
   end
 
   def display_instruction
     puts "Players move pieces across the Chessboard using the notation A1B1.\n\n"
     puts "In the example A1B1:\n\n"
     puts "A1 will represent where the piece you wish to move is located.\n\n"
-    puts "B1 will represent where you want that piece to move.\n\n" 
+    puts "B1 will represent where you want that piece to move.\n\n"
     puts "To find the desired number/letter coordinates, look at the chessboard.\n\n"
   end
 
@@ -58,15 +56,14 @@ class CurrentGame
   def create_player(color)
     puts "\nWhat will be the name of the #{color} Player? If this player is to be a computer, type the name Computer\n\n"
     player_name = gets.chomp
-    player = Player.new(color, player_name)
-    player
+    Player.new(color, player_name)
   end
 
   def show_display
     display = Display.new
     display.transform_to_symbol(@board)
     display.show
-  end 
+  end
 
   def play_turn(movement)
     start_location = [movement[0], movement[1]]
@@ -78,7 +75,7 @@ class CurrentGame
     elsif player_performing_castling(start_location, end_location)
       move_castling_rook(color, start_location, end_location, @board)
     end
-    
+
     move_gamepiece(start_location, end_location, @board)
     promote_eligible_pawns(@board)
     have_rooks_or_kings_moved(end_location, @board)
@@ -93,13 +90,13 @@ class CurrentGame
         input = 'save'
         save_game
       elsif player.verify_input && verify_movement(player.movement, player.color, @board)
-        input = player.movement 
+        input = player.movement
         break
       else
         puts "Looks like you entered an invalid input. Enter 'save' or a valid move."
-        puts "Remember that Players move pieces across the Chessboard using the notation A1B1"
-        puts "In the example A1B1, A1 will represent where your piece is located on this turn."
-        puts "In the example A1B1, B1 will represent where you want that piece to move.\n\n"  
+        puts 'Remember that Players move pieces across the Chessboard using the notation A1B1'
+        puts 'In the example A1B1, A1 will represent where your piece is located on this turn.'
+        puts "In the example A1B1, B1 will represent where you want that piece to move.\n\n"
       end
     end
     input
@@ -108,8 +105,7 @@ class CurrentGame
   def get_piece(coordinates)
     row = coordinates[0]
     column = coordinates[1]
-    starting_piece = @board[row][column]
-    starting_piece
+    @board[row][column]
   end
 
   def get_king_location(color, board)
@@ -117,9 +113,7 @@ class CurrentGame
 
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
-        if cell.is_a?(King) && cell.color == color
-          king_location = [row_index, column_index]
-        end
+        king_location = [row_index, column_index] if cell.is_a?(King) && cell.color == color
       end
     end
     king_location
@@ -141,7 +135,7 @@ class CurrentGame
     opposite_color = ''
     if current_player_color == 'white'
       opposite_color = 'black'
-    elsif current_player_color =='black'
+    elsif current_player_color == 'black'
       opposite_color = 'white'
     end
     opposite_color
@@ -160,5 +154,4 @@ class CurrentGame
       end
     end
   end
-
 end

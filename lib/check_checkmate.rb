@@ -1,8 +1,7 @@
 module CheckCheckmate
-
   def assess_endofgame(color, board)
     is_game_over = false
-    if assess_endofround_checkmate(color, board) 
+    if assess_endofround_checkmate(color, board)
       puts "Looks like #{color} has won and put the opposing color into Checkmate!"
       is_game_over = true
     elsif assess_endofround_check(color, board)
@@ -13,14 +12,13 @@ module CheckCheckmate
     end
     is_game_over
   end
-  
+
   def verify_movement(movement, color, board)
     is_movement_verified = false
     starting_coordinates = [movement[0], movement[1]]
     ending_coordinates = [movement[2], movement[3]]
     is_movement_verified = verify_start(starting_coordinates, color)
-    is_movement_verified = verify_end(starting_coordinates, ending_coordinates, board)
-    is_movement_verified
+    verify_end(starting_coordinates, ending_coordinates, board)
   end
 
   def verify_start(starting_coordinates, color)
@@ -41,8 +39,8 @@ module CheckCheckmate
   def verify_end(starting_coordinates, ending_coordinates, board)
     starting_piece = get_piece(starting_coordinates)
     color = starting_piece.color
-    all_movements = Array.new
-    impossible_movements = Array.new
+    all_movements = []
+    impossible_movements = []
     can_piece_move_or_attack = false
 
     all_movements.push(*starting_piece.all_possible_movements(board, starting_coordinates))
@@ -51,15 +49,11 @@ module CheckCheckmate
     all_movements.each do |possible_end|
       simulated_board = Marshal.load(Marshal.dump(board))
       move_gamepiece(starting_coordinates, possible_end, simulated_board)
-      if verify_check(color, simulated_board) == true
-        impossible_movements.push(possible_end)
-      end
+      impossible_movements.push(possible_end) if verify_check(color, simulated_board) == true
     end
-    all_movements = all_movements - impossible_movements
+    all_movements -= impossible_movements
 
-    if all_movements.include?(ending_coordinates)
-      can_piece_move_or_attack = true
-    end 
+    can_piece_move_or_attack = true if all_movements.include?(ending_coordinates)
     can_piece_move_or_attack
   end
 
@@ -68,15 +62,13 @@ module CheckCheckmate
     all_possible_attacks = get_all_attacks_against(color, board)
     defending_king_location = get_king_location(color, board)
 
-    if all_possible_attacks.include?(defending_king_location)
-      is_defending_king_in_check = true
-    end
+    is_defending_king_in_check = true if all_possible_attacks.include?(defending_king_location)
 
     is_defending_king_in_check
   end
 
   def get_all_attacks_against(color, board)
-    all_attacks = Array.new
+    all_attacks = []
 
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
@@ -96,11 +88,11 @@ module CheckCheckmate
     if current_player_color == 'white'
       other_player_color = 'black'
       is_other_player_in_check = verify_check(other_player_color, board)
-    elsif current_player_color =='black'
+    elsif current_player_color == 'black'
       other_player_color = 'white'
       is_other_player_in_check = verify_check(other_player_color, board)
     end
-    
+
     is_other_player_in_check
   end
 
@@ -109,13 +101,9 @@ module CheckCheckmate
     next_player_color = opposite_player_color(current_color)
     enemy_attacks = get_all_attacks_against(next_player_color, board)
     defending_king_location = get_king_location(next_player_color, board)
-    if enemy_attacks.include?(defending_king_location)
-      is_next_player_in_checkmate = true
-    end
+    is_next_player_in_checkmate = true if enemy_attacks.include?(defending_king_location)
 
-    if can_next_player_move(current_color, board)
-      is_next_player_in_checkmate = false
-    end
+    is_next_player_in_checkmate = false if can_next_player_move(current_color, board)
 
     is_next_player_in_checkmate
   end
@@ -139,9 +127,7 @@ module CheckCheckmate
 
   def assess_endofround_stalemate(color, board)
     is_next_player_in_stalemate = true
-    if can_next_player_move(color, board)
-      is_next_player_in_stalemate = false
-    end
+    is_next_player_in_stalemate = false if can_next_player_move(color, board)
     is_next_player_in_stalemate
   end
 

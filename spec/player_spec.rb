@@ -1,12 +1,10 @@
-#spec/player_spec.rb
+# spec/player_spec.rb
 require 'player'
 
 describe Player do
   describe '#letter_to_numbers' do
-
-    subject(:player) {described_class.new('white', 'test_player')}
+    subject(:player) { described_class.new('white', 'test_player') }
     context 'When transforming player inputs from A to H' do
-
       it 'returns 0 as the corresponding row for A on the Chessboard' do
         input_letter = 'A'
 
@@ -34,16 +32,14 @@ describe Player do
   end
 
   describe '#starting_location' do
-
-    subject(:player) {described_class.new('white', 'test_player')}
+    subject(:player) { described_class.new('white', 'test_player') }
     context 'when Player inputs a starting location with LetterNumber format' do
-
       it 'returns coordinate notation [0,0] for the input algebraic notation location A8A8' do
         player.alg_notation = 'A8A8'
 
         coordinate_notation = player.starting_location
 
-        expect(coordinate_notation).to eq([0,0])
+        expect(coordinate_notation).to eq([0, 0])
       end
 
       it 'returns coordinate notation [1,5] for the input algebraic notation location A8A8' do
@@ -51,7 +47,7 @@ describe Player do
 
         coordinate_notation = player.starting_location
 
-        expect(coordinate_notation).to eq([5,1])
+        expect(coordinate_notation).to eq([5, 1])
       end
 
       it 'returns coordinate notation [3,6] for the input algebraic notation location G2A8' do
@@ -59,22 +55,20 @@ describe Player do
 
         coordinate_notation = player.starting_location
 
-        expect(coordinate_notation).to eq([6,6])
+        expect(coordinate_notation).to eq([6, 6])
       end
     end
   end
 
   describe '#ending_location' do
-
-    subject(:player) {described_class.new('white', 'test_player')}
+    subject(:player) { described_class.new('white', 'test_player') }
     context 'when Player inputs a ending location with LetterNumber format' do
-
       it 'returns coordinate notation [2,0] for the input algebraic notation location A8C8' do
         player.alg_notation = 'A8C8'
 
         coordinate_notation = player.ending_location
 
-        expect(coordinate_notation).to eq([0,2])
+        expect(coordinate_notation).to eq([0, 2])
       end
 
       it 'returns coordinate notation [7,7] for the input algebraic notation location A8H1' do
@@ -82,7 +76,7 @@ describe Player do
 
         coordinate_notation = player.ending_location
 
-        expect(coordinate_notation).to eq([7,7])
+        expect(coordinate_notation).to eq([7, 7])
       end
 
       it 'returns coordinate notation [3,6] for the input algebraic notation location G2D2' do
@@ -90,33 +84,29 @@ describe Player do
 
         coordinate_notation = player.ending_location
 
-        expect(coordinate_notation).to eq([6,3])
+        expect(coordinate_notation).to eq([6, 3])
       end
     end
   end
   describe '#movement' do
-
-    subject(:player) {described_class.new('white', 'test_player')}
+    subject(:player) { described_class.new('white', 'test_player') }
     context 'When transforming alg_notation to coordinate notation' do
-
       it 'returns [0,0,1,1] as the corresponding coordinates for A8 to B7' do
-        player.alg_notation = ['A','8','B','7']
+        player.alg_notation = %w[A 8 B 7]
 
         transformed_coordinates = player.movement
 
-        expect(transformed_coordinates).to eq([0,0,1,1])
+        expect(transformed_coordinates).to eq([0, 0, 1, 1])
       end
     end
   end
 
   describe '#get_algebraic_notation' do
-
-    subject(:player) {described_class.new('white', 'test_player')}
+    subject(:player) { described_class.new('white', 'test_player') }
     context 'When transforming coordinate notation to algebraic notation' do
-
       it 'returns A8 to B7 from the movement notation of [0,0,1,1' do
-        movement = [0,0,1,1]
-        alg_notation = "A8B7"
+        movement = [0, 0, 1, 1]
+        alg_notation = 'A8B7'
 
         transformed_notation = player.get_algebraic_notation(movement)
 
@@ -126,12 +116,10 @@ describe Player do
   end
 
   describe '#verify_input' do
-
-    subject(:player) {described_class.new('white', 'test_player')}
+    subject(:player) { described_class.new('white', 'test_player') }
     context 'When transforming coordinate notation to algebraic notation' do
-
       it "returns true because the input ['A','8','B','5'] is verified as proper chess algebraic notation" do
-        player.alg_notation = ['A','8','B','5']
+        player.alg_notation = %w[A 8 B 5]
 
         input_verified = player.verify_input
 
@@ -139,7 +127,7 @@ describe Player do
       end
 
       it "returns false because the input ['A','9','B','5'] is verified as proper chess algebraic notation" do
-        player.alg_notation = ['A','9','B','5']
+        player.alg_notation = %w[A 9 B 5]
 
         input_verified = player.verify_input
 
