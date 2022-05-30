@@ -33,20 +33,26 @@ Once I had a plan in mind, I began writing code in a TDD manner starting with th
 
 - Problem: What should I work on first?
 
-    - Solution:  In a project of this scope it was hard to decide what problem to tackle first, and it was thanks to the books I read that I settled on what appeared to be the simplest - Rook movement - even though I *wanted* to dive into Check/Checkmate logic. 
+    - Solution:  In a project of this scope it was hard to decide what problem to tackle first, and it was thanks to the books I read that I settled on what appeared to be the simplest - Rook movement - even though I *wanted* to dive into Check/Checkmate logic.
   
-- Problem: What should I work on second, third, fourth?
+- Problem: How can I make sure my program is well tested?
 
-    - Solution: This is where I made a mistake, and it's shaped how I will approach future projects. The core of Chess logic revolves around the King, Checks, and Checkmates. Once I had a Rook which could move and attack, I should have went into making a King move and attack, and then straight into the overarching game logic - are movements valid, when do checks occur, when do checkmates occur. Instead I made all of my pieces move and attack before working on Check and Checkmate. While it was smart to *start* with the simplest problem, I know that development is ultimately smoother if you first verify that the entirety of your logic works well as a system before spending time on every granular component.
-
+    - Solution: Use test-driven development whenever possible, and avoid using doubles - instead relying on incorporating actual objects in tests to perform integration testing. 
+   
+    
 ### What I learned
 
 As projects grow in scope and complexity, some things become essential if a developer wants to avoid pulling out their hair:
-- Keep code modular
+- Keep code modular.
 - Keep the codebase clean (thanks [Clean Code](https://www.oreilly.com/library/view/clean-code-a/9780136083238/))
 - keep methods tested for behavior (not implementation)
 - Utilize integration tests
 - Replicate bugs in unit tests, to prevent them from re-appearing in the future
+- If you need to extend functionality but are unsure of how to do it - don't be afraid to refactor. 
+
+There's things I'm proud of in this project - the classes I planned out, tests I wrote, and the debugging skills I've acquired. That said there's also lessons I'm taking with me which will influence how I create future programs. 
+
+While I'm happy I worked on the simplest problem first, as you can see through my commit history I stayed on simple problems for too long, choosing to program all piece movements and attacks before the check and checkmate logic. How I'm writing future projects thanks to the lessons I've learned in Chess and my Facebook Clone, is to begin with the simplest problem and then move up in complexity. Utilize TDD to make sure behaviour is working properly (in Rails this can be done with Model tests), and once the behaviour works integrate the component you've created into a system test. Then begin adding more and more complex components onto that system test, until you have an MVP of the entire app working end-to-end. 
 
 ### Continued Development
 
