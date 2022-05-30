@@ -11,7 +11,7 @@ class Player
   end
 
   def get_input_array
-    puts "Please enter the movement you would like to make, or 'save' if you wish to save:"
+    puts "- Please enter the movement you would like to make, or 'save' if you wish to save:"
     @alg_notation = gets.chomp.upcase.split('')
   end
 

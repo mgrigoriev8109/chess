@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Castling
-  def have_rooks_or_kings_moved(ending_location, _board)
+  def rooks_or_kings_moved?(ending_location, _board)
     piece_being_moved = get_piece(ending_location)
     case piece_being_moved
     when King

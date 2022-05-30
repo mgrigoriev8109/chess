@@ -32,18 +32,16 @@ class CurrentGame
   end
 
   def display_introduction
-    puts "Welcome to a CLI game of Chess!\n\n"
-    puts "Enter the word 'load' if you would like to load a saved game.\n\n"
-    puts "Otherwise, enter 'play' to play a new game.\n\n"
+    puts "\n\n- Enter the word 'play' to begin or 'load' to load a game if playing locally.\n\n"
     load_game if gets.chomp == 'load'
   end
 
   def display_instruction
-    puts "Players move pieces across the Chessboard using the notation A1B1.\n\n"
-    puts "In the example A1B1:\n\n"
-    puts "A1 will represent where the piece you wish to move is located.\n\n"
-    puts "B1 will represent where you want that piece to move.\n\n"
-    puts "To find the desired number/letter coordinates, look at the chessboard.\n\n"
+    puts "\n\n- Players move pieces across the Chessboard using the notation A1B1.\n"
+    puts "  In the example A1B1:\n"
+    puts "  A1 will represent where the piece you wish to move is located.\n"
+    puts "  B1 will represent where you want that piece to move.\n"
+    puts "  To find the desired number/letter coordinates, look at the chessboard.\n"
   end
 
   def populate_gameboard
@@ -56,7 +54,9 @@ class CurrentGame
   end
 
   def create_player(color)
-    puts "\nWhat will be the name of the #{color} Player? If this player is to be a computer, type the name Computer\n\n"
+    puts "\n- Who will play the color #{color}?\n"
+    puts "  Type in 'computer' for this color to be played by AI\n"
+    puts "  Or any other name, for example 'Robin', to play this color as a human.\n\n"
     player_name = gets.chomp
     Player.new(color, player_name)
   end
@@ -80,7 +80,7 @@ class CurrentGame
 
     move_gamepiece(start_location, end_location, @board)
     promote_eligible_pawns(@board)
-    have_rooks_or_kings_moved(end_location, @board)
+    rooks_or_kings_moved?(end_location, @board)
     can_next_player_castle(color, @board)
     can_next_player_enpassant(start_location, end_location, @board)
   end

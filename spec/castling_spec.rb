@@ -173,7 +173,7 @@ describe CurrentGame do
         king_end = [0, 3]
 
         current_game.move_gamepiece(king_start, king_end, current_game.board)
-        current_game.have_rooks_or_kings_moved(king_end, current_game.board)
+        current_game.rooks_or_kings_moved?(king_end, current_game.board)
         are_condtions_verified = current_game.verify_castling_conditions('black', current_game.board, 'left')
 
         expect(are_condtions_verified).to be false
@@ -186,7 +186,7 @@ describe CurrentGame do
         rook_end = [0, 3]
 
         current_game.move_gamepiece(rook_start, rook_end, current_game.board)
-        current_game.have_rooks_or_kings_moved(rook_end, current_game.board)
+        current_game.rooks_or_kings_moved?(rook_end, current_game.board)
         are_condtions_verified = current_game.verify_castling_conditions('black', current_game.board, 'left')
 
         expect(are_condtions_verified).to be false
@@ -199,7 +199,7 @@ describe CurrentGame do
         rook_end = [0, 3]
 
         current_game.move_gamepiece(rook_start, rook_end, current_game.board)
-        current_game.have_rooks_or_kings_moved(rook_end, current_game.board)
+        current_game.rooks_or_kings_moved?(rook_end, current_game.board)
         current_game.move_gamepiece([0, 3], [0, 0], current_game.board)
         are_condtions_verified = current_game.verify_castling_conditions('black', current_game.board, 'left')
 
