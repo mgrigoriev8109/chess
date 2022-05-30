@@ -48,7 +48,7 @@ As projects grow in scope and complexity, some things become essential if a deve
 - keep methods tested for behavior (not implementation)
 - Utilize integration tests
 - Replicate bugs in unit tests, to prevent them from re-appearing in the future
-- If you need to extend functionality but are unsure of how to do it - don't be afraid to refactor. 
+- If you need to extend functionality but are unsure of how to do it - don't be afraid to refactor (thanks [Refactoring](https://martinfowler.com/books/refactoring.html)
 
 There's things I'm proud of in this project - the classes I planned out, tests I wrote, and the debugging skills I've acquired. That said there's also lessons I'm taking with me which will influence how I create future programs. 
 
