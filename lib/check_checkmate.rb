@@ -16,13 +16,12 @@ module CheckCheckmate
   end
 
   def verify_movement(movement, color, board)
-    movement_verified = true
+    movement_verified = false
     starting_coordinates = [movement[0], movement[1]]
     ending_coordinates = [movement[2], movement[3]]
     start_verified = verify_start(starting_coordinates, color) 
-    end_verified = verify_end(starting_coordinates, ending_coordinates, board)
-    if start_verified == false || end_verified == false
-      movement_verified = false
+    if start_verified 
+      movement_verified = verify_end(starting_coordinates, ending_coordinates, board)
     end
     movement_verified
   end
