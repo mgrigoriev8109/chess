@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Computer
   def determine_computer_movement(color, board)
     computer_movement = []

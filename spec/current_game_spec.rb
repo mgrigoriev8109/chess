@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/current_game_spec.rb
 require 'current_game'
 require 'player'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/castling_spec.rb
 require 'current_game'
 

@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 module Castling
   def have_rooks_or_kings_moved(ending_location, _board)
     piece_being_moved = get_piece(ending_location)
-    if piece_being_moved.is_a?(King)
+    case piece_being_moved
+    when King
       piece_being_moved.has_moved = true
-    elsif piece_being_moved.is_a?(Rook)
+    when Rook
       piece_being_moved.has_moved = true
     end
   end
@@ -91,9 +94,10 @@ module Castling
 
   def get_rook_column(direction)
     rook_column = 0
-    if direction == 'left'
+    case direction
+    when 'left'
       rook_column = 0
-    elsif direction == 'right'
+    when 'right'
       rook_column = 7
     end
     rook_column
@@ -133,9 +137,10 @@ module Castling
     first_right_location = [king_location[0], king_location[1] + 1]
     second_right_location = [king_location[0], king_location[1] + 2]
 
-    if direction == 'left'
+    case direction
+    when 'left'
       king_also_lands_on.push(first_left_location, second_left_location)
-    elsif direction == 'right'
+    when 'right'
       king_also_lands_on.push(first_right_location, second_right_location)
     end
     king_also_lands_on

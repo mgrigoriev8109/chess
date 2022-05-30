@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module KnightAttacks
   def attacks_up_right(board, coordinates)
     knight_row = coordinates[0]

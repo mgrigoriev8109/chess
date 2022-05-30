@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/rook_spec.rb
 require 'pieces/rook'
 require 'current_game'

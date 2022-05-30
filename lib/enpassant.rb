@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EnPassant
   def player_performing_enpassant(start_location, end_location)
     attack_piece = get_piece(start_location)

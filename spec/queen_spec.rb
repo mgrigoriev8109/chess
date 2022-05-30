@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/queen_spec.rb
 require 'pieces/queen'
 require 'pieces/knight'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CreatePieces
   def create_starting_rooks
     @board[0][0] = Rook.new('black')

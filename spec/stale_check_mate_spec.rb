@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/stale_check_mate_spec.rb
 require 'current_game'
 

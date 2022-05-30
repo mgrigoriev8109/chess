@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/bishop_spec.rb
 require 'pieces/bishop'
 require 'current_game'

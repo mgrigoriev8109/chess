@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BishopRookAttacks
   def attacks_up(board, rook_location)
     starting_row = 7 - rook_location[0]
@@ -147,7 +149,7 @@ module BishopRookAttacks
     piece_column = piece_location[1]
     possible_diagonal_locations = []
 
-    until (piece_row == 0) || (piece_column == 0)
+    until piece_row.zero? || piece_column.zero?
       piece_row -= 1
       piece_column -= 1
       possible_diagonal_locations.push([piece_row, piece_column])

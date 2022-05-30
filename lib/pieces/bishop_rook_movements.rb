@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BishopRookMovements
   def movements_down_left(board, piece_location)
     starting_row = piece_location[0]

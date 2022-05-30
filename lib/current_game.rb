@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'player'
 require_relative 'display'
 require_relative 'pieces/rook'
@@ -133,9 +135,10 @@ class CurrentGame
 
   def opposite_player_color(current_player_color)
     opposite_color = ''
-    if current_player_color == 'white'
+    case current_player_color
+    when 'white'
       opposite_color = 'black'
-    elsif current_player_color == 'black'
+    when 'black'
       opposite_color = 'white'
     end
     opposite_color
@@ -144,7 +147,7 @@ class CurrentGame
   def promote_eligible_pawns(board)
     board.each_with_index do |row, row_index|
       row.each_with_index do |cell, column_index|
-        if row_index == 0 && cell.is_a?(WhitePawn)
+        if row_index.zero? && cell.is_a?(WhitePawn)
           board[row_index][column_index] = Queen.new('white')
           puts 'A White Pawn has been promoted to a White Queen'
         elsif row_index == 7 && cell.is_a?(BlackPawn)

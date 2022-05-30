@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/knight_spec.rb
 require 'pieces/knight'
 require 'current_game'

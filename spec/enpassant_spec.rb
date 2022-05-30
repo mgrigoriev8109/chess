@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/enpassant_spec.rb
 require 'current_game'
 

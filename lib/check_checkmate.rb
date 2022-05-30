@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CheckCheckmate
   def assess_endofgame(color, board)
     is_game_over = false
@@ -85,10 +87,11 @@ module CheckCheckmate
     is_other_player_in_check = false
     current_player_color
 
-    if current_player_color == 'white'
+    case current_player_color
+    when 'white'
       other_player_color = 'black'
       is_other_player_in_check = verify_check(other_player_color, board)
-    elsif current_player_color == 'black'
+    when 'black'
       other_player_color = 'white'
       is_other_player_in_check = verify_check(other_player_color, board)
     end

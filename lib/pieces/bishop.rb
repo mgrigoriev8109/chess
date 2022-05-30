@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'piece'
 require_relative 'bishop_rook_movements'
 require_relative 'bishop_rook_attacks'
@@ -13,9 +15,10 @@ class Bishop < Piece
   end
 
   def symbol
-    if @color == 'white'
+    case @color
+    when 'white'
       symbol = '♝'
-    elsif @color == 'black'
+    when 'black'
       symbol = '♗'
     end
     symbol

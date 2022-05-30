@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/computer_game_spec.rb
 require 'computer'
 require 'current_game'

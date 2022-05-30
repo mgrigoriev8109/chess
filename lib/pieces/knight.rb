@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'piece'
 require_relative 'knight_movements'
 require_relative 'knight_attacks'
@@ -13,9 +15,10 @@ class Knight < Piece
   end
 
   def symbol
-    if @color == 'white'
+    case @color
+    when 'white'
       symbol = '♞'
-    elsif @color == 'black'
+    when 'black'
       symbol = '♘'
     end
     symbol
