@@ -1,3 +1,5 @@
+<img src='chess_sample.gif' alt='computer_check'>
+
 # Chess
 
 This is the a linux command line game of Chess, creating to include all main game features including En Passant, Castling, Check, and Checkmate. Players can play against each other, against a computer, or watch two computers battle it out. As you can see in the demo below, computers will prioritise movements resulting in a check or checkmate, and if they can't perform one they'll prioritize attacking an enemy piece!
@@ -5,7 +7,6 @@ This is the a linux command line game of Chess, creating to include all main gam
 ## Table of Concepts
 
 - [Overview](#overview)
-    - [Demo](#demo)
 - [My Process](#my-process)
     - [Challenges](#challenges)
     - [What I learned](#What-i-learned)
@@ -18,10 +19,6 @@ This is the a linux command line game of Chess, creating to include all main gam
 This is the a linux command line game of Chess, creating to include all main game features including En Passant, Castling, Check, and Checkmate. Players can play against each other, against a computer, or watch two computers battle it out. As you can see in the demo below, computers will prioritise movements resulting in a check or checkmate, and if they can't perform one they'll prioritize attacking an enemy piece!
 
 You can play the game online by [clicking on this replit link](https://replit.com/@mgrig92/chess#.replit), and then pressing the green `Run` button.
-
-## Demo
-
-<img src='chess_sample.gif' alt='computer_check'>
 
 ## My Process
 
