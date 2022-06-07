@@ -1,17 +1,17 @@
 # Chess
-[<img src='chess_sample.gif' alt='computer_check'>](https://replit.com/@mgrig92/chess#.replit)
 
-This is the a linux command line game of Chess, creating to include all main game features including En Passant, Castling, Check, and Checkmate. Players can play against each other, against a computer, or watch two computers battle it out. As you can see in the demo below, computers will prioritise movements resulting in a check or checkmate, and if they can't perform one they'll prioritize attacking an enemy piece!
+[<img src='chess_sample.gif' alt='computer_check'>](https://replit.com/@mgrig92/chess#.replit)
 
 ## Table of Concepts
 
 - [Overview](#overview)
 - [My Process](#my-process)
     - [Challenges](#challenges)
-    - [What I learned](#What-i-learned)
+    - [What I learned](#what-i-learned)
     - [Continued Development](#continued-development)
     - [Instructions](#instructions)
 - [Author](#author)
+- [License](#license)
 
 ## Overview
 
@@ -66,4 +66,8 @@ To run the tests you must have rspec installed. More info on rspec can be found 
 
 ## Author
 
-- Personal Portfolio: to be updated
+- [Personal Portfolio: www.mgrigo.com](www.mgrigo.com)
+
+## License
+
+This project is licensed under the terms of the MIT license.
